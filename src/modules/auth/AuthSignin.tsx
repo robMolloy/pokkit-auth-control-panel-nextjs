@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { pb } from "@/config/pocketbaseConfig";
+import { PocketBase } from "@/config/pocketbaseConfig";
 import { useState } from "react";
 
-interface AuthSigninProps {
+export const AuthSignin = (p: {
+  pb: PocketBase;
   onSignIn: (success: boolean, message: string) => void;
-}
-
-export function AuthSignin({ onSignIn }: AuthSigninProps) {
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,11 +18,11 @@ export function AuthSignin({ onSignIn }: AuthSigninProps) {
     setIsLoading(true);
 
     try {
-      await pb.collection("users").authWithPassword(email, password);
-      onSignIn(true, "Successfully signed in!");
+      await p.pb.collection("users").authWithPassword(email, password);
+      p.onSignIn(true, "Successfully signed in!");
     } catch (err) {
       console.error("Sign in error:", err);
-      onSignIn(false, "Invalid email or password. Please try again.");
+      p.onSignIn(false, "Invalid email or password. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -60,4 +59,4 @@ export function AuthSignin({ onSignIn }: AuthSigninProps) {
       </Button>
     </form>
   );
-}
+};
