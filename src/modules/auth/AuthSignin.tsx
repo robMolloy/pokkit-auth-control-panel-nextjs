@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PocketBase } from "@/config/pocketbaseConfig";
 import { useState } from "react";
+import { PocketBase } from "../pocketBase/pocketBaseHelpers";
 
 export const AuthSignin = (p: {
   pb: PocketBase;

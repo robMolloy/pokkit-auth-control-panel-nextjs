@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { AuthSignin } from "./AuthSignin";
 import { AuthSignup } from "./AuthSignup";
-import { PocketBase } from "@/config/pocketbaseConfig";
+import { PocketBase } from "../pocketBase/pocketBaseHelpers";
 
 export function AuthForm(p: { pb: PocketBase }) {
   const [error, setError] = useState<string | null>(null);
