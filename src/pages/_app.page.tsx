@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { PocketBaseScreen } from "@/modules/pocketBase/screens/PocketBaseScreen";
+import { LoadingScreen } from "@/screens/LoadingScreen";
 import { usePocketBaseStore } from "@/stores/pocketBaseStore";
 import { useThemeStore } from "@/stores/themeStore";
 import "@/styles/globals.css";
@@ -20,6 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Layout>
         {(() => {
+          if (pocketBaseStore.data === undefined) return <LoadingScreen />;
           if (pocketBaseStore.data === null) return <PocketBaseScreen />;
           return <Component {...pageProps} />;
         })()}

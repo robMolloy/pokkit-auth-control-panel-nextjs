@@ -4,20 +4,14 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { H1 } from "@/components/ui/defaultComponents";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { usePocketBaseStore, usePocketBaseUrlStore } from "@/stores/pocketBaseStore";
+import { usePocketBaseStore } from "@/stores/pocketBaseStore";
 import { useState } from "react";
+import { checkPocketBaseUrlHealth } from "../pocketBaseHelpers";
 
 const PocketBaseConnectToInstanceForm = () => {
   const pocketBaseStore = usePocketBaseStore();
-  const pocketBaseUrlStore = usePocketBaseUrlStore();
   const [url, setUrl] = useState("http://127.0.0.1:8090");
-
-  const status = (() => {
-    const data = pocketBaseStore.data;
-    if (data === null) return "disconnected";
-    if (data === undefined) return "loading";
-    return "connected";
-  })();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Card>
@@ -30,7 +24,10 @@ const PocketBaseConnectToInstanceForm = () => {
           onSubmit={async (e) => {
             e.preventDefault();
 
-            pocketBaseUrlStore.setData(url);
+            setIsLoading(true);
+            const resp = await checkPocketBaseUrlHealth(url);
+            pocketBaseStore.setData(resp.success ? resp.data.pb : null);
+            setIsLoading(false);
           }}
         >
           <div>
@@ -42,11 +39,11 @@ const PocketBaseConnectToInstanceForm = () => {
             />
           </div>
           <div className="flex justify-end">
-            <Button type="submit" disabled={status === "loading"}>
+            <Button type="submit" disabled={isLoading}>
               Submit
             </Button>
           </div>
-          <pre>{JSON.stringify({ pocketBaseUrlStore }, undefined, 2)}</pre>
+          <pre>{JSON.stringify({ pocketBaseStore }, undefined, 2)}</pre>
         </form>
       </CardContent>
     </Card>
