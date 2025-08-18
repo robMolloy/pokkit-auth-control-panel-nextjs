@@ -6,22 +6,12 @@ import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePocketBaseStore } from "@/stores/pocketBaseStore";
 import { useState } from "react";
-import { z } from "zod";
-import { PocketBase } from "../pocketBaseHelpers";
+import { checkPocketBaseUrlHealth, PocketBase } from "../pocketBaseHelpers";
 
-const checkPocketBaseUrlHealth = async (url: string) => {
-  const schema = z.object({ status: z.number() });
-  try {
-    const initResp = await fetch(`${url}/api/health`);
-    return schema.safeParse(initResp);
-  } catch (error) {
-    return { success: false, error } as const;
-  }
-};
-
-const PocketBaseInstanceConnectForm = () => {
+const PocketBaseConnectToInstanceForm = () => {
   const pocketBaseStore = usePocketBaseStore();
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("http://127.0.0.1:8090");
+
   return (
     <Card>
       <CardHeader>
@@ -29,13 +19,13 @@ const PocketBaseInstanceConnectForm = () => {
       </CardHeader>
       <CardContent>
         <form
+          className="flex flex-col gap-4"
           onSubmit={async (e) => {
             e.preventDefault();
 
             const x = await checkPocketBaseUrlHealth(url);
             if (x.success) pocketBaseStore.setData(new PocketBase(url));
           }}
-          className="flex flex-col gap-4"
         >
           <div>
             <Label>Connect to your PocketBase instance</Label>
@@ -59,7 +49,7 @@ export const PocketBaseScreen = () => {
     <MainLayout>
       <div className="mt-16 flex justify-center">
         <div className="w-[400px]">
-          <PocketBaseInstanceConnectForm />
+          <PocketBaseConnectToInstanceForm />
         </div>
       </div>
     </MainLayout>
