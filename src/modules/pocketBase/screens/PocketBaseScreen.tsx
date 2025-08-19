@@ -3,10 +3,10 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { H1 } from "@/components/ui/defaultComponents";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { usePocketBaseStore } from "@/stores/pocketBaseStore";
 import { useState } from "react";
 import { checkPocketBaseUrlHealth } from "../pocketBaseHelpers";
 import { MainLayout } from "@/components/layout/LayoutTemplate";
+import { usePocketBaseStore } from "../pocketBaseStore";
 
 const PocketBaseConnectToInstanceForm = () => {
   const pocketBaseStore = usePocketBaseStore();

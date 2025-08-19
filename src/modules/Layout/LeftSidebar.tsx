@@ -1,11 +1,13 @@
 import { PreserveScrollAbility } from "@/components/layout/LayoutTemplate";
 import { LeftSidebarTemplate, SidebarButton } from "@/components/layout/LeftSidebarTemplate";
-import { usePocketBaseStore } from "@/stores/pocketBaseStore";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { usePocketBaseStore } from "../pocketBase/pocketBaseStore";
+import { useSuperUserAuthStore } from "../superUserAuth/useSuperUserAuthStore";
 
 export function LeftSidebar() {
   const pocketBaseStore = usePocketBaseStore();
+  const superUserAuthStore = useSuperUserAuthStore();
   const router = useRouter();
   const [scrollItemIndex, setScrollItemIndex] = useState(0);
 
@@ -43,6 +45,16 @@ export function LeftSidebar() {
         bottom={
           pocketBaseStore.data && (
             <>
+              {superUserAuthStore.data && (
+                // todo: superuser not actually logged out
+                <SidebarButton
+                  iconName="LogOut"
+                  isHighlighted={false}
+                  onClick={() => superUserAuthStore.clear()}
+                >
+                  Log Out
+                </SidebarButton>
+              )}
               <SidebarButton
                 iconName="Unplug"
                 isHighlighted={false}
