@@ -15,7 +15,7 @@ const useInitPocketBaseStore = create<{
 
 const persistenceKey = "pocketBaseUrl";
 export const usePocketBaseStore = () => {
-  const initPocketBaseStore = useInitPocketBaseStore();
+  const { clear, ...initPocketBaseStore } = useInitPocketBaseStore();
 
   useEffect(() => {
     const url = localStorage.getItem(persistenceKey);
@@ -35,5 +35,11 @@ export const usePocketBaseStore = () => {
     localStorage.setItem(persistenceKey, url);
   }, [initPocketBaseStore.data]);
 
-  return initPocketBaseStore;
+  return {
+    ...initPocketBaseStore,
+    clear: async () => {
+      await initPocketBaseStore.data?.authStore.clear();
+      setTimeout(() => clear(), 10);
+    },
+  };
 };

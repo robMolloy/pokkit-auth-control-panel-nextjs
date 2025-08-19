@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { TSuperUser } from "./dbSuperUserHelpers";
+import { usePocketBaseStore } from "../pocketBase/pocketBaseStore";
 
 type TSuperUserState = TSuperUser | null;
 
@@ -14,7 +15,14 @@ const useInitSuperUserAuthStore = create<{
 }));
 
 export const useSuperUserAuthStore = () => {
-  const store = useInitSuperUserAuthStore();
+  const pocketBaseStore = usePocketBaseStore();
+  const { clear, ...store } = useInitSuperUserAuthStore();
 
-  return store;
+  return {
+    ...store,
+    clear: async () => {
+      await pocketBaseStore.data?.authStore.clear();
+      clear();
+    },
+  } as const;
 };

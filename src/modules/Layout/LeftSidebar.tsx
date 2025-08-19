@@ -58,7 +58,7 @@ export function LeftSidebar() {
               <SidebarButton
                 iconName="Unplug"
                 isHighlighted={false}
-                onClick={() => pocketBaseStore.setData(null)}
+                onClick={() => pocketBaseStore.clear()}
               >
                 Disconnect
               </SidebarButton>
