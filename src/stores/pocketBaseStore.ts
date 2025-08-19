@@ -19,11 +19,7 @@ export const usePocketBaseStore = () => {
 
   useEffect(() => {
     const url = localStorage.getItem(persistenceKey);
-    if (!url) {
-      localStorage.removeItem(persistenceKey); // unnecessary
-      initPocketBaseStore.setData(null);
-      return;
-    }
+    if (!url) return initPocketBaseStore.setData(null);
 
     (async () => {
       const resp = await checkPocketBaseUrlHealth(url);
@@ -32,6 +28,7 @@ export const usePocketBaseStore = () => {
   }, []);
 
   useEffect(() => {
+    if (initPocketBaseStore.data === undefined) return;
     if (!initPocketBaseStore.data) return localStorage.removeItem(persistenceKey);
 
     const url = initPocketBaseStore.data.baseURL;
