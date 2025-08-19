@@ -1,4 +1,6 @@
-import { Layout } from "@/components/layout/Layout";
+import { LayoutTemplate } from "@/components/layout/LayoutTemplate";
+import { Header } from "@/modules/Layout/Header";
+import { LeftSidebar } from "@/modules/Layout/LeftSidebar";
 import { PocketBaseScreen } from "@/modules/pocketBase/screens/PocketBaseScreen";
 import { LoadingScreen } from "@/screens/LoadingScreen";
 import { usePocketBaseStore } from "@/stores/pocketBaseStore";
@@ -19,13 +21,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>pokkit auth-control-panel</title>
       </Head>
-      <Layout>
+      <LayoutTemplate Header={<Header />} LeftSidebar={<LeftSidebar />}>
         {(() => {
           if (pocketBaseStore.data === undefined) return <LoadingScreen />;
           if (pocketBaseStore.data === null) return <PocketBaseScreen />;
           return <Component {...pageProps} />;
         })()}
-      </Layout>
+      </LayoutTemplate>
     </>
   );
 }

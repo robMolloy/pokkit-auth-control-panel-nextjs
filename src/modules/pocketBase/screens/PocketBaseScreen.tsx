@@ -1,4 +1,3 @@
-import { MainLayout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { H1 } from "@/components/ui/defaultComponents";
@@ -7,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { usePocketBaseStore } from "@/stores/pocketBaseStore";
 import { useState } from "react";
 import { checkPocketBaseUrlHealth } from "../pocketBaseHelpers";
+import { MainLayout } from "@/components/layout/LayoutTemplate";
 
 const PocketBaseConnectToInstanceForm = () => {
   const pocketBaseStore = usePocketBaseStore();
@@ -43,7 +43,6 @@ const PocketBaseConnectToInstanceForm = () => {
               Submit
             </Button>
           </div>
-          <pre>{JSON.stringify({ pocketBaseStore }, undefined, 2)}</pre>
         </form>
       </CardContent>
     </Card>

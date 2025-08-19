@@ -1,0 +1,59 @@
+import { PreserveScrollAbility } from "@/components/layout/LayoutTemplate";
+import { LeftSidebarTemplate, SidebarButton } from "@/components/layout/LeftSidebarTemplate";
+import { usePocketBaseStore } from "@/stores/pocketBaseStore";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+export function LeftSidebar() {
+  const pocketBaseStore = usePocketBaseStore();
+  const router = useRouter();
+  const [scrollItemIndex, setScrollItemIndex] = useState(0);
+
+  return !pocketBaseStore.data ? (
+    <></>
+  ) : (
+    <PreserveScrollAbility className="w-64">
+      <LeftSidebarTemplate
+        top={
+          pocketBaseStore.data && (
+            <>
+              <SidebarButton href="/" iconName="Home" isHighlighted={router.pathname === "/"}>
+                Home
+              </SidebarButton>
+              <SidebarButton
+                href="/scroll"
+                iconName="Ban"
+                isHighlighted={router.pathname === "/scroll"}
+              >
+                Scroll
+              </SidebarButton>
+            </>
+          )
+        }
+        middle={[...Array(100)].map((_, j) => (
+          <SidebarButton
+            iconName="Ban"
+            key={j}
+            isHighlighted={j === scrollItemIndex}
+            onClick={() => setScrollItemIndex(j)}
+          >
+            do summit {j} {j === scrollItemIndex && <>(selected)</>}
+          </SidebarButton>
+        ))}
+        bottom={
+          pocketBaseStore.data && (
+            <>
+              <SidebarButton
+                iconName="Unplug"
+                isHighlighted={false}
+                onClick={() => pocketBaseStore.setData(null)}
+              >
+                Disconnect
+              </SidebarButton>
+            </>
+          )
+        }
+      />
+    </PreserveScrollAbility>
+  );
+}

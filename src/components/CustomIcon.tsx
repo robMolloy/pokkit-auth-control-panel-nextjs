@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import {
+  Unplug,
   Ban,
   Clock,
   ChevronDown,
@@ -41,6 +42,7 @@ import {
 } from "lucide-react";
 
 const iconMap = {
+  Unplug,
   Ban,
   Clock,
   ChevronDown,
