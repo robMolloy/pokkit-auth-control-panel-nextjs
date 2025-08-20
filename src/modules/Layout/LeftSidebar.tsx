@@ -46,11 +46,10 @@ export function LeftSidebar() {
           pocketBaseStore.data && (
             <>
               {superUserAuthStore.data && (
-                // todo: superuser not actually logged out
                 <SidebarButton
                   iconName="LogOut"
                   isHighlighted={false}
-                  onClick={() => superUserAuthStore.clear()}
+                  onClick={() => pocketBaseStore.logout()}
                 >
                   Log Out
                 </SidebarButton>

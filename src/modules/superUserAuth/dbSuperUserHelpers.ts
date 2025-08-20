@@ -15,7 +15,11 @@ export type TSuperUser = z.infer<typeof superUserSchema>;
 export type TSuperUserState = TSuperUser | null;
 
 export const superUserLogin = async (p: { pb: PocketBase; username: string; password: string }) => {
-  const resp = await p.pb.collection(collectionName).authWithPassword(p.username, p.password);
+  try {
+    const resp = await p.pb.collection(collectionName).authWithPassword(p.username, p.password);
 
-  return superUserSchema.safeParse(resp.record);
+    return superUserSchema.safeParse(resp.record);
+  } catch (error) {
+    return { success: false, error } as const;
+  }
 };
