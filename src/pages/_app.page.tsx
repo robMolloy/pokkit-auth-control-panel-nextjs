@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>pokkit Starter</title>
+        <title>pokkit auth control panel</title>
       </Head>
       <LayoutTemplate
         Header={<Header />}

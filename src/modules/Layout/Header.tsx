@@ -9,7 +9,7 @@ export const Header = () => {
       Left={
         <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
           <CustomIcon iconName="Cloud" size="lg" />
-          <span className="font-bold">pokkit Starter</span>
+          <span className="font-bold">pokkit auth control panel</span>
         </Link>
       }
       Right={<ThemeToggle />}
