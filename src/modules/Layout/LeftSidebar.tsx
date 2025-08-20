@@ -23,13 +23,6 @@ export function LeftSidebar() {
               <SidebarButton href="/" iconName="Home" isHighlighted={router.pathname === "/"}>
                 Home
               </SidebarButton>
-              <SidebarButton
-                href="/scroll"
-                iconName="Ban"
-                isHighlighted={router.pathname === "/scroll"}
-              >
-                Scroll
-              </SidebarButton>
             </>
           )
         }
