@@ -1,9 +1,9 @@
 import { LayoutTemplate } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
-import { useInitAuth } from "@/modules/auth/useInitAuth";
 import { Header } from "@/modules/Layout/Header";
 import { LeftSidebar } from "@/modules/Layout/LeftSidebar";
 import { SuperuserAuthScreen } from "@/modules/superusers/SuperuserAuthScreen";
+import { useInitAuth } from "@/modules/superusers/useInitAuth";
 
 import { LoadingScreen } from "@/screens/LoadingScreen";
 import { useCurrentUserStore } from "@/stores/authDataStore";
