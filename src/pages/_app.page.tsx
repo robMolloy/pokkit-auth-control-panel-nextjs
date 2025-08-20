@@ -3,7 +3,7 @@ import { pb } from "@/config/pocketbaseConfig";
 import { useInitAuth } from "@/modules/auth/useInitAuth";
 import { Header } from "@/modules/Layout/Header";
 import { LeftSidebar } from "@/modules/Layout/LeftSidebar";
-import { SuperUserAuthScreen } from "@/modules/superusers/SuperUserAuthScreen";
+import { SuperuserAuthScreen } from "@/modules/superusers/SuperuserAuthScreen";
 
 import { LoadingScreen } from "@/screens/LoadingScreen";
 import { useCurrentUserStore } from "@/stores/authDataStore";
@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
           if (currentUserStore.data.authStatus === "loading") return <LoadingScreen />;
 
           if (currentUserStore.data.authStatus === "loggedOut")
-            return <SuperUserAuthScreen pb={pb} />;
+            return <SuperuserAuthScreen pb={pb} />;
 
           // should not be required
           if (currentUserStore.data.authStatus !== "loggedIn") {
