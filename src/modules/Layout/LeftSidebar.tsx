@@ -1,23 +1,24 @@
 import { PreserveScrollAbility } from "@/components/layout/LayoutTemplate";
 import { LeftSidebarTemplate, SidebarButton } from "@/components/layout/LeftSidebarTemplate";
+import { pb } from "@/config/pocketbaseConfig";
+import { logout } from "@/modules/auth/dbAuthUtils";
+import { useCurrentUserStore } from "@/stores/authDataStore";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { usePocketBaseStore } from "../pocketBase/pocketBaseStore";
-import { useSuperUserAuthStore } from "../superUserAuth/useSuperUserAuthStore";
 
 export function LeftSidebar() {
-  const pocketBaseStore = usePocketBaseStore();
-  const superUserAuthStore = useSuperUserAuthStore();
   const router = useRouter();
   const [scrollItemIndex, setScrollItemIndex] = useState(0);
 
-  return !pocketBaseStore.data ? (
-    <></>
-  ) : (
+  const currentUserStore = useCurrentUserStore();
+
+  const isApproved = currentUserStore.data.authStatus === "loggedIn";
+
+  return (
     <PreserveScrollAbility className="w-64">
       <LeftSidebarTemplate
         top={
-          pocketBaseStore.data && (
+          isApproved && (
             <>
               <SidebarButton href="/" iconName="Home" isHighlighted={router.pathname === "/"}>
                 Home
@@ -43,23 +44,10 @@ export function LeftSidebar() {
           </SidebarButton>
         ))}
         bottom={
-          pocketBaseStore.data && (
+          currentUserStore.data.authStatus === "loggedIn" && (
             <>
-              {superUserAuthStore.data && (
-                <SidebarButton
-                  iconName="LogOut"
-                  isHighlighted={false}
-                  onClick={() => pocketBaseStore.logout()}
-                >
-                  Log Out
-                </SidebarButton>
-              )}
-              <SidebarButton
-                iconName="Unplug"
-                isHighlighted={false}
-                onClick={() => pocketBaseStore.clear()}
-              >
-                Disconnect
+              <SidebarButton iconName="LogOut" isHighlighted={false} onClick={() => logout({ pb })}>
+                Log Out
               </SidebarButton>
             </>
           )

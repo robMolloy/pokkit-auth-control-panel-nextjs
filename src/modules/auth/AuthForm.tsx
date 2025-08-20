@@ -10,9 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { AuthSignin } from "./AuthSignin";
 import { AuthSignup } from "./AuthSignup";
-import { PocketBase } from "../pocketBase/pocketBaseHelpers";
 
-export function AuthForm(p: { pb: PocketBase }) {
+export function AuthForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -49,10 +48,10 @@ export function AuthForm(p: { pb: PocketBase }) {
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
           <TabsContent value="signin">
-            <AuthSignin onSignIn={handleAuthResult} pb={p.pb} />
+            <AuthSignin />
           </TabsContent>
           <TabsContent value="signup">
-            <AuthSignup onSignUp={handleAuthResult} pb={p.pb} />
+            <AuthSignup onSignUp={handleAuthResult} />
           </TabsContent>
         </Tabs>
       </CardContent>

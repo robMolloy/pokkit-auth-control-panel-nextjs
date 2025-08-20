@@ -1,17 +1,13 @@
-import { MainLayout } from "@/components/layout/LayoutTemplate";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { H1 } from "@/components/ui/defaultComponents";
 import { TextInput } from "@/components/ui/input";
+import { PocketBase } from "@/config/pocketbaseConfig";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useState } from "react";
-import { PocketBase } from "../pocketBase/pocketBaseHelpers";
-import { useSuperUserAuthStore } from "./useSuperUserAuthStore";
-import { Button } from "@/components/ui/button";
-import { superUserLogin } from "./dbSuperUserHelpers";
+import { superuserLogin } from "./dbSuperusersUtils";
 
 export const SuperUserAuthForm = (p: { pb: PocketBase }) => {
-  const superUserAuthStore = useSuperUserAuthStore();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -29,8 +25,7 @@ export const SuperUserAuthForm = (p: { pb: PocketBase }) => {
 
             setIsLoading(true);
 
-            const resp = await superUserLogin({ pb: p.pb, username, password });
-            if (resp.success) superUserAuthStore.setData(resp.data);
+            await superuserLogin({ pb: p.pb, username, password });
 
             setIsLoading(false);
           }}
@@ -60,17 +55,5 @@ export const SuperUserAuthForm = (p: { pb: PocketBase }) => {
         </form>
       </CardContent>
     </Card>
-  );
-};
-
-export const SuperUserAuthScreen = (p: { pb: PocketBase }) => {
-  return (
-    <MainLayout>
-      <div className="mt-16 flex justify-center">
-        <div className="w-[400px]">
-          <SuperUserAuthForm pb={p.pb} />
-        </div>
-      </div>
-    </MainLayout>
   );
 };

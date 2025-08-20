@@ -1,43 +1,55 @@
 import { LayoutTemplate } from "@/components/layout/LayoutTemplate";
+import { pb } from "@/config/pocketbaseConfig";
+import { useInitAuth } from "@/modules/auth/useInitAuth";
 import { Header } from "@/modules/Layout/Header";
 import { LeftSidebar } from "@/modules/Layout/LeftSidebar";
-import { useAuthSync, usePocketBaseStore } from "@/modules/pocketBase/pocketBaseStore";
-import { PocketBaseScreen } from "@/modules/pocketBase/screens/PocketBaseScreen";
-import { SuperUserAuthScreen } from "@/modules/superUserAuth/SuperUserAuthScreen";
-import { useSuperUserAuthStore } from "@/modules/superUserAuth/useSuperUserAuthStore";
-// import { SuperUserAuthScreen } from "@/modules/superUserAuth/SuperUserAuthScreen";
-// import { useSuperUserAuthStore } from "@/modules/superUserAuth/useSuperUserAuthStore";
-import { LoadingScreen } from "@/screens/LoadingScreen";
+import { SuperUserAuthScreen } from "@/modules/superusers/SuperUserAuthScreen";
 
+import { LoadingScreen } from "@/screens/LoadingScreen";
+import { useCurrentUserStore } from "@/stores/authDataStore";
 import { useThemeStore } from "@/stores/themeStore";
 import "@/styles/globals.css";
 import "@/styles/markdown.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const pocketBaseStore = usePocketBaseStore();
-  const superUserAuthStore = useSuperUserAuthStore();
   const themeStore = useThemeStore();
-  useAuthSync();
-
-  useEffect(() => {
-    pocketBaseStore.init();
-  }, []);
+  const currentUserStore = useCurrentUserStore();
 
   themeStore.useThemeStoreSideEffect();
+
+  useInitAuth({
+    onIsLoading: () => {},
+    onIsLoggedIn: () => {},
+    onIsLoggedOut: () => {},
+  });
 
   return (
     <>
       <Head>
-        <title>pokkit auth-control-panel</title>
+        <title>pokkit Starter</title>
       </Head>
-      <LayoutTemplate Header={<Header />} LeftSidebar={<LeftSidebar />}>
+      <LayoutTemplate
+        Header={<Header />}
+        LeftSidebar={currentUserStore.data.authStatus === "loggedIn" && <LeftSidebar />}
+      >
         {(() => {
-          if (pocketBaseStore.data === undefined) return <LoadingScreen />;
-          if (pocketBaseStore.data === null) return <PocketBaseScreen />;
-          if (!superUserAuthStore.data) return <SuperUserAuthScreen pb={pocketBaseStore.data} />;
+          if (currentUserStore.data.authStatus === "loading") return <LoadingScreen />;
+
+          if (currentUserStore.data.authStatus === "loggedOut")
+            return <SuperUserAuthScreen pb={pb} />;
+
+          // should not be required
+          if (currentUserStore.data.authStatus !== "loggedIn") {
+            console.error(`this line should never be hit`);
+            return;
+          }
+
+          // if (currentUserStore.data.user.status === "pending") return <AwaitingApprovalScreen />;
+
+          // if (currentUserStore.data.user.status === "blocked") return <BlockedScreen />;
+
           return <Component {...pageProps} />;
         })()}
       </LayoutTemplate>

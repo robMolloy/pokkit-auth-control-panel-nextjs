@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { pb } from "@/config/pocketbaseConfig";
 import { useState } from "react";
-import { PocketBase } from "../pocketBase/pocketBaseHelpers";
 
-export const AuthSignup = (p: {
-  pb: PocketBase;
+interface AuthSignupProps {
   onSignUp: (success: boolean, message: string) => void;
-}) => {
+}
+
+export function AuthSignup({ onSignUp }: AuthSignupProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [name, setName] = useState("");
@@ -21,13 +22,13 @@ export const AuthSignup = (p: {
     setIsLoading(true);
 
     if (password !== confirmPassword) {
-      p.onSignUp(false, "Passwords do not match");
+      onSignUp(false, "Passwords do not match");
       setIsLoading(false);
       return;
     }
 
     try {
-      await p.pb.collection("users").create({
+      await pb.collection("users").create({
         name,
         email,
         status: "pending",
@@ -38,12 +39,12 @@ export const AuthSignup = (p: {
       });
 
       // After creating the user, log them in
-      await p.pb.collection("users").authWithPassword(email, password);
-      p.onSignUp(true, "Account created successfully!");
+      await pb.collection("users").authWithPassword(email, password);
+      onSignUp(true, "Account created successfully!");
     } catch (e: unknown) {
       const error = e as { message: string };
       console.error("Sign up error:", error);
-      p.onSignUp(false, error.message ?? "Failed to create account. Please try again.");
+      onSignUp(false, error.message ?? "Failed to create account. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -104,4 +105,4 @@ export const AuthSignup = (p: {
       </Button>
     </form>
   );
-};
+}

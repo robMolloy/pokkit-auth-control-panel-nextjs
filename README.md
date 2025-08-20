@@ -1,6 +1,6 @@
-## Pokkit auth-control-panel
+## Pokkit Starter
 
-This is a auth-control-panel project for Pokkit. It is a NextJS app with a TS server and a Pocketbase instance that provides a control panel for pokkit auth.
+This is a starter project for Pokkit. It is a NextJS app with a TS server and a Pocketbase instance. It can be used as a starting point for your own Pokkit project - a fast reliable way to prototype your ideas .
 
 ## Dev Setup
 

@@ -1,62 +1,47 @@
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { pb } from "@/config/pocketbaseConfig";
 import { useState } from "react";
-import { PocketBase } from "../pocketBase/pocketBaseHelpers";
+import { superuserLogin } from "../superusers/dbSuperusersUtils";
 
-export const AuthSignin = (p: {
-  pb: PocketBase;
-  onSignIn: (success: boolean, message: string) => void;
-}) => {
+export function AuthSignin() {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (isLoading) return;
-    setIsLoading(true);
-
-    try {
-      await p.pb.collection("users").authWithPassword(email, password);
-      p.onSignIn(true, "Successfully signed in!");
-    } catch (err) {
-      console.error("Sign in error:", err);
-      p.onSignIn(false, "Invalid email or password. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <form onSubmit={handleSignIn} className="flex flex-col gap-4">
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={async (e) => {
+        e.preventDefault();
+
+        setIsLoading(true);
+
+        const resp = await superuserLogin({ pb, username, password });
+        console.log(`AuthSignin.tsx:${/*LL*/ 47}`, resp);
+
+        setIsLoading(false);
+      }}
+    >
       <div>
-        <Label htmlFor="email">Email</Label>
-        <TextInput
-          value={email}
-          onInput={setEmail}
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Enter your email"
-          required
-        />
+        <Label>SuperUser username</Label>
+        <TextInput value={username} onInput={(x) => setUsername(x)} placeholder="admin@admin.com" />
       </div>
       <div>
-        <Label htmlFor="password">Password</Label>
+        <Label>SuperUser password</Label>
         <TextInput
-          value={password}
-          onInput={setPassword}
-          id="password"
-          name="password"
           type="password"
-          placeholder="Enter your password"
-          required
+          value={password}
+          onInput={(x) => setPassword(x)}
+          placeholder="Password"
         />
       </div>
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Signing in..." : "Sign In"}
-      </Button>
+      <div className="flex justify-end">
+        <Button type="submit" disabled={isLoading}>
+          Submit
+        </Button>
+      </div>
     </form>
   );
-};
+}
