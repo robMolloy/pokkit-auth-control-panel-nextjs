@@ -19,7 +19,7 @@ export const SuperUserAuthForm = (p: { pb: PocketBase }) => {
   return (
     <Card>
       <CardHeader>
-        <H1>PocketBase Instance</H1>
+        <H1>SuperUser Sign In</H1>
       </CardHeader>
       <CardContent>
         <form
@@ -36,7 +36,7 @@ export const SuperUserAuthForm = (p: { pb: PocketBase }) => {
           }}
         >
           <div>
-            <Label>Superuser username</Label>
+            <Label>SuperUser username</Label>
             <TextInput
               value={username}
               onInput={(x) => setUsername(x)}
@@ -44,7 +44,7 @@ export const SuperUserAuthForm = (p: { pb: PocketBase }) => {
             />
           </div>
           <div>
-            <Label>Superuser password</Label>
+            <Label>SuperUser password</Label>
             <TextInput
               type="password"
               value={password}
