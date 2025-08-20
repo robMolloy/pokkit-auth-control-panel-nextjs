@@ -4,11 +4,9 @@ import { pb } from "@/config/pocketbaseConfig";
 import { logout } from "@/modules/auth/dbAuthUtils";
 import { useCurrentUserStore } from "@/stores/authDataStore";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 export function LeftSidebar() {
   const router = useRouter();
-  const [scrollItemIndex, setScrollItemIndex] = useState(0);
 
   const currentUserStore = useCurrentUserStore();
 
@@ -26,16 +24,6 @@ export function LeftSidebar() {
             </>
           )
         }
-        middle={[...Array(100)].map((_, j) => (
-          <SidebarButton
-            iconName="Ban"
-            key={j}
-            isHighlighted={j === scrollItemIndex}
-            onClick={() => setScrollItemIndex(j)}
-          >
-            do summit {j} {j === scrollItemIndex && <>(selected)</>}
-          </SidebarButton>
-        ))}
         bottom={
           currentUserStore.data.authStatus === "loggedIn" && (
             <>
