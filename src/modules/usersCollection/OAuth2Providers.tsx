@@ -1,3 +1,4 @@
+import { CustomIcon } from "@/components/CustomIcon";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { PocketBase } from "@/config/pocketbaseConfig";
@@ -56,7 +57,7 @@ export const OAuth2ProviderForm = (p: {
           if (resp.success) p.onUsersCollectionUpdate(resp.data);
         }}
       >
-        Remove
+        <CustomIcon iconName="Trash2" size="lg" />
       </Button>
     </form>
   );
