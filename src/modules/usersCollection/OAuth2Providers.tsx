@@ -9,10 +9,11 @@ import {
   TUsersCollection,
 } from "@/modules/usersCollection/pbUsersCollectionHelpers";
 import { useState } from "react";
+import { OAuth2ProviderImage, providerNames, TProviderName } from "./OAuth2ProviderImage";
 
 export const OAuth2ProviderForm = (p: {
   pb: PocketBase;
-  providerName: string;
+  providerName: TProviderName;
   usersCollection: TUsersCollection;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
@@ -32,7 +33,9 @@ export const OAuth2ProviderForm = (p: {
         if (resp.success) p.onUsersCollectionUpdate(resp.data);
       }}
     >
-      <div>{p.providerName}</div>
+      <div>
+        <OAuth2ProviderImage providerName={p.providerName} />
+      </div>
       <div>
         <label htmlFor={`${p.providerName}-client-id-input`}>client id</label>
         <TextInput value={clientId} onInput={(x) => setClientId(x)} placeholder="enter client id" />
@@ -70,18 +73,15 @@ export const OAuth2Providers = (p: {
 }) => {
   return (
     <div className="flex flex-col gap-2">
-      <OAuth2ProviderForm
-        pb={p.pb}
-        providerName="google"
-        usersCollection={p.usersCollection}
-        onUsersCollectionUpdate={(x) => p.onUsersCollectionUpdate(x)}
-      />
-      <OAuth2ProviderForm
-        pb={p.pb}
-        providerName="twitter"
-        usersCollection={p.usersCollection}
-        onUsersCollectionUpdate={(x) => p.onUsersCollectionUpdate(x)}
-      />
+      {providerNames.map((x) => (
+        <OAuth2ProviderForm
+          key={x}
+          pb={p.pb}
+          providerName={x}
+          usersCollection={p.usersCollection}
+          onUsersCollectionUpdate={(x) => p.onUsersCollectionUpdate(x)}
+        />
+      ))}
     </div>
   );
 };

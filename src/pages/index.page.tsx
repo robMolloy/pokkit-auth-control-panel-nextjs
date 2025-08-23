@@ -1,14 +1,13 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
-import { OAuth2Providers } from "@/modules/usersCollection/OAuth2Providers";
 import { EnableUsersCollectionOauth2Toggle } from "@/modules/usersCollection/EnableUsersCollectionOauth2Toggle";
+import { OAuth2Providers } from "@/modules/usersCollection/OAuth2Providers";
 import {
   getUsersCollection,
   TUsersCollection,
 } from "@/modules/usersCollection/pbUsersCollectionHelpers";
 import { useEffect, useState } from "react";
-import { OAuth2ProviderImage, providerNames } from "@/modules/usersCollection/OAuth2ProviderImage";
 
 export default function Home() {
   const [usersCollection, setUsersCollection] = useState<TUsersCollection>();
