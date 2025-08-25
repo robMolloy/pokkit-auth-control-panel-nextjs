@@ -1,5 +1,4 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
-import { AuthCollectionModel } from "pocketbase";
 import { z } from "zod";
 
 const collectionName = "users";
@@ -16,10 +15,43 @@ const usersCollectionSchema = z.object({
   }),
 });
 
-type TOAuth2Provider = AuthCollectionModel["oauth2"]["providers"][number];
-type TOAuth2ProviderSeed = Pick<TOAuth2Provider, "name" | "clientId" | "clientSecret">;
-
 export type TUsersCollection = z.infer<typeof usersCollectionSchema>;
+export type TOAuth2Provider = TUsersCollection["oauth2"]["providers"][number];
+type TOAuth2ProviderSeed = Pick<TOAuth2Provider, "name" | "clientId"> & { clientSecret: string };
+
+export const providerNames = [
+  "apple",
+  "google",
+  "microsoft",
+  "yandex",
+  "facebook",
+  "instagram",
+  "github",
+  "gitlab",
+  "bitbucket",
+  "gitee",
+  "gitea",
+  "discord",
+  "twitter",
+  "kakao",
+  "vk",
+  "linear",
+  "notion",
+  "monday",
+  "box",
+  "spotify",
+  "trakt",
+  "twitch",
+  "patreon",
+  "strava",
+  "wakatime",
+  "livechat",
+  "mailcow",
+  "planningcenter",
+  "oidc",
+] as const;
+
+export type TOAuth2ProviderName = (typeof providerNames)[number];
 
 export const getUsersCollection = async (p: { pb: PocketBase }) => {
   try {
