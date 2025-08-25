@@ -33,7 +33,7 @@ export const OAuth2ProviderForm = (p: {
         e.preventDefault();
         const resp = await addUsersCollectionOAuth2Provider({
           pb: p.pb,
-          provider: { name: p.providerName.toLowerCase(), clientId, clientSecret },
+          provider: { name: p.providerName, clientId, clientSecret },
           usersCollection: p.usersCollection,
         });
         if (resp.success) p.onUsersCollectionUpdate(resp.data);
@@ -63,7 +63,7 @@ export const OAuth2ProviderForm = (p: {
             onClick={async () => {
               const resp = await removeUsersCollectionOAuth2Provider({
                 pb: p.pb,
-                providerName: p.providerName.toLowerCase(),
+                providerName: p.providerName,
                 usersCollection: p.usersCollection,
               });
               if (resp.success) p.onUsersCollectionUpdate(resp.data);
@@ -118,7 +118,7 @@ export const OAuth2ProviderFormCard = (p: {
   );
 };
 
-export const OAuth2Providers = (p: {
+export const OAuth2ProvidersFormCards = (p: {
   pb: PocketBase;
   usersCollection: TUsersCollection;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;

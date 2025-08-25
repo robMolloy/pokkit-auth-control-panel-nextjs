@@ -2,7 +2,7 @@ import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
 import { EnableUsersCollectionOauth2Toggle } from "@/modules/usersCollection/EnableUsersCollectionOauth2Toggle";
-import { OAuth2Providers } from "@/modules/usersCollection/OAuth2Providers";
+import { OAuth2ProvidersFormCards } from "@/modules/usersCollection/OAuth2ProviderFormCards";
 import {
   getUsersCollection,
   TUsersCollection,
@@ -34,7 +34,7 @@ export default function Home() {
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
           />
           <br />
-          <OAuth2Providers
+          <OAuth2ProvidersFormCards
             pb={pb}
             usersCollection={usersCollection}
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
