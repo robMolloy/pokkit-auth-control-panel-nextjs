@@ -56,11 +56,13 @@ export const addUsersCollectionOAuth2Provider = async (p: {
   provider: TOAuth2ProviderSeed;
   usersCollection: TUsersCollection;
 }) => {
+  const providers = p.usersCollection.oauth2.providers;
+  const filteredProviders = providers.filter((x) => x.name !== p.provider.name);
+  const newProviders = [...filteredProviders, p.provider];
+
   try {
     const collection = await p.pb.collections.update(collectionName, {
-      oauth2: {
-        providers: [...p.usersCollection.oauth2.providers, p.provider],
-      },
+      oauth2: { providers: newProviders },
     });
 
     return usersCollectionSchema.safeParse(collection);
@@ -75,7 +77,6 @@ export const removeUsersCollectionOAuth2Provider = async (p: {
 }) => {
   const providers = p.usersCollection.oauth2.providers;
   const newProviders = providers.filter((x) => x.name !== p.providerName);
-  console.log(`index.page.tsx:${/*LL*/ 33}`, { providers, newProviders });
   try {
     const collection = await p.pb.collections.update(collectionName, {
       oauth2: { providers: newProviders },

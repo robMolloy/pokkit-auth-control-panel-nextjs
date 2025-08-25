@@ -30,6 +30,7 @@ import {
   Monitor,
   X,
   Check,
+  CheckCircleIcon,
   Circle,
   MoreVertical,
   Upload,
@@ -41,6 +42,7 @@ import {
 } from "lucide-react";
 
 const iconMap = {
+  CheckCircleIcon,
   Ban,
   Clock,
   ChevronDown,
@@ -96,9 +98,10 @@ export const CustomIcon = (p: {
   iconName: keyof typeof iconMap;
   size: keyof typeof iconSizeClass;
   className?: string;
+  color?: string;
 }) => {
   const Icon = iconMap[p.iconName];
   const sizeClass = iconSizeClass[p.size];
 
-  return <Icon className={cn(sizeClass, p.className)} />;
+  return <Icon color={p.color} className={cn(sizeClass, p.className)} />;
 };

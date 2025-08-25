@@ -41,7 +41,6 @@ export default function Home() {
           />
         </>
       )}
-      <pre>{JSON.stringify(usersCollection?.oauth2.providers, undefined, 2)}</pre>
     </MainLayout>
   );
 }
