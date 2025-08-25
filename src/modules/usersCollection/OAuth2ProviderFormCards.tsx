@@ -89,7 +89,7 @@ export const OAuth2ProviderFormCard = (p: {
     <Card className="p-0">
       <CardContent className="p-0">
         <Accordion type="single" collapsible className="w-full px-6">
-          <AccordionItem value="item-1">
+          <AccordionItem value={p.providerName}>
             <AccordionTrigger className="flex justify-start gap-4">
               <OAuth2ProviderImage providerName={p.providerName} />
               <div className="flex flex-1 flex-col">
