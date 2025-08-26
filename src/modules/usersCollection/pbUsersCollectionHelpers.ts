@@ -2,8 +2,12 @@ import { PocketBase } from "@/config/pocketbaseConfig";
 import { z } from "zod";
 
 const collectionName = "users";
-const usersCollectionSchema = z.object({
+export const usersCollectionName = collectionName;
+export const usersCollectionSchema = z.object({
   created: z.string(),
+  mfa: z.object({
+    enabled: z.boolean(),
+  }),
   oauth2: z.object({
     enabled: z.boolean(),
     providers: z.array(

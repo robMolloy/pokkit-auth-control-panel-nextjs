@@ -1,6 +1,7 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
+import { EnableMfaToggle } from "@/modules/mfa/EnableMfaToggle";
 import { EnableOauth2Toggle } from "@/modules/usersCollection/EnableUsersCollectionOauth2Toggle";
 import {
   getUsersCollection,
@@ -24,7 +25,7 @@ export default function Home() {
       <H1>Welcome to pokkit auth control panel</H1>
       <br />
       {usersCollection && (
-        <>
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col">
             <EnableOauth2Toggle
               pb={pb}
@@ -35,7 +36,13 @@ export default function Home() {
               Go to oAuth2
             </Link>
           </div>
-        </>
+          <EnableMfaToggle
+            pb={pb}
+            usersCollection={usersCollection}
+            onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+          />
+          <pre>{JSON.stringify({ usersCollection }, undefined, 2)}</pre>
+        </div>
       )}
     </MainLayout>
   );

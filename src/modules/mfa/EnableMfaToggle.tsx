@@ -1,32 +1,33 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
-import { disableOAuth2, enableOAuth2 } from "./pbOAuth2";
+import { disableMfa, enableMfa } from "./pbMfa";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { TUsersCollection } from "./pbUsersCollectionHelpers";
+import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
 
-export const EnableOauth2Toggle = (p: {
+export const EnableMfaToggle = (p: {
   pb: PocketBase;
   usersCollection: TUsersCollection;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [innerValue, setInnerValue] = useState(p.usersCollection);
-  const isChecked = innerValue.oauth2.enabled;
+  const isChecked = innerValue.mfa.enabled;
 
-  useEffect(() => setInnerValue(p.usersCollection), [p.usersCollection.oauth2.enabled]);
+  useEffect(() => setInnerValue(p.usersCollection), [p.usersCollection.mfa.enabled]);
+  useEffect(() => p.onUsersCollectionUpdate(innerValue), [innerValue]);
 
   return (
     <span className="flex items-center gap-2">
       <Switch
-        id="enable-users-collection-oauth2-switch"
+        id="enable-users-collection-mfa-switch"
         disabled={isLoading}
-        checked={innerValue.oauth2.enabled}
+        checked={innerValue.mfa.enabled}
         onCheckedChange={async () => {
           if (isLoading) return;
           setIsLoading(true);
 
-          const promise = isChecked ? disableOAuth2({ pb: p.pb }) : enableOAuth2({ pb: p.pb });
+          const promise = isChecked ? disableMfa({ pb: p.pb }) : enableMfa({ pb: p.pb });
 
           const resp = await promise;
           if (resp.success) setInnerValue(resp.data);
@@ -34,7 +35,7 @@ export const EnableOauth2Toggle = (p: {
           setIsLoading(false);
         }}
       />
-      <Label htmlFor="enable-users-collection-oauth2-switch">Enable oAuth2</Label>
+      <Label htmlFor="enable-users-collection-mfa-switch">Enable MFA</Label>
     </span>
   );
 };

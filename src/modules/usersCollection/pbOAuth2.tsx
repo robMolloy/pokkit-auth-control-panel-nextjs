@@ -1,21 +1,11 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
-import { z } from "zod";
+import {
+  TUsersCollection,
+  usersCollectionName,
+  usersCollectionSchema,
+} from "./pbUsersCollectionHelpers";
 
-const collectionName = "users";
-const usersCollectionSchema = z.object({
-  created: z.string(),
-  oauth2: z.object({
-    enabled: z.boolean(),
-    providers: z.array(
-      z.object({
-        clientId: z.string(),
-        name: z.string(),
-      }),
-    ),
-  }),
-});
-
-export type TUsersCollection = z.infer<typeof usersCollectionSchema>;
+const collectionName = usersCollectionName;
 export type TOAuth2Provider = TUsersCollection["oauth2"]["providers"][number];
 type TOAuth2ProviderSeed = Pick<TOAuth2Provider, "name" | "clientId"> & { clientSecret: string };
 

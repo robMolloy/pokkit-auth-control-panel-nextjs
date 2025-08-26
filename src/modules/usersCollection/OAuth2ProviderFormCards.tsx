@@ -10,11 +10,11 @@ import {
   removeOAuth2Provider,
   TOAuth2Provider,
   TOAuth2ProviderName,
-  TUsersCollection,
 } from "@/modules/usersCollection/pbOAuth2";
 import { AccordionItem } from "@radix-ui/react-accordion";
 import { useState } from "react";
 import { OAuth2ProviderImage } from "./OAuth2ProviderImage";
+import { TUsersCollection } from "./pbUsersCollectionHelpers";
 
 export const OAuth2ProviderForm = (p: {
   pb: PocketBase;
