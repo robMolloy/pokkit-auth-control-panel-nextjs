@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
-import { EnableUsersCollectionOauth2Toggle } from "@/modules/usersCollection/EnableUsersCollectionOauth2Toggle";
+import { EnableOauth2Toggle } from "@/modules/usersCollection/EnableUsersCollectionOauth2Toggle";
 import {
   getUsersCollection,
   TUsersCollection,
@@ -26,7 +26,7 @@ export default function Home() {
       {usersCollection && (
         <>
           <div className="flex flex-col">
-            <EnableUsersCollectionOauth2Toggle
+            <EnableOauth2Toggle
               pb={pb}
               usersCollection={usersCollection}
               onUsersCollectionUpdate={(x) => setUsersCollection(x)}

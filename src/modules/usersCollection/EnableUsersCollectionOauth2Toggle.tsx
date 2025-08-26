@@ -1,14 +1,10 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
-import {
-  disableUsersCollectionOAuth2,
-  enableUsersCollectionOAuth2,
-  TUsersCollection,
-} from "./pbUsersCollectionHelpers";
+import { disableOAuth2, enableOAuth2, TUsersCollection } from "./pbOAuth2";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
-export const EnableUsersCollectionOauth2Toggle = (p: {
+export const EnableOauth2Toggle = (p: {
   pb: PocketBase;
   usersCollection: TUsersCollection;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
@@ -29,9 +25,7 @@ export const EnableUsersCollectionOauth2Toggle = (p: {
           if (isLoading) return;
           setIsLoading(true);
 
-          const promise = isChecked
-            ? disableUsersCollectionOAuth2({ pb: p.pb })
-            : enableUsersCollectionOAuth2({ pb: p.pb });
+          const promise = isChecked ? disableOAuth2({ pb: p.pb }) : enableOAuth2({ pb: p.pb });
 
           const resp = await promise;
           if (resp.success) setInnerValue(resp.data);

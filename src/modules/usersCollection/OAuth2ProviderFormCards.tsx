@@ -5,13 +5,13 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { TextInput } from "@/components/ui/input";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import {
-  addUsersCollectionOAuth2Provider,
-  providerNames,
-  removeUsersCollectionOAuth2Provider,
+  addOAuth2Provider,
+  oAuth2ProviderNames,
+  removeOAuth2Provider,
   TOAuth2Provider,
   TOAuth2ProviderName,
   TUsersCollection,
-} from "@/modules/usersCollection/pbUsersCollectionHelpers";
+} from "@/modules/usersCollection/pbOAuth2";
 import { AccordionItem } from "@radix-ui/react-accordion";
 import { useState } from "react";
 import { OAuth2ProviderImage } from "./OAuth2ProviderImage";
@@ -31,7 +31,7 @@ export const OAuth2ProviderForm = (p: {
       className="p-1"
       onSubmit={async (e) => {
         e.preventDefault();
-        const resp = await addUsersCollectionOAuth2Provider({
+        const resp = await addOAuth2Provider({
           pb: p.pb,
           provider: { name: p.providerName, clientId, clientSecret },
           usersCollection: p.usersCollection,
@@ -61,7 +61,7 @@ export const OAuth2ProviderForm = (p: {
           <Button
             variant="destructive"
             onClick={async () => {
-              const resp = await removeUsersCollectionOAuth2Provider({
+              const resp = await removeOAuth2Provider({
                 pb: p.pb,
                 providerName: p.providerName,
                 usersCollection: p.usersCollection,
@@ -125,7 +125,7 @@ export const OAuth2ProvidersFormCards = (p: {
 }) => {
   return (
     <div className="flex flex-col gap-2">
-      {providerNames.map((x) => (
+      {oAuth2ProviderNames.map((x) => (
         <OAuth2ProviderFormCard
           key={x}
           pb={p.pb}
