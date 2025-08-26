@@ -21,11 +21,7 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <H1>Welcome to pokkit auth control panel</H1>
-      <br />
-      <p className="text-muted-foreground">
-        This is your dashboard. Start adding your content here.
-      </p>
+      <H1>oAuth2</H1>
       {usersCollection && (
         <>
           <EnableUsersCollectionOauth2Toggle
