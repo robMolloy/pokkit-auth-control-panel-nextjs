@@ -4,6 +4,7 @@ import { disableMfa, enableMfa } from "./pbMfa";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
+import { toast } from "sonner";
 
 export const EnableMfaToggle = (p: {
   pb: PocketBase;
@@ -31,6 +32,7 @@ export const EnableMfaToggle = (p: {
 
           const resp = await promise;
           if (resp.success) setInnerValue(resp.data);
+          if (!resp.success) toast(resp.error.message);
 
           setIsLoading(false);
         }}

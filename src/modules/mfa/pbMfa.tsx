@@ -13,8 +13,16 @@ export const enableMfa = async (p: { pb: PocketBase }) => {
   } catch (error) {
     const errorSchema = z.object({
       message: z.string().optional(),
-      mfa: z
-        .object({ enabled: z.object({ message: z.string().optional() }).optional() })
+      response: z
+        .object({
+          data: z
+            .object({
+              mfa: z
+                .object({ enabled: z.object({ message: z.string().optional() }).optional() })
+                .optional(),
+            })
+            .optional(),
+        })
         .optional(),
     });
 
@@ -23,10 +31,10 @@ export const enableMfa = async (p: { pb: PocketBase }) => {
       success: false,
       error: (() => {
         const message = parsed.success
-          ? (parsed.data.mfa?.enabled?.message ?? parsed.data.message)
-          : null;
+          ? (parsed.data.response?.data?.mfa?.enabled?.message ?? parsed.data.message)
+          : "Enable MFA unsuccessful";
 
-        return message ? { message } : error;
+        return { message };
       })(),
     } as const;
   }
@@ -42,8 +50,16 @@ export const disableMfa = async (p: { pb: PocketBase }) => {
   } catch (error) {
     const errorSchema = z.object({
       message: z.string().optional(),
-      mfa: z
-        .object({ enabled: z.object({ message: z.string().optional() }).optional() })
+      response: z
+        .object({
+          data: z
+            .object({
+              mfa: z
+                .object({ enabled: z.object({ message: z.string().optional() }).optional() })
+                .optional(),
+            })
+            .optional(),
+        })
         .optional(),
     });
 
@@ -52,10 +68,10 @@ export const disableMfa = async (p: { pb: PocketBase }) => {
       success: false,
       error: (() => {
         const message = parsed.success
-          ? (parsed.data.mfa?.enabled?.message ?? parsed.data.message)
-          : null;
+          ? (parsed.data.response?.data?.mfa?.enabled?.message ?? parsed.data.message)
+          : "Disable MFA unsuccessful";
 
-        return message ? { message } : error;
+        return { message };
       })(),
     } as const;
   }
