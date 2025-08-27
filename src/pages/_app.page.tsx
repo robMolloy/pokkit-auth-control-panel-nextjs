@@ -1,4 +1,5 @@
 import { LayoutTemplate } from "@/components/layout/LayoutTemplate";
+import { Toaster } from "@/components/ui/sonner";
 import { pb } from "@/config/pocketbaseConfig";
 import { Header } from "@/modules/Layout/Header";
 import { LeftSidebar } from "@/modules/Layout/LeftSidebar";
@@ -34,6 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
         Header={<Header />}
         LeftSidebar={currentUserStore.data.authStatus === "loggedIn" && <LeftSidebar />}
       >
+        <Toaster />
         {(() => {
           if (currentUserStore.data.authStatus === "loading") return <LoadingScreen />;
 
