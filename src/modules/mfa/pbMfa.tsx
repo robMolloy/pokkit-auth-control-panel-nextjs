@@ -5,35 +5,48 @@ import {
 } from "../usersCollection/pbUsersCollectionHelpers";
 import { z } from "zod";
 
+const outerSchema = z.record(z.string(), z.unknown());
+// const innerSchema = outerSchema;
+const messageObjSchema = z.object({ message: z.string() });
+
 const extractMessageFromPbError = (p: { error: unknown }) => {
-  const messages: string[] = [];
   const errorSchema1 = z.object({
     message: z.string().optional(),
     response: z.object({
-      data: z.record(z.string(), z.unknown()).transform((x1) => {
-        const values = Object.values(x1);
-        values.forEach((value) => {
-          const schema2 = z.record(z.string(), z.unknown());
-          const parsed2 = schema2.safeParse(value);
-          if (!parsed2.success) return;
+      data: z.record(z.string(), z.unknown()).transform((outerObj) => {
+        const messages: string[] = [];
 
-          const values2 = Object.values(parsed2.data);
-          values2.forEach((x2) => {
-            const schema3 = z.object({ message: z.string() });
-            const parsed3 = schema3.safeParse(x2);
-            if (!parsed3.success) return;
-            messages.push(parsed3.data.message);
+        Object.values(outerObj)
+          .map((outerValue) => {
+            const outerParsed = outerSchema.safeParse(outerValue);
+            return outerParsed.success ? outerParsed.data : null;
+          })
+          .filter((val) => !!val)
+          .map((outerValue) => {
+            return Object.values(outerValue)
+              .map((messageObj) => {
+                const messageObjParsed = messageObjSchema.safeParse(messageObj);
+                return messageObjParsed.success ? messageObjParsed.data : null;
+              })
+              .filter((val) => !!val);
+          })
+          .forEach((outerValue) => {
+            outerValue.forEach((messageObj) => {
+              messages.push(messageObj.message);
+            });
           });
-        });
+
+        return { messages };
       }),
     }),
   });
   const parsed1 = errorSchema1.safeParse(p.error);
-  console.log(parsed1);
 
   if (!parsed1.success) return;
 
-  if (messages.length === 0) undefined;
+  const initMessages = parsed1.data.response.data.messages;
+  const messages = [parsed1.data.message, ...initMessages].filter((x) => !!x);
+  if (messages.length === 0) return;
   return messages;
 };
 
