@@ -5,6 +5,9 @@ const collectionName = "users";
 export const usersCollectionName = collectionName;
 export const usersCollectionSchema = z.object({
   created: z.string(),
+  authAlert: z.object({
+    enabled: z.boolean(),
+  }),
   mfa: z.object({
     enabled: z.boolean(),
   }),
