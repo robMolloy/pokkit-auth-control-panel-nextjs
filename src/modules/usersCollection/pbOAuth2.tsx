@@ -4,6 +4,7 @@ import {
   usersCollectionName,
   usersCollectionSchema,
 } from "./pbUsersCollectionHelpers";
+import { extractMessageFromPbError } from "../utils/pbUtils";
 
 const collectionName = usersCollectionName;
 export type TOAuth2Provider = TUsersCollection["oauth2"]["providers"][number];
@@ -46,9 +47,21 @@ export type TOAuth2ProviderName = (typeof oAuth2ProviderNames)[number];
 export const enableOAuth2 = async (p: { pb: PocketBase }) => {
   try {
     const collection = await p.pb.collections.update(collectionName, { oauth2: { enabled: true } });
-    return usersCollectionSchema.safeParse(collection);
+
+    const data = usersCollectionSchema.parse(collection);
+    return { success: true, data } as const;
   } catch (error) {
-    return { success: false, error } as const;
+    const messagesResp = extractMessageFromPbError({ error });
+
+    return {
+      success: false,
+      error: (() => {
+        const fallback = "Ensable oAuth2 unsuccessful";
+        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+
+        return { messages };
+      })(),
+    } as const;
   }
 };
 
@@ -58,9 +71,20 @@ export const disableOAuth2 = async (p: { pb: PocketBase }) => {
       oauth2: { enabled: false },
     });
 
-    return usersCollectionSchema.safeParse(collection);
+    const data = usersCollectionSchema.parse(collection);
+    return { success: true, data } as const;
   } catch (error) {
-    return { success: false, error } as const;
+    const messagesResp = extractMessageFromPbError({ error });
+
+    return {
+      success: false,
+      error: (() => {
+        const fallback = "Disable oAuth2 unsuccessful";
+        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+
+        return { messages };
+      })(),
+    } as const;
   }
 };
 
