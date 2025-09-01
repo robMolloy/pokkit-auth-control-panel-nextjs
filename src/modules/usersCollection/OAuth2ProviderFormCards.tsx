@@ -92,7 +92,7 @@ export const OAuth2ProviderFormCard = (p: {
           <AccordionItem value={p.providerName}>
             <AccordionTrigger className="flex justify-start gap-4">
               <OAuth2ProviderImage providerName={p.providerName} />
-              <div className="flex flex-1 flex-col">
+              <div className="flex flex-1 flex-col gap-2">
                 <CardTitle className="flex gap-4">
                   {p.providerName}
                   {isEnabled && <CustomIcon iconName="CheckCircleIcon" size="md" color="green" />}
