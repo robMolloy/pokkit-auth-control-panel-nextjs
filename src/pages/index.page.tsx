@@ -2,6 +2,7 @@ import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
 import { EnableMfaToggle } from "@/modules/mfa/EnableMfaToggle";
+import { EnableOtpToggle } from "@/modules/otp/EnableOtpToggle";
 import { EnableOauth2Toggle } from "@/modules/usersCollection/EnableUsersCollectionOauth2Toggle";
 import {
   getUsersCollection,
@@ -37,6 +38,11 @@ export default function Home() {
             </Link>
           </div>
           <EnableMfaToggle
+            pb={pb}
+            usersCollection={usersCollection}
+            onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+          />
+          <EnableOtpToggle
             pb={pb}
             usersCollection={usersCollection}
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}

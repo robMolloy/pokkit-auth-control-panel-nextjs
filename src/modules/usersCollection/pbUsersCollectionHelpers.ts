@@ -8,6 +8,9 @@ export const usersCollectionSchema = z.object({
   mfa: z.object({
     enabled: z.boolean(),
   }),
+  otp: z.object({
+    enabled: z.boolean(),
+  }),
   oauth2: z.object({
     enabled: z.boolean(),
     providers: z.array(
