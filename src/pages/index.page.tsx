@@ -59,7 +59,7 @@ export default function Home() {
             usersCollection={usersCollection}
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
           />
-          <pre>{JSON.stringify({ usersCollection }, undefined, 2)}</pre>
+          {/* <pre>{JSON.stringify({ usersCollection }, undefined, 2)}</pre> */}
         </div>
       )}
     </MainLayout>
