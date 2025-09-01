@@ -28,11 +28,30 @@ export const EnableMfaToggle = (p: {
           if (isLoading) return;
           setIsLoading(true);
 
-          const promise = isChecked ? disableMfa({ pb: p.pb }) : enableMfa({ pb: p.pb });
+          await (async () => {
+            const resp1 = await disableMfa({ pb: p.pb });
+            if (!resp1.success) {
+              resp1.error;
+            }
 
-          const resp = await promise;
-          if (resp.success) setInnerValue(resp.data);
-          if (!resp.success) toast(resp.error.message);
+            const promise = isChecked ? disableMfa({ pb: p.pb }) : enableMfa({ pb: p.pb });
+
+            const resp = await promise;
+            if (resp.success) return setInnerValue(resp.data);
+
+            const [message1, ...messages] = resp.error.messages;
+
+            if (!resp.success)
+              toast(message1, {
+                description: (
+                  <div>
+                    {messages.map((message) => (
+                      <div key={message}>{message}</div>
+                    ))}
+                  </div>
+                ),
+              });
+          })();
 
           setIsLoading(false);
         }}
