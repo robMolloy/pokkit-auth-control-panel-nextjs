@@ -28,6 +28,20 @@ export function LeftSidebar() {
               >
                 oAuth2
               </SidebarButton>
+              <SidebarButton
+                href="/email"
+                iconName="Home"
+                isHighlighted={router.pathname === "/email"}
+              >
+                Email
+              </SidebarButton>
+              <SidebarButton
+                href="/tokens"
+                iconName="Home"
+                isHighlighted={router.pathname === "/tokens"}
+              >
+                Tokens
+              </SidebarButton>
             </>
           )
         }
