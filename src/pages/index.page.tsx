@@ -3,6 +3,7 @@ import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
 import { EnableMfaToggle } from "@/modules/mfa/EnableMfaToggle";
 import { EnableOtpToggle } from "@/modules/otp/EnableOtpToggle";
+import { EnablePasswordAuthToggle } from "@/modules/passwordAuth/EnablePasswordAuthToggle";
 import { EnableOauth2Toggle } from "@/modules/usersCollection/EnableUsersCollectionOauth2Toggle";
 import {
   getUsersCollection,
@@ -43,6 +44,11 @@ export default function Home() {
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
           />
           <EnableOtpToggle
+            pb={pb}
+            usersCollection={usersCollection}
+            onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+          />
+          <EnablePasswordAuthToggle
             pb={pb}
             usersCollection={usersCollection}
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
