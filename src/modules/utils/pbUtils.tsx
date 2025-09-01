@@ -1,4 +1,19 @@
+import { toast } from "sonner";
 import { z } from "zod";
+
+export const handlePbErrorMessages = (messages: string[]) => {
+  const [message1, ...otherMessages] = messages;
+
+  toast(message1, {
+    description: (
+      <div>
+        {otherMessages.map((message) => (
+          <div key={message}>{message}</div>
+        ))}
+      </div>
+    ),
+  });
+};
 
 const outerSchema = z.record(z.string(), z.unknown());
 const innerSchema = outerSchema;

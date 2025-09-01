@@ -1,10 +1,10 @@
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
-import { disableMfa, enableMfa } from "./pbMfa";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { toast } from "sonner";
+import { handlePbErrorMessages } from "../utils/pbUtils";
+import { disableMfa, enableMfa } from "./pbMfa";
 
 export const EnableMfaToggle = (p: {
   pb: PocketBase;
@@ -33,17 +33,7 @@ export const EnableMfaToggle = (p: {
 
             if (resp.success) return setInnerValue(resp.data);
 
-            const [message1, ...messages] = resp.error.messages;
-
-            toast(message1, {
-              description: (
-                <div>
-                  {messages.map((message) => (
-                    <div key={message}>{message}</div>
-                  ))}
-                </div>
-              ),
-            });
+            handlePbErrorMessages(resp.error.messages);
           })();
 
           setIsLoading(false);

@@ -1,10 +1,10 @@
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
+import { handlePbErrorMessages } from "../utils/pbUtils";
 import { disableOAuth2, enableOAuth2 } from "./pbOAuth2";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { TUsersCollection } from "./pbUsersCollectionHelpers";
-import { toast } from "sonner";
 
 export const EnableOauth2Toggle = (p: {
   pb: PocketBase;
@@ -26,6 +26,7 @@ export const EnableOauth2Toggle = (p: {
         onCheckedChange={async () => {
           if (isLoading) return;
           setIsLoading(true);
+
           await (async () => {
             const resp = await (isChecked
               ? disableOAuth2({ pb: p.pb })
@@ -33,17 +34,7 @@ export const EnableOauth2Toggle = (p: {
 
             if (resp.success) return setInnerValue(resp.data);
 
-            const [message1, ...messages] = resp.error.messages;
-
-            toast(message1, {
-              description: (
-                <div>
-                  {messages.map((message) => (
-                    <div key={message}>{message}</div>
-                  ))}
-                </div>
-              ),
-            });
+            handlePbErrorMessages(resp.error.messages);
           })();
 
           setIsLoading(false);
