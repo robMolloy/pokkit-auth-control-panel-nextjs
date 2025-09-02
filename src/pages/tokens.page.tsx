@@ -2,6 +2,7 @@ import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
 import { AuthTokenDurationInputForm } from "@/modules/authToken/AuthTokenDurationInputForm";
+import { EmailChangeTokenDurationInputForm } from "@/modules/emailChangeToken/EmailChangeTokenDurationInputForm";
 import {
   getUsersCollection,
   TUsersCollection,
@@ -27,6 +28,11 @@ export default function Home() {
           <AuthTokenDurationInputForm
             pb={pb}
             value={usersCollection.authToken.duration}
+            onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+          />
+          <EmailChangeTokenDurationInputForm
+            pb={pb}
+            value={usersCollection.emailChangeToken.duration}
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
           />
         </div>

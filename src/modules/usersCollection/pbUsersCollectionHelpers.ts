@@ -11,6 +11,9 @@ export const usersCollectionSchema = z.object({
   authToken: z.object({
     duration: z.number(),
   }),
+  emailChangeToken: z.object({
+    duration: z.number(),
+  }),
   mfa: z.object({
     enabled: z.boolean(),
   }),
