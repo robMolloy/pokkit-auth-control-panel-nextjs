@@ -8,6 +8,9 @@ export const usersCollectionSchema = z.object({
   authAlert: z.object({
     enabled: z.boolean(),
   }),
+  authToken: z.object({
+    duration: z.number(),
+  }),
   mfa: z.object({
     enabled: z.boolean(),
   }),

@@ -1,5 +1,36 @@
-const Page = () => {
-  return <div>tokens Page</div>;
-};
+import { MainLayout } from "@/components/layout/LayoutTemplate";
+import { H1 } from "@/components/ui/defaultComponents";
+import { pb } from "@/config/pocketbaseConfig";
+import { AuthTokenDurationInputForm } from "@/modules/authToken/AuthTokenDurationInputForm";
+import {
+  getUsersCollection,
+  TUsersCollection,
+} from "@/modules/usersCollection/pbUsersCollectionHelpers";
+import { useEffect, useState } from "react";
 
-export default Page;
+export default function Home() {
+  const [usersCollection, setUsersCollection] = useState<TUsersCollection>();
+
+  useEffect(() => {
+    (async () => {
+      const resp = await getUsersCollection({ pb });
+      if (resp.success) setUsersCollection(resp.data);
+    })();
+  }, []);
+
+  return (
+    <MainLayout>
+      <H1>Welcome to pokkit auth control panel</H1>
+      <br />
+      {usersCollection && (
+        <div className="flex flex-col gap-4">
+          <AuthTokenDurationInputForm
+            pb={pb}
+            value={usersCollection.authToken.duration}
+            onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+          />
+        </div>
+      )}
+    </MainLayout>
+  );
+}
