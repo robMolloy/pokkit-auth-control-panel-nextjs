@@ -17,12 +17,6 @@ export const usersCollectionSchema = z.object({
   mfa: z.object({
     enabled: z.boolean(),
   }),
-  otp: z.object({
-    enabled: z.boolean(),
-  }),
-  passwordAuth: z.object({
-    enabled: z.boolean(),
-  }),
   oauth2: z.object({
     enabled: z.boolean(),
     providers: z.array(
@@ -31,6 +25,15 @@ export const usersCollectionSchema = z.object({
         name: z.string(),
       }),
     ),
+  }),
+  otp: z.object({
+    enabled: z.boolean(),
+  }),
+  passwordAuth: z.object({
+    enabled: z.boolean(),
+  }),
+  passwordResetToken: z.object({
+    duration: z.number(),
   }),
 });
 
