@@ -50,6 +50,37 @@ export const TextInput = ({
   );
 };
 
+export const NumberInput = ({
+  onInput,
+  value,
+  ...p
+}: Omit<TInputParams, "type" | "onInput" | "value"> & {
+  value: number;
+  onInput: (x: number) => void;
+}) => {
+  const [internalValue, setInternalValue] = React.useState<number>(value);
+
+  React.useEffect(() => {
+    onInput(internalValue);
+  }, [internalValue]);
+  React.useEffect(() => setInternalValue(value), [value]);
+
+  return (
+    <Input
+      {...p}
+      value={`${internalValue}`}
+      onInput={(e) => {
+        const newStr = (e.target as unknown as { value: string }).value;
+
+        const numStr = newStr.replace(/[^0-9]/g, "");
+        if (newStr !== numStr) return;
+        const num = numStr ? parseInt(numStr) : 0;
+        setInternalValue(num);
+      }}
+    />
+  );
+};
+
 export const FileInput = ({
   onInput,
   value,
