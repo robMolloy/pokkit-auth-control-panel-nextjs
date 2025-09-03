@@ -5,6 +5,7 @@ import { AuthTokenDurationInputForm } from "@/modules/authToken/AuthTokenDuratio
 import { EmailChangeTokenDurationInputForm } from "@/modules/emailChangeToken/EmailChangeTokenDurationInputForm";
 import { EmailVerificationTokenDurationInputForm } from "@/modules/EmailVerificationToken/emailVerificationTokenInputForm";
 import { PasswordResetTokenDurationInputForm } from "@/modules/passwordResetToken/passwordResetTokenInputForm";
+import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/ProtectedFileAccessToken/protectedFileAccessTokenInputForm";
 import {
   getUsersCollection,
   TUsersCollection,
@@ -45,6 +46,11 @@ export default function Home() {
           <EmailVerificationTokenDurationInputForm
             pb={pb}
             value={usersCollection.verificationToken.duration}
+            onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+          />
+          <ProtectedFileAccessTokenDurationInputForm
+            pb={pb}
+            value={usersCollection.fileToken.duration}
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
           />
         </div>
