@@ -3,6 +3,7 @@ import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
 import { AuthTokenDurationInputForm } from "@/modules/authToken/AuthTokenDurationInputForm";
 import { EmailChangeTokenDurationInputForm } from "@/modules/emailChangeToken/EmailChangeTokenDurationInputForm";
+import { EmailVerificationTokenDurationInputForm } from "@/modules/EmailVerificationToken/emailVerificationTokenInputForm";
 import { PasswordResetTokenDurationInputForm } from "@/modules/passwordResetToken/passwordResetTokenInputForm";
 import {
   getUsersCollection,
@@ -39,6 +40,11 @@ export default function Home() {
           <PasswordResetTokenDurationInputForm
             pb={pb}
             value={usersCollection.passwordResetToken.duration}
+            onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+          />
+          <EmailVerificationTokenDurationInputForm
+            pb={pb}
+            value={usersCollection.verificationToken.duration}
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
           />
         </div>

@@ -35,6 +35,9 @@ export const usersCollectionSchema = z.object({
   passwordResetToken: z.object({
     duration: z.number(),
   }),
+  verificationToken: z.object({
+    duration: z.number(),
+  }),
 });
 
 export type TUsersCollection = z.infer<typeof usersCollectionSchema>;
