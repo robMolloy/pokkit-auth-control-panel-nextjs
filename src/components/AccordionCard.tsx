@@ -7,7 +7,7 @@ export const AccordionCard = (p: {
   topLeft?: React.ReactNode;
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
-  content?: React.ReactNode;
+  children?: React.ReactNode;
 }) => {
   return (
     <Card className="p-0">
@@ -17,11 +17,11 @@ export const AccordionCard = (p: {
             <AccordionTrigger className="flex justify-start gap-4">
               {p.topLeft}
               <div className="flex flex-1 flex-col gap-2">
-                <CardTitle className="flex gap-4">{p.title}</CardTitle>
-                <div className="no-underline">{p.content}</div>
+                <CardTitle>{p.title}</CardTitle>
+                <div className="no-underline">{p.subtitle}</div>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="p-0">{p.content}</AccordionContent>
+            <AccordionContent className="p-0">{p.children}</AccordionContent>
           </AccordionItem>
         </Accordion>
       </CardContent>

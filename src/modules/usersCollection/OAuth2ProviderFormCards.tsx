@@ -1,7 +1,6 @@
+import { AccordionCard } from "@/components/AccordionCard";
 import { CustomIcon } from "@/components/CustomIcon";
-import { Accordion, AccordionContent, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { TextInput } from "@/components/ui/input";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import {
@@ -11,7 +10,6 @@ import {
   TOAuth2Provider,
   TOAuth2ProviderName,
 } from "@/modules/usersCollection/pbOAuth2";
-import { AccordionItem } from "@radix-ui/react-accordion";
 import { useState } from "react";
 import { OAuth2ProviderImage } from "./OAuth2ProviderImage";
 import { TUsersCollection } from "./pbUsersCollectionHelpers";
@@ -86,35 +84,26 @@ export const OAuth2ProviderFormCard = (p: {
 }) => {
   const isEnabled = !!p.provider;
   return (
-    <Card className="p-0">
-      <CardContent className="p-0">
-        <Accordion type="single" collapsible className="w-full px-6">
-          <AccordionItem value={p.providerName}>
-            <AccordionTrigger className="flex justify-start gap-4">
-              <OAuth2ProviderImage providerName={p.providerName} />
-              <div className="flex flex-1 flex-col gap-2">
-                <CardTitle className="flex gap-4">
-                  {p.providerName}
-                  {isEnabled && <CustomIcon iconName="CheckCircleIcon" size="md" color="green" />}
-                </CardTitle>
-                <div className="no-underline">
-                  Click to edit the settings for this oAuth2 provider
-                </div>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="p-0">
-              <OAuth2ProviderForm
-                pb={p.pb}
-                providerName={p.providerName}
-                provider={p.usersCollection.oauth2.providers.find((x) => x.name === p.providerName)}
-                usersCollection={p.usersCollection}
-                onUsersCollectionUpdate={p.onUsersCollectionUpdate}
-              />
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </CardContent>
-    </Card>
+    <AccordionCard
+      value={p.providerName}
+      topLeft={<OAuth2ProviderImage providerName={p.providerName} />}
+      title={
+        <div className="flex gap-4">
+          {p.providerName}
+          {isEnabled && <CustomIcon iconName="CheckCircleIcon" size="md" color="green" />}
+        </div>
+      }
+      subtitle={"Click to edit the settings for this oAuth2 provider"}
+      children={
+        <OAuth2ProviderForm
+          pb={p.pb}
+          providerName={p.providerName}
+          provider={p.usersCollection.oauth2.providers.find((x) => x.name === p.providerName)}
+          usersCollection={p.usersCollection}
+          onUsersCollectionUpdate={p.onUsersCollectionUpdate}
+        />
+      }
+    />
   );
 };
 
