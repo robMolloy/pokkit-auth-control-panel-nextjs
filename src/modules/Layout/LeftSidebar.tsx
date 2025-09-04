@@ -22,6 +22,13 @@ export function LeftSidebar() {
                 Home
               </SidebarButton>
               <SidebarButton
+                href="/appSettings"
+                iconName="Home"
+                isHighlighted={router.pathname === "/appSettings"}
+              >
+                App Settings
+              </SidebarButton>
+              <SidebarButton
                 href="/oauth2"
                 iconName="Home"
                 isHighlighted={router.pathname === "/oauth2"}
