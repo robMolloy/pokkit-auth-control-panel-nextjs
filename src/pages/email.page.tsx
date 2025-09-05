@@ -2,6 +2,7 @@ import { AccordionCard } from "@/components/AccordionCard";
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
 import { EmailVerificationTemplateForm } from "@/modules/EmailVerificationTemplate/emailVerificationTemplateForm";
+import { ResetPasswordTemplateForm } from "@/modules/resetPasswordTemplate/ResetPasswordTemplateForm";
 import {
   getUsersCollection,
   TUsersCollection,
@@ -21,8 +22,8 @@ const Page = () => {
   return (
     <MainLayout>
       {usersCollection && (
-        <>
-          <AccordionCard title="Email Verification Template" value="Email-Verification-Template">
+        <div className="flex flex-col gap-4">
+          <AccordionCard title="Email Verification Template" value="email-verification-template">
             <EmailVerificationTemplateForm
               pb={pb}
               subject={usersCollection.verificationTemplate.subject}
@@ -30,7 +31,16 @@ const Page = () => {
               onUsersCollectionUpdate={(x) => setUsersCollection(x)}
             />
           </AccordionCard>
-        </>
+
+          <AccordionCard title="Reset Password Template" value="reset-password-template">
+            <ResetPasswordTemplateForm
+              pb={pb}
+              subject={usersCollection.resetPasswordTemplate.subject}
+              body={usersCollection.resetPasswordTemplate.body}
+              onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+            />
+          </AccordionCard>
+        </div>
       )}
     </MainLayout>
   );
