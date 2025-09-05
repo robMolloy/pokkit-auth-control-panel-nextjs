@@ -1,6 +1,7 @@
 import { AccordionCard } from "@/components/AccordionCard";
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
+import { ConfirmEmailChangeTemplateForm } from "@/modules/confirmEmailChangeTemplate/confirmEmailChangeTemplateForm";
 import { EmailVerificationTemplateForm } from "@/modules/emailVerificationTemplate/emailVerificationTemplateForm";
 import { ResetPasswordTemplateForm } from "@/modules/resetPasswordTemplate/ResetPasswordTemplateForm";
 import {
@@ -37,6 +38,18 @@ const Page = () => {
               pb={pb}
               subject={usersCollection.resetPasswordTemplate.subject}
               body={usersCollection.resetPasswordTemplate.body}
+              onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+            />
+          </AccordionCard>
+
+          <AccordionCard
+            title="Confirm Email Change Template"
+            value="confirm-email-change-template"
+          >
+            <ConfirmEmailChangeTemplateForm
+              pb={pb}
+              subject={usersCollection.confirmEmailChangeTemplate.subject}
+              body={usersCollection.confirmEmailChangeTemplate.body}
               onUsersCollectionUpdate={(x) => setUsersCollection(x)}
             />
           </AccordionCard>

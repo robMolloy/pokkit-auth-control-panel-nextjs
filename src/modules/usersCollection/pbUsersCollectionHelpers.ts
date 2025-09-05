@@ -11,6 +11,10 @@ export const usersCollectionSchema = z.object({
   authToken: z.object({
     duration: z.number(),
   }),
+  confirmEmailChangeTemplate: z.object({
+    subject: z.string(),
+    body: z.string(),
+  }),
   emailChangeToken: z.object({
     duration: z.number(),
   }),
