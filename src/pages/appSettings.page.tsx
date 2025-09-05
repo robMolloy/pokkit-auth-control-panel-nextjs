@@ -20,7 +20,11 @@ const Page = () => {
           <AppSettingsForm
             pb={pb}
             appName={appSettings.meta.appName}
-            onAppSettingsUpdate={(x) => setAppSettings(x)}
+            appUrl={appSettings.meta.appURL}
+            onAppSettingsUpdate={(x) => {
+              console.log(x);
+              setAppSettings(x);
+            }}
           />
           <pre>{JSON.stringify({ appSettings }, undefined, 2)}</pre>
         </div>

@@ -10,12 +10,15 @@ import { TAppSettings, updateAppSettings } from "./pbAppSettings";
 export const AppSettingsForm = (p: {
   pb: PocketBase;
   appName: string;
+  appUrl: string;
   onAppSettingsUpdate: (x: TAppSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [innerAppName, setInnerAppName] = useState(p.appName);
+  const [innerAppUrl, setInnerAppUrl] = useState(p.appUrl);
 
   useEffect(() => setInnerAppName(p.appName), [p.appName]);
+  useEffect(() => setInnerAppUrl(p.appUrl), [p.appUrl]);
 
   return (
     <form
@@ -26,9 +29,12 @@ export const AppSettingsForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateAppSettings({ pb, appName: innerAppName });
+          const resp = await updateAppSettings({ pb, appName: innerAppName, appUrl: innerAppUrl });
 
-          if (resp.success) return toast("App settings updated successfully");
+          if (resp.success) {
+            p.onAppSettingsUpdate(resp.data);
+            return toast("App settings updated successfully");
+          }
 
           const errorMessages = extractMessageFromPbError(resp);
           if (errorMessages) showMultipleErrorMessagesAsToast(errorMessages);
@@ -44,6 +50,15 @@ export const AppSettingsForm = (p: {
           disabled={isLoading}
           value={innerAppName}
           onInput={(appName) => setInnerAppName(appName)}
+        />
+      </div>
+      <div>
+        <Label htmlFor="appSettings-appUrl-input">App url</Label>
+        <TextInput
+          id="appSettings-appUrl-input"
+          disabled={isLoading}
+          value={innerAppUrl}
+          onInput={(appUrl) => setInnerAppUrl(appUrl)}
         />
       </div>
       <span className="flex justify-end gap-2">
