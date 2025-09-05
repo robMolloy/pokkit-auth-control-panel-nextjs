@@ -1,6 +1,7 @@
 import { AccordionCard } from "@/components/AccordionCard";
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
+import { AuthAlertEmailTemplateForm } from "@/modules/authAlertEmailTemplate/authAlertEmailTemplateForm";
 import { ConfirmEmailChangeTemplateForm } from "@/modules/confirmEmailChangeTemplate/confirmEmailChangeTemplateForm";
 import { EmailVerificationTemplateForm } from "@/modules/emailVerificationTemplate/emailVerificationTemplateForm";
 import { OtpEmailTemplateForm } from "@/modules/otpEmailTemplate/otpEmailTemplateForm";
@@ -54,11 +55,21 @@ const Page = () => {
               onUsersCollectionUpdate={(x) => setUsersCollection(x)}
             />
           </AccordionCard>
+
           <AccordionCard title="Otp Email Template" value="otp-email-template">
             <OtpEmailTemplateForm
               pb={pb}
               subject={usersCollection.otp.emailTemplate.subject}
               body={usersCollection.otp.emailTemplate.body}
+              onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+            />
+          </AccordionCard>
+
+          <AccordionCard title="Auth Alert Email Template" value="auth-alert-email-template">
+            <AuthAlertEmailTemplateForm
+              pb={pb}
+              subject={usersCollection.authAlert.emailTemplate.subject}
+              body={usersCollection.authAlert.emailTemplate.body}
               onUsersCollectionUpdate={(x) => setUsersCollection(x)}
             />
           </AccordionCard>

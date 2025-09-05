@@ -7,6 +7,10 @@ export const usersCollectionSchema = z.object({
   created: z.string(),
   authAlert: z.object({
     enabled: z.boolean(),
+    emailTemplate: z.object({
+      subject: z.string(),
+      body: z.string(),
+    }),
   }),
   authToken: z.object({
     duration: z.number(),
