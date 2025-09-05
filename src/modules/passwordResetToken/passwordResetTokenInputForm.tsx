@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
 import { Button } from "@/components/ui/button";
 import { updatePasswordResetTokenDuration } from "./pbPasswordResetTokenInput";
-import { extractMessageFromPbError, handlePbErrorMessages } from "../utils/pbUtils";
+import { extractMessageFromPbError, showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
 import { toast } from "sonner";
 
 export const PasswordResetTokenDurationInputForm = (p: {
@@ -32,7 +32,7 @@ export const PasswordResetTokenDurationInputForm = (p: {
           if (resp.success) return toast("token updated successfully");
 
           const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) handlePbErrorMessages(errorMessages);
+          if (errorMessages) showMultipleErrorMessagesAsToast(errorMessages);
         })();
 
         setIsLoading(false);

@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { handlePbErrorMessages } from "../utils/pbUtils";
+import { showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
 import { disableOtp, enableOtp } from "./pbOtp";
 
 export const EnableOtpToggle = (p: {
@@ -33,7 +33,7 @@ export const EnableOtpToggle = (p: {
 
             if (resp.success) return setInnerValue(resp.data);
 
-            handlePbErrorMessages(resp.error.messages);
+            showMultipleErrorMessagesAsToast(resp.error.messages);
           })();
 
           setIsLoading(false);

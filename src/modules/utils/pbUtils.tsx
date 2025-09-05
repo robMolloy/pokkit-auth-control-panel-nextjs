@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { z } from "zod";
 
-export const handlePbErrorMessages = (messages: string[]) => {
+export const showMultipleErrorMessagesAsToast = (messages: string[]) => {
   const [message1, ...otherMessages] = messages;
 
   toast(message1, {

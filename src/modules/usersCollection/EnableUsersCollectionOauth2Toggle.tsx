@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
-import { handlePbErrorMessages } from "../utils/pbUtils";
+import { showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
 import { disableOAuth2, enableOAuth2 } from "./pbOAuth2";
 import { TUsersCollection } from "./pbUsersCollectionHelpers";
 
@@ -34,7 +34,7 @@ export const EnableOauth2Toggle = (p: {
 
             if (resp.success) return setInnerValue(resp.data);
 
-            handlePbErrorMessages(resp.error.messages);
+            showMultipleErrorMessagesAsToast(resp.error.messages);
           })();
 
           setIsLoading(false);
