@@ -35,6 +35,10 @@ export const usersCollectionSchema = z.object({
   }),
   otp: z.object({
     enabled: z.boolean(),
+    emailTemplate: z.object({
+      subject: z.string(),
+      body: z.string(),
+    }),
   }),
   passwordAuth: z.object({
     enabled: z.boolean(),

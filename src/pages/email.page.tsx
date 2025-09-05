@@ -3,6 +3,7 @@ import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
 import { ConfirmEmailChangeTemplateForm } from "@/modules/confirmEmailChangeTemplate/confirmEmailChangeTemplateForm";
 import { EmailVerificationTemplateForm } from "@/modules/emailVerificationTemplate/emailVerificationTemplateForm";
+import { OtpEmailTemplateForm } from "@/modules/otpEmailTemplate/otpEmailTemplateForm";
 import { ResetPasswordTemplateForm } from "@/modules/resetPasswordTemplate/ResetPasswordTemplateForm";
 import {
   getUsersCollection,
@@ -50,6 +51,14 @@ const Page = () => {
               pb={pb}
               subject={usersCollection.confirmEmailChangeTemplate.subject}
               body={usersCollection.confirmEmailChangeTemplate.body}
+              onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+            />
+          </AccordionCard>
+          <AccordionCard title="Otp Email Template" value="otp-email-template">
+            <OtpEmailTemplateForm
+              pb={pb}
+              subject={usersCollection.otp.emailTemplate.subject}
+              body={usersCollection.otp.emailTemplate.body}
               onUsersCollectionUpdate={(x) => setUsersCollection(x)}
             />
           </AccordionCard>
