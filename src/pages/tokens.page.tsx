@@ -3,9 +3,9 @@ import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
 import { AuthTokenDurationInputForm } from "@/modules/authToken/AuthTokenDurationInputForm";
 import { EmailChangeTokenDurationInputForm } from "@/modules/emailChangeToken/EmailChangeTokenDurationInputForm";
-import { EmailVerificationTokenDurationInputForm } from "@/modules/EmailVerificationToken/emailVerificationTokenInputForm";
+import { EmailVerificationTokenDurationInputForm } from "@/modules/emailVerificationToken/emailVerificationTokenInputForm";
 import { PasswordResetTokenDurationInputForm } from "@/modules/passwordResetToken/passwordResetTokenInputForm";
-import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/ProtectedFileAccessToken/protectedFileAccessTokenInputForm";
+import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/protectedFileAccessToken/protectedFileAccessTokenInputForm";
 import {
   getUsersCollection,
   TUsersCollection,

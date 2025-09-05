@@ -1,7 +1,7 @@
 import { AccordionCard } from "@/components/AccordionCard";
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
-import { EmailVerificationTemplateForm } from "@/modules/EmailVerificationTemplate/emailVerificationTemplateForm";
+import { EmailVerificationTemplateForm } from "@/modules/emailVerificationTemplate/emailVerificationTemplateForm";
 import { ResetPasswordTemplateForm } from "@/modules/resetPasswordTemplate/ResetPasswordTemplateForm";
 import {
   getUsersCollection,

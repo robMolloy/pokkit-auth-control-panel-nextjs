@@ -1,8 +1,8 @@
 import { LayoutTemplate } from "@/components/layout/LayoutTemplate";
 import { Toaster } from "@/components/ui/sonner";
 import { pb } from "@/config/pocketbaseConfig";
-import { Header } from "@/modules/Layout/Header";
-import { LeftSidebar } from "@/modules/Layout/LeftSidebar";
+import { Header } from "@/modules/layout/Header";
+import { LeftSidebar } from "@/modules/layout/LeftSidebar";
 import { SuperuserAuthScreen } from "@/modules/superusers/SuperuserAuthScreen";
 import { useInitAuth } from "@/modules/superusers/useInitAuth";
 
