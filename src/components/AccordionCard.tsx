@@ -21,7 +21,7 @@ export const AccordionCard = (p: {
                 <div className="no-underline">{p.subtitle}</div>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="p-0">{p.children}</AccordionContent>
+            <AccordionContent>{p.children}</AccordionContent>
           </AccordionItem>
         </Accordion>
       </CardContent>

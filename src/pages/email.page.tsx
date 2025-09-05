@@ -1,3 +1,4 @@
+import { AccordionCard } from "@/components/AccordionCard";
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
 import { EmailVerificationTemplateForm } from "@/modules/EmailVerificationTemplate/emailVerificationTemplateForm";
@@ -21,12 +22,14 @@ const Page = () => {
     <MainLayout>
       {usersCollection && (
         <>
-          <EmailVerificationTemplateForm
-            pb={pb}
-            subject={usersCollection.verificationTemplate.subject}
-            body={usersCollection.verificationTemplate.body}
-            onUsersCollectionUpdate={(x) => setUsersCollection(x)}
-          />
+          <AccordionCard title="Email Verification Template" value="Email-Verification-Template">
+            <EmailVerificationTemplateForm
+              pb={pb}
+              subject={usersCollection.verificationTemplate.subject}
+              body={usersCollection.verificationTemplate.body}
+              onUsersCollectionUpdate={(x) => setUsersCollection(x)}
+            />
+          </AccordionCard>
         </>
       )}
     </MainLayout>

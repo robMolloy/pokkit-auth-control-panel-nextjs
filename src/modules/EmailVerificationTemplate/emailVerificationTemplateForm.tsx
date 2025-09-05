@@ -50,9 +50,7 @@ export const EmailVerificationTemplateForm = (p: {
       }}
     >
       <div>
-        <Label htmlFor="users-collection-emailVerificationTemplateSubject-input">
-          Email Verification Template Subject
-        </Label>
+        <Label htmlFor="users-collection-emailVerificationTemplateSubject-input">Subject</Label>
         <TextInput
           id="users-collection-emailVerificationTemplateSubject-input"
           disabled={isLoading}
@@ -61,9 +59,7 @@ export const EmailVerificationTemplateForm = (p: {
         />
       </div>
       <div>
-        <Label htmlFor="users-collection-emailVerificationTemplateBody-input">
-          Email Verification Template Body
-        </Label>
+        <Label htmlFor="users-collection-emailVerificationTemplateBody-input">Body</Label>
         <Textarea
           id="users-collection-emailVerificationTemplateBody-input"
           disabled={isLoading}
