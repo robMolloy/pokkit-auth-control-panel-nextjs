@@ -34,8 +34,12 @@ export const TextInput = ({
 }) => {
   const [internalValue, setInternalValue] = React.useState(value);
 
-  React.useEffect(() => onInput(internalValue), [internalValue]);
-  React.useEffect(() => setInternalValue(value), [value]);
+  React.useEffect(() => {
+    onInput(internalValue);
+  }, [internalValue]);
+  React.useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
 
   return (
     <Input
@@ -63,7 +67,9 @@ export const NumberInput = ({
   React.useEffect(() => {
     onInput(internalValue);
   }, [internalValue]);
-  React.useEffect(() => setInternalValue(value), [value]);
+  React.useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
 
   return (
     <Input

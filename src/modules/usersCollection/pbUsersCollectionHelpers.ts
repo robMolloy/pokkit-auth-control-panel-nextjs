@@ -38,6 +38,10 @@ export const usersCollectionSchema = z.object({
   passwordResetToken: z.object({
     duration: z.number(),
   }),
+  verificationTemplate: z.object({
+    subject: z.string(),
+    body: z.string(),
+  }),
   verificationToken: z.object({
     duration: z.number(),
   }),
