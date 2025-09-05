@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
 import { extractMessageFromPbError, handlePbErrorMessages } from "../utils/pbUtils";
 import { updateEmailVerificationTemplate } from "./pbEmailVerificationTemplate";
+import { Textarea } from "@/components/ui/textarea";
 
 export const EmailVerificationTemplateForm = (p: {
   pb: PocketBase;
@@ -63,11 +64,12 @@ export const EmailVerificationTemplateForm = (p: {
         <Label htmlFor="users-collection-emailVerificationTemplateBody-input">
           Email Verification Template Body
         </Label>
-        <TextInput
+        <Textarea
           id="users-collection-emailVerificationTemplateBody-input"
           disabled={isLoading}
           value={innerBodyValue}
-          onInput={async (body) => setInnerBodyValue(body)}
+          onInput={(body) => setInnerBodyValue(body)}
+          rows={10}
         />
       </div>
       <span className="flex justify-end gap-2">
