@@ -19,12 +19,8 @@ export const EmailVerificationTemplateForm = (p: {
   const [innerSubjectValue, setInnerSubjectValue] = useState(p.subject);
   const [innerBodyValue, setInnerBodyValue] = useState(p.body);
 
-  useEffect(() => {
-    setInnerSubjectValue(p.subject);
-  }, [p.subject]);
-  useEffect(() => {
-    setInnerBodyValue(p.body);
-  }, [p.body]);
+  useEffect(() => setInnerSubjectValue(p.subject), [p.subject]);
+  useEffect(() => setInnerBodyValue(p.body), [p.body]);
 
   return (
     <form
