@@ -17,3 +17,11 @@ export const getAppSettings = async (p: { pb: PocketBase }) => {
     return { success: false, error } as const;
   }
 };
+export const updateAppSettings = async (p: { pb: PocketBase; appName: string }) => {
+  try {
+    const appSettings = await p.pb.settings.update({ meta: { appName: p.appName } });
+    return appSettingsSchema.safeParse(appSettings);
+  } catch (error) {
+    return { success: false, error } as const;
+  }
+};
