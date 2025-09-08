@@ -6,19 +6,23 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { extractMessageFromPbError, showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
 import { TEmailSettings, updateEmailSettings } from "./pbEmailSettings";
+import { Switch } from "@/components/ui/switch";
 
 export const EmailSettingsForm = (p: {
   pb: PocketBase;
   senderName: string;
   senderAddress: string;
+  smtpEnabled: boolean;
   onEmailSettingsUpdate: (x: TEmailSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [innerSenderName, setInnerSenderName] = useState(p.senderName);
   const [innerSenderAddress, setInnerSenderAddress] = useState(p.senderAddress);
+  const [innerSmtpEnabled, setInnerSmtpEnabled] = useState(p.smtpEnabled);
 
   useEffect(() => setInnerSenderName(p.senderName), [p.senderName]);
   useEffect(() => setInnerSenderAddress(p.senderAddress), [p.senderAddress]);
+  useEffect(() => setInnerSmtpEnabled(p.smtpEnabled), [p.smtpEnabled]);
 
   return (
     <form
@@ -33,6 +37,7 @@ export const EmailSettingsForm = (p: {
             pb,
             senderName: innerSenderName,
             senderAddress: innerSenderAddress,
+            smtpEnabled: innerSmtpEnabled,
           });
 
           if (resp.success) {
@@ -64,6 +69,15 @@ export const EmailSettingsForm = (p: {
           value={innerSenderAddress}
           onInput={(senderAddress) => setInnerSenderAddress(senderAddress)}
         />
+      </div>
+      <div>
+        <Switch
+          id="emailSettings-smtpEnabled-switch"
+          disabled={isLoading}
+          checked={innerSmtpEnabled}
+          onCheckedChange={async () => setInnerSmtpEnabled((x) => !x)}
+        />
+        <Label htmlFor="emailSettings-smtpEnabled-switch">Enable SMTP</Label>
       </div>
       <span className="flex justify-end gap-2">
         <Button type="submit">Submit</Button>

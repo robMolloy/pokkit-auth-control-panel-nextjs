@@ -21,6 +21,7 @@ const Page = () => {
             pb={pb}
             senderName={emailSettings.meta.senderName}
             senderAddress={emailSettings.meta.senderAddress}
+            smtpEnabled={emailSettings.smtp.enabled}
             onEmailSettingsUpdate={(x) => setEmailSettings(x)}
           />
         </div>

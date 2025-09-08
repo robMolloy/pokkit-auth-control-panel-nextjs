@@ -6,6 +6,9 @@ export const emailSettingsSchema = z.object({
     senderName: z.string(),
     senderAddress: z.string(),
   }),
+  smtp: z.object({
+    enabled: z.boolean(),
+  }),
 });
 
 export type TEmailSettings = z.infer<typeof emailSettingsSchema>;
@@ -23,10 +26,12 @@ export const updateEmailSettings = async (p: {
   pb: PocketBase;
   senderName: string;
   senderAddress: string;
+  smtpEnabled: boolean;
 }) => {
   try {
     const emailSettings = await p.pb.settings.update({
       meta: { senderName: p.senderName, senderAddress: p.senderAddress },
+      smtp: { enabled: p.smtpEnabled },
     });
     return emailSettingsSchema.safeParse(emailSettings);
   } catch (error) {
