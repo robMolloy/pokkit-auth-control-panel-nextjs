@@ -36,6 +36,13 @@ export function LeftSidebar() {
                 oAuth2
               </SidebarButton>
               <SidebarButton
+                href="/email-settings"
+                iconName="Home"
+                isHighlighted={router.pathname === "/email-settings"}
+              >
+                Email Settings
+              </SidebarButton>
+              <SidebarButton
                 href="/email-templates"
                 iconName="Home"
                 isHighlighted={router.pathname === "/email-templates"}
