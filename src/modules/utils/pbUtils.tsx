@@ -1,17 +1,19 @@
 import { toast } from "sonner";
 import { z } from "zod";
 
-export const showMultipleErrorMessagesAsToast = (messages: string[]) => {
+export const showMultipleErrorMessagesAsToast = (initMessages: string[] | undefined) => {
+  const messages = initMessages ?? ["Something went wrong"];
+  if (messages === undefined || messages.length === 0) return;
   const [message1, ...otherMessages] = messages;
 
   toast(message1, {
-    description: (
+    description: otherMessages ? (
       <div>
         {otherMessages.map((message) => (
           <div key={message}>{message}</div>
         ))}
       </div>
-    ),
+    ) : undefined,
   });
 };
 

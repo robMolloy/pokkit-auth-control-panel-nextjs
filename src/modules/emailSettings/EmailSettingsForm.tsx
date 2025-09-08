@@ -10,19 +10,19 @@ import { Switch } from "@/components/ui/switch";
 
 export const EmailSettingsForm = (p: {
   pb: PocketBase;
-  senderName: string;
-  senderAddress: string;
-  smtpEnabled: boolean;
+  emailSettings: TEmailSettings;
   onEmailSettingsUpdate: (x: TEmailSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerSenderName, setInnerSenderName] = useState(p.senderName);
-  const [innerSenderAddress, setInnerSenderAddress] = useState(p.senderAddress);
-  const [innerSmtpEnabled, setInnerSmtpEnabled] = useState(p.smtpEnabled);
+  const [innerSenderName, setInnerSenderName] = useState(p.emailSettings.meta.senderName);
+  const [innerSenderAddress, setInnerSenderAddress] = useState(p.emailSettings.meta.senderAddress);
+  const [innerSmtpEnabled, setInnerSmtpEnabled] = useState(p.emailSettings.smtp.enabled);
 
-  useEffect(() => setInnerSenderName(p.senderName), [p.senderName]);
-  useEffect(() => setInnerSenderAddress(p.senderAddress), [p.senderAddress]);
-  useEffect(() => setInnerSmtpEnabled(p.smtpEnabled), [p.smtpEnabled]);
+  useEffect(() => {
+    setInnerSenderName(p.emailSettings.meta.senderName);
+    setInnerSenderAddress(p.emailSettings.meta.senderAddress);
+    setInnerSmtpEnabled(p.emailSettings.smtp.enabled);
+  }, [p.emailSettings]);
 
   return (
     <form
@@ -46,7 +46,7 @@ export const EmailSettingsForm = (p: {
           }
 
           const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) showMultipleErrorMessagesAsToast(errorMessages);
+          showMultipleErrorMessagesAsToast(errorMessages ?? ["something went wrong"]);
         })();
 
         setIsLoading(false);

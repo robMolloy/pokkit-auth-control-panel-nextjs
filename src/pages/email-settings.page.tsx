@@ -19,9 +19,7 @@ const Page = () => {
         <div className="flex flex-col gap-4">
           <EmailSettingsForm
             pb={pb}
-            senderName={emailSettings.meta.senderName}
-            senderAddress={emailSettings.meta.senderAddress}
-            smtpEnabled={emailSettings.smtp.enabled}
+            emailSettings={emailSettings}
             onEmailSettingsUpdate={(x) => setEmailSettings(x)}
           />
         </div>
