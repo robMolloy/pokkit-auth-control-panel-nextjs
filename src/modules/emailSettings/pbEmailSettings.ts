@@ -8,6 +8,12 @@ export const emailSettingsSchema = z.object({
   }),
   smtp: z.object({
     enabled: z.boolean(),
+    port: z.number(),
+    host: z.string(),
+    username: z.string(),
+    authMethod: z.string(),
+    tls: z.boolean(),
+    localName: z.string(),
   }),
 });
 

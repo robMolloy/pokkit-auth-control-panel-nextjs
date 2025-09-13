@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { TextInput } from "@/components/ui/input";
+import { NumberInput, TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
@@ -17,6 +17,19 @@ export const EmailSettingsForm = (p: {
   const [innerSenderName, setInnerSenderName] = useState(p.emailSettings.meta.senderName);
   const [innerSenderAddress, setInnerSenderAddress] = useState(p.emailSettings.meta.senderAddress);
   const [innerSmtpEnabled, setInnerSmtpEnabled] = useState(p.emailSettings.smtp.enabled);
+  const [innerSmtpServerHost, setInnerSmtpServerHost] = useState(p.emailSettings.smtp.host);
+  const [innerSmtpServerPort, setInnerSmtpServerPort] = useState(p.emailSettings.smtp.port);
+  const [innerSmtpServerUsername, setInnerSmtpServerUsername] = useState(
+    p.emailSettings.smtp.username,
+  );
+  const [innerSmtpServerPassword, setInnerSmtpServerPassword] = useState("");
+  const [innerSmtpServerLocalName, setInnerSmtpServerLocalName] = useState(
+    p.emailSettings.smtp.localName,
+  );
+  const [innerSmtpServerTls, setInnerSmtpServerTls] = useState(p.emailSettings.smtp.tls);
+  const [innerSmtpServerAuthMethod, setInnerSmtpServerAuthMethod] = useState(
+    p.emailSettings.smtp.authMethod,
+  );
 
   useEffect(() => {
     setInnerSenderName(p.emailSettings.meta.senderName);
@@ -70,7 +83,7 @@ export const EmailSettingsForm = (p: {
           onInput={(senderAddress) => setInnerSenderAddress(senderAddress)}
         />
       </div>
-      <div>
+      <div className="flex items-center gap-2">
         <Switch
           id="emailSettings-smtpEnabled-switch"
           disabled={isLoading}
@@ -79,6 +92,74 @@ export const EmailSettingsForm = (p: {
         />
         <Label htmlFor="emailSettings-smtpEnabled-switch">Enable SMTP</Label>
       </div>
+      {innerSmtpEnabled && (
+        <div className="flex flex-col gap-4">
+          <div>
+            <Label htmlFor="emailSettings-serverHost-input">Server Host</Label>
+            <TextInput
+              id="emailSettings-serverHost-input"
+              disabled={isLoading}
+              value={innerSmtpServerHost}
+              onInput={(serverHost) => setInnerSmtpServerHost(serverHost)}
+            />
+          </div>
+          <div>
+            <Label htmlFor="emailSettings-serverPort-input">Server Port</Label>
+            <NumberInput
+              id="emailSettings-serverPort-input"
+              disabled={isLoading}
+              value={innerSmtpServerPort}
+              onInput={(serverPort) => setInnerSmtpServerPort(serverPort)}
+            />
+          </div>
+          <div>
+            <Label htmlFor="emailSettings-serverUsername-input">Server Username</Label>
+            <TextInput
+              id="emailSettings-serverUsername-input"
+              disabled={isLoading}
+              value={innerSmtpServerUsername}
+              onInput={(serverUsername) => setInnerSmtpServerUsername(serverUsername)}
+            />
+          </div>
+          <div>
+            <Label htmlFor="emailSettings-serverPassword-input">Server Password</Label>
+            <TextInput
+              type="password"
+              id="emailSettings-serverPassword-input"
+              disabled={isLoading}
+              value={innerSmtpServerPassword}
+              onInput={(serverPassword) => setInnerSmtpServerPassword(serverPassword)}
+            />
+          </div>
+          <div>
+            <Label htmlFor="emailSettings-serverLocalName-input">Server LocalName</Label>
+            <TextInput
+              id="emailSettings-serverLocalName-input"
+              disabled={isLoading}
+              value={innerSmtpServerLocalName}
+              onInput={(serverLocalName) => setInnerSmtpServerLocalName(serverLocalName)}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <Switch
+              id="emailSettings-serverTls-toggle"
+              disabled={isLoading}
+              checked={innerSmtpServerTls}
+              onCheckedChange={async () => setInnerSmtpServerTls((x) => !x)}
+            />
+            <Label htmlFor="emailSettings-serverTls-input">Server Tls</Label>
+          </div>
+          <div>
+            <Label htmlFor="emailSettings-serverAuthMethod-input">Server AuthMethod</Label>
+            <TextInput
+              id="emailSettings-serverAuthMethod-input"
+              disabled={isLoading}
+              value={innerSmtpServerAuthMethod}
+              onInput={(serverAuthMethod) => setInnerSmtpServerAuthMethod(serverAuthMethod)}
+            />
+          </div>
+        </div>
+      )}
       <span className="flex justify-end gap-2">
         <Button type="submit">Submit</Button>
       </span>
