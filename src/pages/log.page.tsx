@@ -1,14 +1,7 @@
-import { useCurrentUserStore, useUnverifiedIsLoggedInStore } from "@/stores/authDataStore";
+import { LogScreen } from "@/screens/LogScreen";
 
 const LogPage = () => {
-  const currentUserStore = useCurrentUserStore();
-  const unverifiedIsLoggedInStore = useUnverifiedIsLoggedInStore();
-
-  return (
-    <div>
-      <pre>{JSON.stringify({ currentUserStore, unverifiedIsLoggedInStore }, undefined, 2)}</pre>
-    </div>
-  );
+  return <LogScreen />;
 };
 
 export default LogPage;
