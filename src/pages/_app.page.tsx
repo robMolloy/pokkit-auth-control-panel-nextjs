@@ -5,6 +5,8 @@ import { Header } from "@/modules/layout/Header";
 import { LeftSidebar } from "@/modules/layout/LeftSidebar";
 import { SuperuserAuthScreen } from "@/modules/superusers/SuperuserAuthScreen";
 import { useInitAuth } from "@/modules/superusers/useInitAuth";
+import { smartSubscribeToUsers } from "@/modules/users/dbUsersUtils";
+import { useUsersStore } from "@/modules/users/usersStore";
 
 import { LoadingScreen } from "@/screens/LoadingScreen";
 import { useCurrentUserStore } from "@/stores/authDataStore";
@@ -17,13 +19,18 @@ import Head from "next/head";
 export default function App({ Component, pageProps }: AppProps) {
   const themeStore = useThemeStore();
   const currentUserStore = useCurrentUserStore();
+  const usersStore = useUsersStore();
 
   themeStore.useThemeStoreSideEffect();
 
   useInitAuth({
     onIsLoading: () => {},
-    onIsLoggedIn: () => {},
-    onIsLoggedOut: () => {},
+    onIsLoggedIn: () => {
+      smartSubscribeToUsers({ pb: pb, onChange: usersStore.setData });
+    },
+    onIsLoggedOut: () => {
+      usersStore.setData([]);
+    },
   });
 
   return (
