@@ -24,8 +24,8 @@ export const UsersScreen = () => {
     <MainLayout>
       <Button
         onClick={() => {
-          [...Array(100)].map((_, i) => {
-            const email = `test-1${i}@test.com`;
+          [...Array(1)].map((_, i) => {
+            const email = `test-${Math.floor(Math.random() * 100000000)}-${i}@test.com`;
 
             pb.collection("users").create({
               name: email,
@@ -70,6 +70,8 @@ export const UsersScreen = () => {
               ))}
             </TableBody>
           </Table>
+          {firstItem} to {lastItem < usersStore.data.length ? lastItem : usersStore.data.length} of{" "}
+          {usersStore.data.length}
         </>
       )}
     </MainLayout>
