@@ -37,7 +37,7 @@ export const useUnverifiedIsLoggedInSync = (p: { pb: PocketBase }) => {
 
     const decodeResponse = decodeJwt(resp.data.token);
     if (!decodeResponse.success) return isLoggedInStore.setData({ authStatus: "loggedOut" });
-    const timeToExpire = new Date().getTime() - decodeResponse.data.payload.exp * 1000;
+    const timeToExpire = decodeResponse.data.payload.exp * 1000 - new Date().getTime();
 
     timeoutRef.current = setTimeout(() => {
       isLoggedInStore.setData({ authStatus: "loggedOut" });
