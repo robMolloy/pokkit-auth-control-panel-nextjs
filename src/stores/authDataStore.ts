@@ -1,6 +1,8 @@
+import { decodeJwt } from "@/lib/utils";
+import { logout } from "@/modules/auth/dbAuthUtils";
 import { superuserSchema, TSuperuser } from "@/modules/superusers/dbSuperusersUtils";
 import PocketBase from "pocketbase";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { z } from "zod";
 import { create } from "zustand";
 
@@ -22,25 +24,30 @@ export const useUnverifiedIsLoggedInStore = create<{
 
 export const useUnverifiedIsLoggedInSync = (p: { pb: PocketBase }) => {
   const isLoggedInStore = useUnverifiedIsLoggedInStore();
-  useEffect(() => {
-    if (!p.pb.authStore.isValid) return isLoggedInStore.setData({ authStatus: "loggedOut" });
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
+  const handleAuthChange = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    if (!p.pb.authStore.isValid) return isLoggedInStore.setData({ authStatus: "loggedOut" });
     const resp = pocketbaseAuthStoreSchema.safeParse(p.pb.authStore);
 
-    isLoggedInStore.setData(
-      resp.success ? { authStatus: "loggedIn", user: resp.data } : { authStatus: "loggedOut" },
-    );
-  }, []);
+    if (!resp.success) return isLoggedInStore.setData({ authStatus: "loggedOut" });
+    isLoggedInStore.setData({ authStatus: "loggedIn", user: resp.data });
 
+    const decodeResponse = decodeJwt(resp.data.token);
+    if (!decodeResponse.success) return isLoggedInStore.setData({ authStatus: "loggedOut" });
+    const timeToExpire = new Date().getTime() - decodeResponse.data.payload.exp * 1000;
+
+    timeoutRef.current = setTimeout(() => {
+      isLoggedInStore.setData({ authStatus: "loggedOut" });
+
+      if (isLoggedInStore.data.authStatus === "loggedOut") logout(p);
+    }, timeToExpire);
+  };
+  useEffect(() => handleAuthChange(), []);
   useEffect(() => {
-    p.pb.authStore.onChange(() => {
-      if (!p.pb.authStore.isValid) return isLoggedInStore.setData({ authStatus: "loggedOut" });
-
-      const resp = pocketbaseAuthStoreSchema.safeParse(p.pb.authStore);
-      isLoggedInStore.setData(
-        resp.success ? { authStatus: "loggedIn", user: resp.data } : { authStatus: "loggedOut" },
-      );
-    });
+    p.pb.authStore.onChange(() => handleAuthChange());
   }, []);
 };
 
