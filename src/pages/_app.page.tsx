@@ -24,12 +24,14 @@ export default function App({ Component, pageProps }: AppProps) {
   themeStore.useThemeStoreSideEffect();
 
   useInitAuth({
-    onIsLoading: () => {},
+    onIsLoading: () => {
+      usersStore.setData(undefined);
+    },
     onIsLoggedIn: () => {
-      smartSubscribeToUsers({ pb: pb, onChange: usersStore.setData });
+      smartSubscribeToUsers({ pb: pb, onChange: (x) => usersStore.setData(x) });
     },
     onIsLoggedOut: () => {
-      usersStore.setData([]);
+      usersStore.setData(null);
     },
   });
 
