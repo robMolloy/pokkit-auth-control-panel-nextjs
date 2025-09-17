@@ -1,11 +1,11 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
-import { EmailChangeTokenDurationInputForm } from "@/modules/emailChangeToken/EmailChangeTokenDurationInputForm";
-import { EmailVerificationTokenDurationInputForm } from "@/modules/emailVerificationToken/emailVerificationTokenInputForm";
-import { PasswordResetTokenDurationInputForm } from "@/modules/passwordResetToken/passwordResetTokenInputForm";
 import { AuthTokenDurationInputForm } from "@/modules/usersCollection/forms/AuthTokenDurationInputForm";
-import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/usersCollection/forms/protectedFileAccessTokenInputForm";
+import { EmailChangeTokenDurationInputForm } from "@/modules/usersCollection/forms/EmailChangeTokenDurationInputForm";
+import { EmailVerificationTokenDurationInputForm } from "@/modules/usersCollection/forms/EmailVerificationTokenInputForm";
+import { PasswordResetTokenDurationInputForm } from "@/modules/usersCollection/forms/PasswordResetTokenInputForm";
+import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/usersCollection/forms/ProtectedFileAccessTokenInputForm";
 import {
   getUsersCollection,
   TUsersCollection,

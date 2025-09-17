@@ -138,3 +138,27 @@ export const updateProtectedFileAccessTokenDuration = async (p: {
     usersCollection: { fileToken: { duration: p.value } },
   });
 };
+
+export const updateEmailChangeTokenDuration = async (p: { pb: PocketBase; value: number }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { emailChangeToken: { duration: p.value } },
+  });
+};
+
+export const updateEmailVerificationTokenDuration = async (p: {
+  pb: PocketBase;
+  value: number;
+}) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { verificationToken: { duration: p.value } },
+  });
+};
+
+export const updatePasswordResetTokenDuration = async (p: { pb: PocketBase; value: number }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { passwordResetToken: { duration: p.value } },
+  });
+};

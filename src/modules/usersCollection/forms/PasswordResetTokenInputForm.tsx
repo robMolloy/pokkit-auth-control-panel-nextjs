@@ -2,13 +2,15 @@ import { NumberInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
 import { Button } from "@/components/ui/button";
-import { updateEmailVerificationTokenDuration } from "./pbEmailVerificationTokenInput";
-import { extractMessageFromPbError, showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
 import { toast } from "sonner";
+import {
+  extractMessageFromPbError,
+  showMultipleErrorMessagesAsToast,
+} from "@/modules/utils/pbUtils";
+import { TUsersCollection, updatePasswordResetTokenDuration } from "../pbUsersCollectionHelpers";
 
-export const EmailVerificationTokenDurationInputForm = (p: {
+export const PasswordResetTokenDurationInputForm = (p: {
   pb: PocketBase;
   value: number;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
@@ -27,7 +29,7 @@ export const EmailVerificationTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateEmailVerificationTokenDuration({ pb, value: innerValue });
+          const resp = await updatePasswordResetTokenDuration({ pb, value: innerValue });
 
           if (resp.success) return toast("token updated successfully");
 
@@ -38,12 +40,12 @@ export const EmailVerificationTokenDurationInputForm = (p: {
         setIsLoading(false);
       }}
     >
-      <Label htmlFor="users-collection-emailVerificationTokenDuration-input">
-        Email Verification Token Duration
+      <Label htmlFor="users-collection-passwordResetTokenDuration-input">
+        Password Reset Token Duration
       </Label>
       <span className="flex gap-2">
         <NumberInput
-          id="users-collection-emailVerificationTokenDuration-input"
+          id="users-collection-passwordResetTokenDuration-input"
           disabled={isLoading}
           value={innerValue}
           onInput={async (e) => setInnerValue(e)}
