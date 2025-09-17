@@ -1,4 +1,4 @@
-import { TOAuth2ProviderName } from "./pbOAuth2";
+import { TOAuth2ProviderName } from "../pbUsersCollectionOAuth2Helpers";
 
 export const OAuth2ProviderImage = (p: { providerName: TOAuth2ProviderName }) => {
   const src = `${process.env.NEXT_PUBLIC_POCKETBASE_URL}/_/images/oauth2/${p.providerName}.svg`;

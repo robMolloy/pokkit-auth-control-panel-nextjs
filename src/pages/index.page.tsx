@@ -5,7 +5,7 @@ import { EnableAuthAlertToggle } from "@/modules/authAlert/EnableAuthAlertToggle
 import { EnableMfaToggle } from "@/modules/mfa/EnableMfaToggle";
 import { EnableOtpToggle } from "@/modules/otp/EnableOtpToggle";
 import { EnablePasswordAuthToggle } from "@/modules/passwordAuth/EnablePasswordAuthToggle";
-import { EnableOauth2Toggle } from "@/modules/usersCollection/EnableUsersCollectionOauth2Toggle";
+import { EnableOauth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOauth2Toggle";
 import {
   getUsersCollection,
   TUsersCollection,

@@ -3,16 +3,16 @@ import { CustomIcon } from "@/components/CustomIcon";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { PocketBase } from "@/config/pocketbaseConfig";
-import {
-  addOAuth2Provider,
-  oAuth2ProviderNames,
-  removeOAuth2Provider,
-  TOAuth2Provider,
-  TOAuth2ProviderName,
-} from "@/modules/usersCollection/pbOAuth2";
 import { useState } from "react";
 import { OAuth2ProviderImage } from "./OAuth2ProviderImage";
-import { TUsersCollection } from "./pbUsersCollectionHelpers";
+import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import {
+  TOAuth2ProviderName,
+  TOAuth2Provider,
+  addOAuth2Provider,
+  removeOAuth2Provider,
+  oAuth2ProviderNames,
+} from "../pbUsersCollectionOAuth2Helpers";
 
 export const OAuth2ProviderForm = (p: {
   pb: PocketBase;

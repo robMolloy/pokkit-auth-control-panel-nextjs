@@ -1,10 +1,10 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
+import { showMultipleErrorMessagesAsToast } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
-import { disableOAuth2, enableOAuth2 } from "./pbOAuth2";
-import { TUsersCollection } from "./pbUsersCollectionHelpers";
+import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import { disableOAuth2, enableOAuth2 } from "../pbUsersCollectionOAuth2Helpers";
 
 export const EnableOauth2Toggle = (p: {
   pb: PocketBase;
