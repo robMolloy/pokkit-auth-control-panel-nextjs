@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { TUsersCollection } from "../pbUsersCollectionHelpers";
 import { disableOAuth2, enableOAuth2 } from "../pbUsersCollectionOAuth2Helpers";
 
-export const EnableOauth2Toggle = (p: {
+export const EnableOAuth2Toggle = (p: {
   pb: PocketBase;
   usersCollection: TUsersCollection;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;

@@ -5,7 +5,7 @@ import { EnableAuthAlertToggle } from "@/modules/authAlert/EnableAuthAlertToggle
 import { EnableMfaToggle } from "@/modules/mfa/EnableMfaToggle";
 import { EnableOtpToggle } from "@/modules/otp/EnableOtpToggle";
 import { EnablePasswordAuthToggle } from "@/modules/passwordAuth/EnablePasswordAuthToggle";
-import { EnableOauth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOauth2Toggle";
+import { EnableOAuth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOAuth2Toggle2";
 import {
   getUsersCollection,
   TUsersCollection,
@@ -30,7 +30,7 @@ export default function Home() {
       {usersCollection && (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col">
-            <EnableOauth2Toggle
+            <EnableOAuth2Toggle
               pb={pb}
               usersCollection={usersCollection}
               onUsersCollectionUpdate={(x) => setUsersCollection(x)}
