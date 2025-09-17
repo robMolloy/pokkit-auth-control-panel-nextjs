@@ -15,7 +15,7 @@ import { useState } from "react";
 export const UsersScreen = () => {
   const usersStore = useUsersStore();
 
-  const [pageSize, _setPageSize] = useState(5);
+  const [pageSize, _setPageSize] = useState(10);
   const [pageNumber, setPageNumber] = useState(0);
 
   const firstItem = pageNumber * pageSize;
@@ -27,8 +27,17 @@ export const UsersScreen = () => {
       {usersStore.data === null && <div>No users found</div>}
       {usersStore.data &&
         (() => {
+          const PaginatorImplementation = () => (
+            <Paginator
+              pageNumber={pageNumber}
+              setPageNumber={setPageNumber}
+              itemsPerPage={pageSize}
+              numberOfItems={usersStore.data!.length}
+            />
+          );
           return (
             <>
+              <PaginatorImplementation />
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -53,12 +62,7 @@ export const UsersScreen = () => {
               {firstItem + 1} to{" "}
               {lastItem < usersStore.data.length ? lastItem : usersStore.data.length} of{" "}
               {usersStore.data.length}
-              <Paginator
-                pageNumber={pageNumber}
-                setPageNumber={setPageNumber}
-                itemsPerPage={pageSize}
-                numberOfItems={usersStore.data.length}
-              />
+              <PaginatorImplementation />
             </>
           );
         })()}
