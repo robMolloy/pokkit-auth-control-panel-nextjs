@@ -1,5 +1,4 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
-import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -17,21 +16,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { pb } from "@/config/pocketbaseConfig";
 import { useUsersStore } from "@/modules/users/usersStore";
 import { LoadingScreen } from "@/screens/LoadingScreen";
 import { useEffect, useState } from "react";
 
-const Paginator = (p: {
-  pageNumber?: number;
-  setPageNumber?: (x: number) => void;
-  numberOfPages: number;
-}) => {
+const Paginator = (
+  p: {
+    pageNumber?: number;
+    setPageNumber?: (x: number) => void;
+  } & ({ numberOfPages: number } | { numberOfItems: number; itemsPerPage: number }),
+) => {
   const [innerPageNumber, setInnerPageNumber] = useState(p.pageNumber ?? 0);
 
-  const allPageNumbers = [...Array(p.numberOfPages)].map((_, i) => i);
+  const numberOfPages =
+    "numberOfPages" in p ? p.numberOfPages : Math.ceil(p.numberOfItems / p.itemsPerPage);
+
+  const allPageNumbers = [...Array(numberOfPages)].map((_, i) => i);
   const firstVisiblePageNumber = Math.max(0, innerPageNumber - 2);
-  const lastVisiblePageNumber = Math.min(p.numberOfPages, innerPageNumber + 3);
+  const lastVisiblePageNumber = Math.min(numberOfPages, innerPageNumber + 3);
   const visiblePageNumbers = allPageNumbers.slice(firstVisiblePageNumber, lastVisiblePageNumber);
   const lastPageNumber = Math.max(allPageNumbers.slice(-1)[0] ?? 0);
   const isFirstPageNumberVisible = visiblePageNumbers.includes(0);
@@ -88,36 +90,20 @@ const Paginator = (p: {
 };
 
 export const UsersScreen = () => {
-  const [pageSize, _setPageSize] = useState(5);
   const usersStore = useUsersStore();
+
+  const [pageSize, _setPageSize] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
+
   const firstItem = pageNumber * pageSize;
   const lastItem = firstItem + pageSize;
 
   return (
     <MainLayout>
-      <Button
-        onClick={() => {
-          [...Array(1)].map((_, i) => {
-            const email = `test-${Math.floor(Math.random() * 100000000)}-${i}@test.com`;
-
-            pb.collection("users").create({
-              name: email,
-              email,
-              password: email,
-              passwordConfirm: email,
-            });
-          });
-        }}
-      >
-        Create users
-      </Button>
       {usersStore.data === undefined && <LoadingScreen />}
       {usersStore.data === null && <div>No users found</div>}
       {usersStore.data &&
         (() => {
-          const numberOfPages = Math.ceil(usersStore.data.length / pageSize);
-
           return (
             <>
               <Table>
@@ -142,12 +128,13 @@ export const UsersScreen = () => {
                 </TableBody>
               </Table>
               {firstItem + 1} to{" "}
-              {lastItem < usersStore.data.length ? lastItem : usersStore.data.length + 1} of{" "}
-              {usersStore.data.length + 1}
+              {lastItem < usersStore.data.length ? lastItem : usersStore.data.length} of{" "}
+              {usersStore.data.length}
               <Paginator
                 pageNumber={pageNumber}
                 setPageNumber={setPageNumber}
-                numberOfPages={numberOfPages}
+                itemsPerPage={pageSize}
+                numberOfItems={usersStore.data.length}
               />
             </>
           );
