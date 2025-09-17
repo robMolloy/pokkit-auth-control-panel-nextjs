@@ -71,11 +71,13 @@ type DeepPartial<T> = {
 
 export type TInitUsersCollectionUpdateSeed = Omit<
   TUsersCollection,
-  "authToken" | "fileToken" | "passwordResetToken"
+  "authToken" | "emailChangeToken" | "fileToken" | "passwordResetToken" | "verificationToken"
 > & {
   authToken: TUsersCollection["authToken"] & { secret: string };
+  emailChangeToken: TUsersCollection["emailChangeToken"] & { secret: string };
   fileToken: TUsersCollection["fileToken"] & { secret: string };
   passwordResetToken: TUsersCollection["passwordResetToken"] & { secret: string };
+  verificationToken: TUsersCollection["verificationToken"] & { secret: string };
 };
 export type TUsersCollectionUpdateSeed = DeepPartial<TInitUsersCollectionUpdateSeed>;
 
