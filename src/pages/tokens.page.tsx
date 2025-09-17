@@ -4,12 +4,12 @@ import { pb } from "@/config/pocketbaseConfig";
 import { EmailChangeTokenDurationInputForm } from "@/modules/emailChangeToken/EmailChangeTokenDurationInputForm";
 import { EmailVerificationTokenDurationInputForm } from "@/modules/emailVerificationToken/emailVerificationTokenInputForm";
 import { PasswordResetTokenDurationInputForm } from "@/modules/passwordResetToken/passwordResetTokenInputForm";
-import { AuthTokenDurationInputForm } from "@/modules/usersCollection/AuthTokenDurationInputForm";
+import { AuthTokenDurationInputForm } from "@/modules/usersCollection/forms/AuthTokenDurationInputForm";
+import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/usersCollection/forms/protectedFileAccessTokenInputForm";
 import {
   getUsersCollection,
   TUsersCollection,
 } from "@/modules/usersCollection/pbUsersCollectionHelpers";
-import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/usersCollection/protectedFileAccessTokenInputForm";
 import { useEffect, useState } from "react";
 
 export default function Home() {

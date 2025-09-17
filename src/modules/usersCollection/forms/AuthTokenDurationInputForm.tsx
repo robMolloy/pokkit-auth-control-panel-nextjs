@@ -2,13 +2,14 @@ import { NumberInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
-import {
-  TUsersCollection,
-  updateAuthTokenDuration,
-} from "../usersCollection/pbUsersCollectionHelpers";
 import { Button } from "@/components/ui/button";
-import { extractMessageFromPbError, showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
+
 import { toast } from "sonner";
+import { updateAuthTokenDuration, TUsersCollection } from "../pbUsersCollectionHelpers";
+import {
+  extractMessageFromPbError,
+  showMultipleErrorMessagesAsToast,
+} from "@/modules/utils/pbUtils";
 
 export const AuthTokenDurationInputForm = (p: {
   pb: PocketBase;
