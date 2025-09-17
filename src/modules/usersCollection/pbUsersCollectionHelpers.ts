@@ -128,3 +128,13 @@ export const invalidateAuthTokens = async (p: { pb: PocketBase }) => {
     usersCollection: { authToken: { secret: generateToken() } },
   });
 };
+
+export const updateProtectedFileAccessTokenDuration = async (p: {
+  pb: PocketBase;
+  value: number;
+}) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { fileToken: { duration: p.value } },
+  });
+};
