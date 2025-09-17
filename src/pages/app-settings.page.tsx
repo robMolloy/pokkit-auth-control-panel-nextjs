@@ -16,18 +16,12 @@ const Page = () => {
   return (
     <MainLayout>
       {appSettings && (
-        <div className="flex flex-col gap-4">
-          <AppSettingsForm
-            pb={pb}
-            appName={appSettings.meta.appName}
-            appUrl={appSettings.meta.appURL}
-            onAppSettingsUpdate={(x) => {
-              console.log(x);
-              setAppSettings(x);
-            }}
-          />
-          <pre>{JSON.stringify({ appSettings }, undefined, 2)}</pre>
-        </div>
+        <AppSettingsForm
+          pb={pb}
+          appName={appSettings.meta.appName}
+          appUrl={appSettings.meta.appURL}
+          onAppSettingsUpdate={(x) => setAppSettings(x)}
+        />
       )}
     </MainLayout>
   );
