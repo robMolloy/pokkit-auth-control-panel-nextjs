@@ -1,8 +1,8 @@
-import * as React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { ButtonProps, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -89,12 +89,84 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<"span"
 );
 PaginationEllipsis.displayName = "PaginationEllipsis";
 
+import { useEffect, useState } from "react";
+
+const Paginator = (
+  p: {
+    pageNumber?: number;
+    setPageNumber?: (x: number) => void;
+  } & ({ numberOfPages: number } | { numberOfItems: number; itemsPerPage: number }),
+) => {
+  const [innerPageNumber, setInnerPageNumber] = useState(p.pageNumber ?? 0);
+
+  const numberOfPages =
+    "numberOfPages" in p ? p.numberOfPages : Math.ceil(p.numberOfItems / p.itemsPerPage);
+
+  const allPageNumbers = [...Array(numberOfPages)].map((_, i) => i);
+  const firstVisiblePageNumber = Math.max(0, innerPageNumber - 2);
+  const lastVisiblePageNumber = Math.min(numberOfPages, innerPageNumber + 3);
+  const visiblePageNumbers = allPageNumbers.slice(firstVisiblePageNumber, lastVisiblePageNumber);
+  const lastPageNumber = Math.max(allPageNumbers.slice(-1)[0] ?? 0);
+  const isFirstPageNumberVisible = visiblePageNumbers.includes(0);
+  const isLastPageNumberVisible = visiblePageNumbers.includes(lastPageNumber);
+
+  useEffect(() => {
+    if (p.pageNumber) setInnerPageNumber(p.pageNumber);
+  }, [p.pageNumber]);
+  useEffect(() => p.setPageNumber?.(innerPageNumber), [innerPageNumber]);
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious onClick={() => setInnerPageNumber((x) => (x === 0 ? x : x - 1))} />
+        </PaginationItem>
+        {!isFirstPageNumberVisible && (
+          <>
+            <PaginationItem>
+              <PaginationLink onClick={() => setInnerPageNumber(0)}>{1}</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          </>
+        )}
+        {visiblePageNumbers.map((x) => (
+          <PaginationItem key={x}>
+            <PaginationLink onClick={() => setInnerPageNumber(x)} isActive={innerPageNumber === x}>
+              {x + 1}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        {!isLastPageNumberVisible && (
+          <>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink onClick={() => setInnerPageNumber(lastPageNumber)}>
+                {lastPageNumber + 1}
+              </PaginationLink>
+            </PaginationItem>
+          </>
+        )}
+        <PaginationItem>
+          <PaginationNext
+            onClick={() => setInnerPageNumber((x) => (x === lastPageNumber ? x : x + 1))}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+};
+
 export {
+  Paginator,
   Pagination,
   PaginationContent,
-  PaginationLink,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationNext,
   PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 };
