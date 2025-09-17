@@ -122,13 +122,6 @@ export const updateAuthTokenDuration = async (p: { pb: PocketBase; value: number
   });
 };
 
-export const invalidateAuthTokens = async (p: { pb: PocketBase }) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { authToken: { secret: generateToken() } },
-  });
-};
-
 export const updateProtectedFileAccessTokenDuration = async (p: {
   pb: PocketBase;
   value: number;
@@ -160,5 +153,40 @@ export const updatePasswordResetTokenDuration = async (p: { pb: PocketBase; valu
   return updateUsersCollection({
     pb: p.pb,
     usersCollection: { passwordResetToken: { duration: p.value } },
+  });
+};
+
+export const invalidateAuthTokens = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { authToken: { secret: generateToken() } },
+  });
+};
+
+export const invalidateEmailChangeTokens = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { emailChangeToken: { secret: generateToken() } },
+  });
+};
+
+export const invalidateEmailVerificationTokens = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { verificationToken: { secret: generateToken() } },
+  });
+};
+
+export const invalidateFileAccessTokens = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { fileToken: { secret: generateToken() } },
+  });
+};
+
+export const invalidatePasswordResetTokens = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { passwordResetToken: { secret: generateToken() } },
   });
 };

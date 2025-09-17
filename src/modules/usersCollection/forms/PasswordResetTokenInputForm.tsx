@@ -1,14 +1,21 @@
+import { ConfirmationModalContent } from "@/components/Modal";
+import { Button } from "@/components/ui/button";
 import { NumberInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import {
   extractMessageFromPbError,
   showMultipleErrorMessagesAsToast,
 } from "@/modules/utils/pbUtils";
-import { TUsersCollection, updatePasswordResetTokenDuration } from "../pbUsersCollectionHelpers";
+import { useModalStore } from "@/stores/modalStore";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import {
+  invalidatePasswordResetTokens,
+  TUsersCollection,
+  updatePasswordResetTokenDuration,
+} from "../pbUsersCollectionHelpers";
 
 export const PasswordResetTokenDurationInputForm = (p: {
   pb: PocketBase;
@@ -17,6 +24,8 @@ export const PasswordResetTokenDurationInputForm = (p: {
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [innerValue, setInnerValue] = useState(p.value);
+
+  const modalStore = useModalStore();
 
   useEffect(() => setInnerValue(p.value), [p.value]);
 
@@ -43,7 +52,7 @@ export const PasswordResetTokenDurationInputForm = (p: {
       <Label htmlFor="users-collection-passwordResetTokenDuration-input">
         Password Reset Token Duration
       </Label>
-      <span className="flex gap-2">
+      <span className="flex items-baseline gap-2">
         <NumberInput
           id="users-collection-passwordResetTokenDuration-input"
           disabled={isLoading}
@@ -52,7 +61,21 @@ export const PasswordResetTokenDurationInputForm = (p: {
         />
         <Button type="submit">Submit</Button>
       </span>
-      <Label>This invalidates all previous issued tokens</Label>
+      <Link
+        href="#"
+        onClick={() =>
+          modalStore.setData(
+            <ConfirmationModalContent
+              title="Confirm token invalidation"
+              description="This will invalidate all previously issued tokens"
+              onConfirm={() => invalidatePasswordResetTokens({ pb })}
+            />,
+          )
+        }
+        className="text-xs hover:underline"
+      >
+        Invalidate all previously issued tokens
+      </Link>
     </form>
   );
 };

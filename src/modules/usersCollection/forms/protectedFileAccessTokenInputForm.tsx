@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
+  invalidateFileAccessTokens,
   TUsersCollection,
   updateProtectedFileAccessTokenDuration,
 } from "../pbUsersCollectionHelpers";
@@ -12,6 +13,9 @@ import {
   extractMessageFromPbError,
   showMultipleErrorMessagesAsToast,
 } from "@/modules/utils/pbUtils";
+import { ConfirmationModalContent } from "@/components/Modal";
+import Link from "next/link";
+import { useModalStore } from "@/stores/modalStore";
 
 export const ProtectedFileAccessTokenDurationInputForm = (p: {
   pb: PocketBase;
@@ -20,6 +24,8 @@ export const ProtectedFileAccessTokenDurationInputForm = (p: {
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [innerValue, setInnerValue] = useState(p.value);
+
+  const modalStore = useModalStore();
 
   useEffect(() => setInnerValue(p.value), [p.value]);
 
@@ -46,7 +52,7 @@ export const ProtectedFileAccessTokenDurationInputForm = (p: {
       <Label htmlFor="users-collection-protectedFileAccessTokenDuration-input">
         Protected File Access Token Duration
       </Label>
-      <span className="flex gap-2">
+      <span className="flex items-baseline gap-2">
         <NumberInput
           id="users-collection-protectedFileAccessTokenDuration-input"
           disabled={isLoading}
@@ -55,7 +61,21 @@ export const ProtectedFileAccessTokenDurationInputForm = (p: {
         />
         <Button type="submit">Submit</Button>
       </span>
-      <Label>This invalidates all previous issued tokens</Label>
+      <Link
+        href="#"
+        onClick={() =>
+          modalStore.setData(
+            <ConfirmationModalContent
+              title="Confirm token invalidation"
+              description="This will invalidate all previously issued tokens"
+              onConfirm={() => invalidateFileAccessTokens({ pb })}
+            />,
+          )
+        }
+        className="text-xs hover:underline"
+      >
+        Invalidate all previously issued tokens
+      </Link>
     </form>
   );
 };
