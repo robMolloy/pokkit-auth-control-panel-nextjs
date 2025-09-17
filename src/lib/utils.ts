@@ -79,3 +79,10 @@ export const isJwtValid = (jwt: string) => {
   const success = decodeResponse.data.payload.exp > now;
   return { success } as const;
 };
+
+export const generateToken = () => {
+  const suitableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  const getRandomInt = () => Math.floor(Math.random() * Math.floor(suitableChars.length));
+
+  return [...Array(50)].map(() => suitableChars[getRandomInt()]).join("");
+};
