@@ -1,6 +1,7 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { z } from "zod";
 import { extractMessageFromPbError } from "../utils/pbUtils";
+import { generateToken } from "@/lib/utils";
 
 const collectionName = "users";
 export const usersCollectionName = collectionName;
@@ -112,4 +113,18 @@ export const updateUsersCollection = async (p: {
       })(),
     } as const;
   }
+};
+
+export const updateAuthTokenDuration = async (p: { pb: PocketBase; value: number }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { authToken: { duration: p.value } },
+  });
+};
+
+export const invalidateAuthTokens = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { authToken: { secret: generateToken() } },
+  });
 };
