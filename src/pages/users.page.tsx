@@ -20,7 +20,72 @@ import {
 import { pb } from "@/config/pocketbaseConfig";
 import { useUsersStore } from "@/modules/users/usersStore";
 import { LoadingScreen } from "@/screens/LoadingScreen";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const Paginator = (p: {
+  pageNumber?: number;
+  setPageNumber?: (x: number) => void;
+  numberOfPages: number;
+}) => {
+  const [innerPageNumber, setInnerPageNumber] = useState(p.pageNumber ?? 0);
+
+  const allPageNumbers = [...Array(p.numberOfPages)].map((_, i) => i);
+  const firstVisiblePageNumber = Math.max(0, innerPageNumber - 2);
+  const lastVisiblePageNumber = Math.min(p.numberOfPages, innerPageNumber + 3);
+  const visiblePageNumbers = allPageNumbers.slice(firstVisiblePageNumber, lastVisiblePageNumber);
+  const lastPageNumber = Math.max(allPageNumbers.slice(-1)[0] ?? 0);
+  const isFirstPageNumberVisible = visiblePageNumbers.includes(0);
+  const isLastPageNumberVisible = visiblePageNumbers.includes(lastPageNumber);
+
+  useEffect(() => {
+    if (p.pageNumber) setInnerPageNumber(p.pageNumber);
+  }, [p.pageNumber]);
+  useEffect(() => p.setPageNumber?.(innerPageNumber), [innerPageNumber]);
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious onClick={() => setInnerPageNumber((x) => (x === 0 ? x : x - 1))} />
+        </PaginationItem>
+        {!isFirstPageNumberVisible && (
+          <>
+            <PaginationItem>
+              <PaginationLink onClick={() => setInnerPageNumber(0)}>{1}</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          </>
+        )}
+        {visiblePageNumbers.map((x) => (
+          <PaginationItem key={x}>
+            <PaginationLink onClick={() => setInnerPageNumber(x)} isActive={innerPageNumber === x}>
+              {x + 1}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        {!isLastPageNumberVisible && (
+          <>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink onClick={() => setInnerPageNumber(lastPageNumber)}>
+                {lastPageNumber + 1}
+              </PaginationLink>
+            </PaginationItem>
+          </>
+        )}
+        <PaginationItem>
+          <PaginationNext
+            onClick={() => setInnerPageNumber((x) => (x === lastPageNumber ? x : x + 1))}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+};
 
 export const UsersScreen = () => {
   const [pageSize, _setPageSize] = useState(5);
@@ -52,16 +117,6 @@ export const UsersScreen = () => {
       {usersStore.data &&
         (() => {
           const numberOfPages = Math.ceil(usersStore.data.length / pageSize);
-          const allPageNumbers = [...Array(numberOfPages)].map((_, i) => i);
-          const firstVisiblePageNumber = Math.max(0, pageNumber - 2);
-          const lastVisiblePageNumber = Math.min(numberOfPages, pageNumber + 3);
-          const visiblePageNumbers = allPageNumbers.slice(
-            firstVisiblePageNumber,
-            lastVisiblePageNumber,
-          );
-          const lastPageNumber = Math.max(allPageNumbers.slice(-1)[0] ?? 0);
-          const isFirstPageNumberVisible = visiblePageNumbers.includes(0);
-          const isLastPageNumberVisible = visiblePageNumbers.includes(lastPageNumber);
 
           return (
             <>
@@ -89,49 +144,11 @@ export const UsersScreen = () => {
               {firstItem + 1} to{" "}
               {lastItem < usersStore.data.length ? lastItem : usersStore.data.length + 1} of{" "}
               {usersStore.data.length + 1}
-              <Pagination>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() => setPageNumber((x) => (x === 0 ? x : x - 1))}
-                    />
-                  </PaginationItem>
-                  {!isFirstPageNumberVisible && (
-                    <>
-                      <PaginationItem>
-                        <PaginationLink onClick={() => setPageNumber(0)}>{1}</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationEllipsis />
-                      </PaginationItem>
-                    </>
-                  )}
-                  {visiblePageNumbers.map((x) => (
-                    <PaginationItem key={x}>
-                      <PaginationLink onClick={() => setPageNumber(x)} isActive={pageNumber === x}>
-                        {x + 1}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ))}
-                  {!isLastPageNumberVisible && (
-                    <>
-                      <PaginationItem>
-                        <PaginationEllipsis />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink onClick={() => setPageNumber(lastPageNumber)}>
-                          {lastPageNumber + 1}
-                        </PaginationLink>
-                      </PaginationItem>
-                    </>
-                  )}
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() => setPageNumber((x) => (x === lastPageNumber ? x : x + 1))}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
+              <Paginator
+                pageNumber={pageNumber}
+                setPageNumber={setPageNumber}
+                numberOfPages={numberOfPages}
+              />
             </>
           );
         })()}
