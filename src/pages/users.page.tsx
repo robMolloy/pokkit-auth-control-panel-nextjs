@@ -1,6 +1,7 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { ConfirmationModalContent } from "@/components/Modal";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Paginator } from "@/components/ui/pagination";
 import {
   Table,
@@ -11,15 +12,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { pb } from "@/config/pocketbaseConfig";
+import { deleteUsers } from "@/modules/users/dbUsersUtils";
 import { deleteUser } from "@/modules/users/dbUserUtils";
 import { useUsersStore } from "@/modules/users/usersStore";
-import {
-  extractMessageFromPbError,
-  showMultipleErrorMessagesAsToast,
-} from "@/modules/utils/pbUtils";
+import { showMultipleErrorMessagesAsToast } from "@/modules/utils/pbUtils";
 import { LoadingScreen } from "@/screens/LoadingScreen";
 import { useModalStore } from "@/stores/modalStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export const UsersScreen = () => {
@@ -33,12 +32,16 @@ export const UsersScreen = () => {
 
   const modalStore = useModalStore();
 
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+  useEffect(() => setSelectedUserIds([]), [modalStore.data, pageNumber]);
+
   return (
     <MainLayout>
       {usersStore.data === undefined && <LoadingScreen />}
       {usersStore.data === null && <div>No users found</div>}
       {usersStore.data &&
         (() => {
+          const displayedUsers = usersStore.data.slice(firstItem, lastItem);
           const PaginatorImplementation = () => (
             <Paginator
               pageNumber={pageNumber}
@@ -58,13 +61,24 @@ export const UsersScreen = () => {
                     <TableHead>Name</TableHead>
                     <TableHead>Email</TableHead>
                     <TableHead></TableHead>
+                    <TableHead>
+                      <Checkbox
+                        checked={selectedUserIds.length > 0}
+                        onCheckedChange={(checked) => {
+                          if (checked) return setSelectedUserIds(displayedUsers.map((x) => x.id));
+                          setSelectedUserIds([]);
+                        }}
+                      />
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                  {usersStore.data.slice(firstItem, lastItem).map((x, j) => (
+                  {displayedUsers.map((x, j) => (
                     <TableRow key={x.id}>
-                      <TableCell className="font-medium">{firstItem + j + 1}</TableCell>
+                      <TableCell className="font-medium">
+                        <span>{firstItem + j + 1}</span>
+                      </TableCell>
                       <TableCell className="font-medium">{x.id}</TableCell>
                       <TableCell className="font-medium">{x.name}</TableCell>
                       <TableCell className="font-medium">{x.email}</TableCell>
@@ -87,13 +101,42 @@ export const UsersScreen = () => {
                       >
                         <Button>Delete</Button>
                       </TableCell>
+                      <TableCell className="font-medium">
+                        <Checkbox
+                          checked={selectedUserIds.includes(x.id)}
+                          onCheckedChange={(checked) => {
+                            if (checked) return setSelectedUserIds([...selectedUserIds, x.id]);
+                            setSelectedUserIds(selectedUserIds.filter((y) => y !== x.id));
+                          }}
+                        />
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-              {firstItem + 1} to{" "}
-              {lastItem < usersStore.data.length ? lastItem : usersStore.data.length} of{" "}
-              {usersStore.data.length}
+              <div className="flex justify-between">
+                <span>{`${firstItem + 1} to ${lastItem < usersStore.data.length ? lastItem : usersStore.data.length} of ${usersStore.data.length}`}</span>
+                <Button
+                  disabled={selectedUserIds.length === 0}
+                  onClick={() => {
+                    modalStore.setData(
+                      <ConfirmationModalContent
+                        title="Delete users"
+                        description="Are you sure you want to delete these users?"
+                        content={<pre>{JSON.stringify(selectedUserIds, undefined, 2)}</pre>}
+                        onConfirm={async () => {
+                          const resp = await deleteUsers({ pb, ids: selectedUserIds });
+                          if (resp.success) return toast("Users deleted successfully");
+                          showMultipleErrorMessagesAsToast(resp.error.messages);
+                        }}
+                      />,
+                    );
+                  }}
+                >
+                  Delete selected{" "}
+                  {selectedUserIds.length === 0 ? "" : `(${selectedUserIds.length})`}
+                </Button>
+              </div>
               <PaginatorImplementation />
             </>
           );

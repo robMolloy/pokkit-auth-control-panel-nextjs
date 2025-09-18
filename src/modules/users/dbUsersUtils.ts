@@ -1,5 +1,6 @@
 import PocketBase from "pocketbase";
 import { TUser, userSchema } from "./dbUserUtils";
+import { extractMessageFromPbError } from "../utils/pbUtils";
 
 export const listUsers = async (p: { pb: PocketBase }) => {
   try {
@@ -56,4 +57,26 @@ export const smartSubscribeToUsers = async (p: {
   let allDocs = listUsersResp.data;
   p.onChange(allDocs);
   return subscribeToUsers({ pb: p.pb, initDocs: allDocs, onChange: p.onChange });
+};
+
+export const deleteUsers = async (p: { pb: PocketBase; ids: string[] }) => {
+  try {
+    const batch = p.pb.createBatch();
+    p.ids.forEach((x) => batch.collection("users").delete(x));
+    await batch.send();
+
+    return { success: true } as const;
+  } catch (error) {
+    const messagesResp = extractMessageFromPbError({ error });
+
+    return {
+      success: false,
+      error: (() => {
+        const fallback = "Delete user unsuccessful";
+        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+
+        return { messages };
+      })(),
+    } as const;
+  }
 };
