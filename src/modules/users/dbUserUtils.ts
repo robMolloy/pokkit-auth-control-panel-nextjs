@@ -1,5 +1,6 @@
 import PocketBase from "pocketbase";
 import { z } from "zod";
+import { extractMessageFromPbError } from "../utils/pbUtils";
 
 export const userSchema = z.object({
   collectionId: z.string(),
@@ -47,6 +48,16 @@ export const deleteUser = async (p: { pb: PocketBase; id: string }) => {
     await p.pb.collection("users").delete(p.id);
     return { success: true } as const;
   } catch (error) {
-    return { success: false, error } as const;
+    const messagesResp = extractMessageFromPbError({ error });
+
+    return {
+      success: false,
+      error: (() => {
+        const fallback = "Delete user unsuccessful";
+        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+
+        return { messages };
+      })(),
+    } as const;
   }
 };

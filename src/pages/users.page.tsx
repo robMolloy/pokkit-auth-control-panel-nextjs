@@ -1,4 +1,6 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
+import { ConfirmationModalContent } from "@/components/Modal";
+import { Button } from "@/components/ui/button";
 import { Paginator } from "@/components/ui/pagination";
 import {
   Table,
@@ -8,9 +10,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { pb } from "@/config/pocketbaseConfig";
+import { deleteUser } from "@/modules/users/dbUserUtils";
 import { useUsersStore } from "@/modules/users/usersStore";
+import {
+  extractMessageFromPbError,
+  showMultipleErrorMessagesAsToast,
+} from "@/modules/utils/pbUtils";
 import { LoadingScreen } from "@/screens/LoadingScreen";
+import { useModalStore } from "@/stores/modalStore";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const UsersScreen = () => {
   const usersStore = useUsersStore();
@@ -20,6 +30,8 @@ export const UsersScreen = () => {
 
   const firstItem = pageNumber * pageSize;
   const lastItem = firstItem + pageSize;
+
+  const modalStore = useModalStore();
 
   return (
     <MainLayout>
@@ -45,6 +57,7 @@ export const UsersScreen = () => {
                     <TableHead>Id</TableHead>
                     <TableHead>Name</TableHead>
                     <TableHead>Email</TableHead>
+                    <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
 
@@ -55,6 +68,25 @@ export const UsersScreen = () => {
                       <TableCell className="font-medium">{x.id}</TableCell>
                       <TableCell className="font-medium">{x.name}</TableCell>
                       <TableCell className="font-medium">{x.email}</TableCell>
+                      <TableCell
+                        className="font-medium"
+                        onClick={() =>
+                          modalStore.setData(
+                            <ConfirmationModalContent
+                              title="Delete user"
+                              description="Are you sure you want to delete this user?"
+                              content={<pre>{JSON.stringify(x, undefined, 2)}</pre>}
+                              onConfirm={async () => {
+                                const resp = await deleteUser({ pb, id: x.id });
+                                if (resp.success) return toast("User deleted successfully");
+                                showMultipleErrorMessagesAsToast(resp.error.messages);
+                              }}
+                            />,
+                          )
+                        }
+                      >
+                        <Button>Delete</Button>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

@@ -43,6 +43,7 @@ export const ModalContent = (p: {
 export const ConfirmationModalContent = (p: {
   title: string;
   description: string;
+  content?: ReactNode;
   onConfirm: () => void;
 }) => {
   const modalStore = useModalStore();
@@ -50,6 +51,7 @@ export const ConfirmationModalContent = (p: {
     <ModalContent
       title={p.title}
       description={p.description}
+      content={p.content}
       footer={
         <DialogFooterButtons>
           <Button variant="destructive" onClick={() => modalStore.close()}>
