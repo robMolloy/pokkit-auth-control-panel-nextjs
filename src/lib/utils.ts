@@ -82,7 +82,10 @@ export const isJwtValid = (jwt: string) => {
 
 export const generateToken = () => {
   const suitableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-  const getRandomInt = () => Math.floor(Math.random() * Math.floor(suitableChars.length));
+  const suitableCharsLength = suitableChars.length;
 
-  return [...Array(50)].map(() => suitableChars[getRandomInt()]).join("");
+  const getRandomInt = () => Math.floor(Math.random() * Math.floor(suitableCharsLength));
+  const getRandomChar = () => suitableChars[getRandomInt()];
+
+  return [...Array(50)].map(() => getRandomChar()).join("");
 };
