@@ -33,7 +33,7 @@ export const UsersScreen = () => {
   const modalStore = useModalStore();
 
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
-  useEffect(() => setSelectedUserIds([]), [modalStore.data, pageNumber]);
+  useEffect(() => setSelectedUserIds([]), [usersStore.data, pageNumber]);
 
   return (
     <MainLayout>
@@ -83,7 +83,7 @@ export const UsersScreen = () => {
                       <TableCell className="font-medium">{x.name}</TableCell>
                       <TableCell className="font-medium">{x.email}</TableCell>
                       <TableCell
-                        className="font-medium"
+                        className="flex justify-center font-medium"
                         onClick={() =>
                           modalStore.setData(
                             <ConfirmationModalContent
@@ -133,8 +133,7 @@ export const UsersScreen = () => {
                     );
                   }}
                 >
-                  Delete selected{" "}
-                  {selectedUserIds.length === 0 ? "" : `(${selectedUserIds.length})`}
+                  {`Delete selected ${selectedUserIds.length === 0 ? "" : `(${selectedUserIds.length})`}`}
                 </Button>
               </div>
               <PaginatorImplementation />
