@@ -106,12 +106,15 @@ const Paginator = (
   const firstVisiblePageNumber = Math.max(0, innerPageNumber - 2);
   const lastVisiblePageNumber = Math.min(numberOfPages, innerPageNumber + 3);
   const visiblePageNumbers = allPageNumbers.slice(firstVisiblePageNumber, lastVisiblePageNumber);
-  const lastPageNumber = Math.max(allPageNumbers.slice(-1)[0] ?? 0);
+  const lastPageNumber = Math.max(allPageNumbers.slice(-1)[0] ?? 0, 0);
 
   useEffect(() => {
     if (p.pageNumber) setInnerPageNumber(p.pageNumber);
   }, [p.pageNumber]);
   useEffect(() => p.setPageNumber?.(innerPageNumber), [innerPageNumber]);
+  useEffect(() => {
+    if (innerPageNumber >= numberOfPages) setInnerPageNumber(() => lastPageNumber);
+  }, [numberOfPages]);
 
   return (
     <Pagination>
@@ -119,12 +122,12 @@ const Paginator = (
         <PaginationItem>
           <PaginationPrevious onClick={() => setInnerPageNumber((x) => (x === 0 ? x : x - 1))} />
         </PaginationItem>
-        {!visiblePageNumbers.includes(0) && (
+        {!visiblePageNumbers.includes(0) && innerPageNumber > 0 && (
           <PaginationItem>
             <PaginationLink onClick={() => setInnerPageNumber(0)}>{1}</PaginationLink>
           </PaginationItem>
         )}
-        {!visiblePageNumbers.includes(1) && (
+        {!visiblePageNumbers.includes(1) && innerPageNumber > 0 && (
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
@@ -136,7 +139,7 @@ const Paginator = (
             </PaginationLink>
           </PaginationItem>
         ))}
-        {!visiblePageNumbers.includes(lastPageNumber - 1) && (
+        {!visiblePageNumbers.includes(lastPageNumber - 1) && innerPageNumber < lastPageNumber && (
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
