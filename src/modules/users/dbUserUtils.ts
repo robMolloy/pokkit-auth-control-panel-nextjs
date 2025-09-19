@@ -49,12 +49,13 @@ export const deleteUser = async (p: { pb: PocketBase; id: string }) => {
 
     z.literal(true).parse(resp);
 
-    const messages = ["User deleted successfully"];
+    const messages = ["Successfully deleted user"];
     return { success: true, messages } as const;
   } catch (error) {
     const messagesResp = extractMessageFromPbError({ error });
-    const fallback = "Delete user unsuccessful";
-    const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+
+    const title = "Failed to delete user";
+    const messages = [title, ...(messagesResp ? messagesResp : [])];
 
     return { success: false, error, messages } as const;
   }

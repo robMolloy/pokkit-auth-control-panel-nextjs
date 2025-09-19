@@ -5,7 +5,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
 import { updateOtpEmailTemplate } from "../dbUsersCollectionModelTemplateHelpers";
 
@@ -32,8 +31,6 @@ export const OtpEmailTemplateForm = (p: {
         setIsLoading(true);
         await (async () => {
           const resp = await updateOtpEmailTemplate({ pb, template: { subject, body } });
-
-          if (resp.success) return toast("template updated successfully");
 
           toastMultiMessages(resp.messages);
         })();
