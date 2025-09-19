@@ -4,7 +4,7 @@ import { PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
 import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { disableOAuth2, enableOAuth2 } from "../pbUsersCollectionOAuth2Helpers";
+import { disableOAuth2, enableOAuth2 } from "../pbUsersCollectionEnableFunctionalityHelpers";
 
 export const EnableOAuth2Toggle = (p: {
   pb: PocketBase;

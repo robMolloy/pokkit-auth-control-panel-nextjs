@@ -3,7 +3,8 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection, disableMfa, enableMfa } from "../pbUsersCollectionHelpers";
+import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import { disableMfa, enableMfa } from "../pbUsersCollectionEnableFunctionalityHelpers";
 
 export const EnableMfaToggle = (p: {
   pb: PocketBase;

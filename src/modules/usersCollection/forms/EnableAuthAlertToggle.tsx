@@ -3,7 +3,8 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { disableAuthAlert, enableAuthAlert, TUsersCollection } from "../pbUsersCollectionHelpers";
+import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import { disableAuthAlert, enableAuthAlert } from "../pbUsersCollectionEnableFunctionalityHelpers";
 
 export const EnableAuthAlertToggle = (p: {
   pb: PocketBase;
