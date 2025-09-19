@@ -34,7 +34,7 @@ export const PasswordResetTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updatePasswordResetTokenDuration({ pb, value: value });
+          const resp = await updatePasswordResetTokenDuration({ pb, duration: value });
 
           toastMultiMessages(resp.messages);
         })();

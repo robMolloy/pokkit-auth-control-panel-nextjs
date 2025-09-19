@@ -35,7 +35,7 @@ export const AuthTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateAuthTokenDuration({ pb, value: value });
+          const resp = await updateAuthTokenDuration({ pb, duration: value });
 
           toastMultiMessages(resp.messages);
         })();

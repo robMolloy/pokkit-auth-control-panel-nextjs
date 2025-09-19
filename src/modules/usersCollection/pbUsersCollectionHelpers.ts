@@ -102,21 +102,21 @@ export const updateUsersCollection = async (p: {
   }
 };
 
-export const updateAuthTokenDuration = async (p: { pb: PocketBase; value: number }) => {
+export const updateAuthTokenDuration = async (p: { pb: PocketBase; duration: number }) => {
   return updateUsersCollection({
     pb: p.pb,
-    usersCollection: { authToken: { duration: p.value } },
+    usersCollection: { authToken: { duration: p.duration } },
     successMessage: "Successfully updated authToken duration",
   });
 };
 
 export const updateProtectedFileAccessTokenDuration = async (p: {
   pb: PocketBase;
-  value: number;
+  duration: number;
 }) => {
   return updateUsersCollection({
     pb: p.pb,
-    usersCollection: { fileToken: { duration: p.value } },
+    usersCollection: { fileToken: { duration: p.duration } },
     successMessage: "Successfully updated protectedFileAccessToken duration",
   });
 };
@@ -131,19 +131,19 @@ export const updateEmailChangeTokenDuration = async (p: { pb: PocketBase; value:
 
 export const updateEmailVerificationTokenDuration = async (p: {
   pb: PocketBase;
-  value: number;
+  duration: number;
 }) => {
   return updateUsersCollection({
     pb: p.pb,
-    usersCollection: { verificationToken: { duration: p.value } },
+    usersCollection: { verificationToken: { duration: p.duration } },
     successMessage: "Successfully updated verificationToken duration",
   });
 };
 
-export const updatePasswordResetTokenDuration = async (p: { pb: PocketBase; value: number }) => {
+export const updatePasswordResetTokenDuration = async (p: { pb: PocketBase; duration: number }) => {
   return updateUsersCollection({
     pb: p.pb,
-    usersCollection: { passwordResetToken: { duration: p.value } },
+    usersCollection: { passwordResetToken: { duration: p.duration } },
     successMessage: "Successfully updated passwordResetToken duration",
   });
 };
@@ -204,42 +204,6 @@ export const disableAuthAlert = async (p: { pb: PocketBase }) => {
   });
 };
 
-export const updateAuthAlertEmailTemplate = async (p: {
-  pb: PocketBase;
-  authAlertEmailTemplate: TInitUsersCollectionUpdateSeed["authAlert"]["emailTemplate"];
-}) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { authAlert: { emailTemplate: p.authAlertEmailTemplate } },
-    successMessage: "Successfully updated authAlert email template",
-  });
-};
-
-export const updateConfirmEmailChangeTemplate = async (p: {
-  pb: PocketBase;
-  confirmEmailChangeTemplate: {
-    subject: string;
-    body: string;
-  };
-}) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { confirmEmailChangeTemplate: p.confirmEmailChangeTemplate },
-    successMessage: "Successfully updated confirmEmailChangeTemplate",
-  });
-};
-
-export const updateEmailVerificationTemplate = async (p: {
-  pb: PocketBase;
-  template: TUsersCollectionUpdateSeed["verificationTemplate"];
-}) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { verificationTemplate: p.template },
-    successMessage: "Successfully updated emailVerificationTemplate",
-  });
-};
-
 export const enableOtp = async (p: { pb: PocketBase }) => {
   return updateUsersCollection({
     pb: p.pb,
@@ -253,14 +217,6 @@ export const disableOtp = async (p: { pb: PocketBase }) => {
     pb: p.pb,
     usersCollection: { otp: { enabled: false } },
     successMessage: "Successfully disabled OTP",
-  });
-};
-
-export const updateOtpEmailTemplate = async (p: { pb: PocketBase; template: TTemplate }) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { otp: { emailTemplate: p.template } },
-    successMessage: "Successfully updated OTP email template",
   });
 };
 
@@ -293,6 +249,47 @@ export const disablePasswordAuth = async (p: { pb: PocketBase }) => {
     pb: p.pb,
     usersCollection: { passwordAuth: { enabled: false } },
     successMessage: "Successfully disabled passwordAuth",
+  });
+};
+
+export const updateAuthAlertEmailTemplate = async (p: {
+  pb: PocketBase;
+  authAlertEmailTemplate: TTemplate;
+}) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { authAlert: { emailTemplate: p.authAlertEmailTemplate } },
+    successMessage: "Successfully updated authAlert email template",
+  });
+};
+
+export const updateConfirmEmailChangeTemplate = async (p: {
+  pb: PocketBase;
+  confirmEmailChangeTemplate: TTemplate;
+}) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { confirmEmailChangeTemplate: p.confirmEmailChangeTemplate },
+    successMessage: "Successfully updated confirmEmailChangeTemplate",
+  });
+};
+
+export const updateEmailVerificationTemplate = async (p: {
+  pb: PocketBase;
+  template: TTemplate;
+}) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { verificationTemplate: p.template },
+    successMessage: "Successfully updated emailVerificationTemplate",
+  });
+};
+
+export const updateOtpEmailTemplate = async (p: { pb: PocketBase; template: TTemplate }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { otp: { emailTemplate: p.template } },
+    successMessage: "Successfully updated OTP email template",
   });
 };
 

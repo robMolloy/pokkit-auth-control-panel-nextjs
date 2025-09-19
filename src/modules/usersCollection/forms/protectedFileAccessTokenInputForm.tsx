@@ -35,7 +35,7 @@ export const ProtectedFileAccessTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateProtectedFileAccessTokenDuration({ pb, value: value });
+          const resp = await updateProtectedFileAccessTokenDuration({ pb, duration: value });
 
           if (resp.success) return toast("token updated successfully");
 

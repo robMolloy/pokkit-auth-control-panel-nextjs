@@ -34,7 +34,7 @@ export const EmailVerificationTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateEmailVerificationTokenDuration({ pb, value: value });
+          const resp = await updateEmailVerificationTokenDuration({ pb, duration: value });
 
           toastMultiMessages(resp.messages);
         })();
