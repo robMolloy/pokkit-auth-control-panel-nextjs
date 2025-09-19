@@ -2,6 +2,7 @@ import { PocketBase } from "@/config/pocketbaseConfig";
 import { z } from "zod";
 import { extractMessageFromPbError } from "../utils/pbUtils";
 import { generateToken } from "@/lib/utils";
+import { DeepPartial } from "../utils/typeUtils";
 
 const collectionName = "users";
 export const usersCollectionName = collectionName;
@@ -66,9 +67,6 @@ export const usersCollectionSchema = z.object({
 });
 
 export type TUsersCollection = z.infer<typeof usersCollectionSchema>;
-type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
 
 export type TInitUsersCollectionUpdateSeed = Omit<
   TUsersCollection,
