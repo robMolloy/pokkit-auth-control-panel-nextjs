@@ -34,11 +34,7 @@ export const EnableOAuth2Toggle = (p: {
 
             if (resp.success) setInnerValue(resp.data);
 
-            toastMultiMessages(
-              resp.success
-                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} oAuth2`]
-                : resp.messages,
-            );
+            toastMultiMessages(resp.messages);
           })();
 
           setIsLoading(false);

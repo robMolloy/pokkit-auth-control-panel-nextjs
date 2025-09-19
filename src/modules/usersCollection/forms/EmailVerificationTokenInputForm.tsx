@@ -3,11 +3,10 @@ import { Button } from "@/components/ui/button";
 import { NumberInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
-import { extractMessageFromPbError, toastMultiMessages } from "@/modules/utils/pbUtils";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import {
   invalidateEmailVerificationTokens,
   TUsersCollection,
@@ -37,10 +36,7 @@ export const EmailVerificationTokenDurationInputForm = (p: {
         await (async () => {
           const resp = await updateEmailVerificationTokenDuration({ pb, value: innerValue });
 
-          if (resp.success) return toast("token updated successfully");
-
-          const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) toastMultiMessages(errorMessages);
+          toastMultiMessages(resp.messages);
         })();
 
         setIsLoading(false);

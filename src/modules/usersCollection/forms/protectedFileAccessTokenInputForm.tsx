@@ -1,18 +1,18 @@
+import { ConfirmationModalContent } from "@/components/Modal";
+import { Button } from "@/components/ui/button";
 import { NumberInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
+import { extractMessageFromPbError, toastMultiMessages } from "@/modules/utils/pbUtils";
+import { useModalStore } from "@/stores/modalStore";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
   invalidateFileAccessTokens,
   TUsersCollection,
   updateProtectedFileAccessTokenDuration,
 } from "../pbUsersCollectionHelpers";
-import { extractMessageFromPbError, toastMultiMessages } from "@/modules/utils/pbUtils";
-import { ConfirmationModalContent } from "@/components/Modal";
-import Link from "next/link";
-import { useModalStore } from "@/stores/modalStore";
 
 export const ProtectedFileAccessTokenDurationInputForm = (p: {
   pb: PocketBase;
@@ -65,7 +65,10 @@ export const ProtectedFileAccessTokenDurationInputForm = (p: {
             <ConfirmationModalContent
               title="Confirm token invalidation"
               description="This will invalidate all previously issued tokens"
-              onConfirm={() => invalidateFileAccessTokens({ pb })}
+              onConfirm={async () => {
+                const resp = await invalidateFileAccessTokens({ pb });
+                toastMultiMessages(resp.messages);
+              }}
             />,
           )
         }

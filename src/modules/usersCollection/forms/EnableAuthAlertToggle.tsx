@@ -1,9 +1,9 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
 import { disableAuthAlert, enableAuthAlert, TUsersCollection } from "../pbUsersCollectionHelpers";
-import { toastMultiMessages } from "@/modules/utils/pbUtils";
 
 export const EnableAuthAlertToggle = (p: {
   pb: PocketBase;
@@ -34,11 +34,7 @@ export const EnableAuthAlertToggle = (p: {
 
             if (resp.success) setInnerValue(resp.data);
 
-            toastMultiMessages(
-              resp.success
-                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} auth alert`]
-                : resp.messages,
-            );
+            toastMultiMessages(resp.messages);
           })();
 
           setIsLoading(false);

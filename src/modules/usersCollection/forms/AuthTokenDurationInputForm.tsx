@@ -5,10 +5,9 @@ import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 
 import { ConfirmationModalContent } from "@/components/Modal";
-import { extractMessageFromPbError, toastMultiMessages } from "@/modules/utils/pbUtils";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
-import { toast } from "sonner";
 import {
   invalidateAuthTokens,
   TUsersCollection,
@@ -38,10 +37,7 @@ export const AuthTokenDurationInputForm = (p: {
         await (async () => {
           const resp = await updateAuthTokenDuration({ pb, value: innerValue });
 
-          if (resp.success) return toast("token updated successfully");
-
-          const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) toastMultiMessages(errorMessages);
+          toastMultiMessages(resp.messages);
         })();
 
         setIsLoading(false);

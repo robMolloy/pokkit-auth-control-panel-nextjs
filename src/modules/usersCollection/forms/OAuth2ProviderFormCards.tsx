@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useState } from "react";
-import { OAuth2ProviderImage } from "./OAuth2ProviderImage";
 import { TUsersCollection } from "../pbUsersCollectionHelpers";
 import {
   TOAuth2ProviderName,
@@ -13,6 +12,16 @@ import {
   removeOAuth2Provider,
   oAuth2ProviderNames,
 } from "../pbUsersCollectionOAuth2Helpers";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
+
+const OAuth2ProviderImage = (p: { providerName: TOAuth2ProviderName }) => {
+  const src = `${process.env.NEXT_PUBLIC_POCKETBASE_URL}/_/images/oauth2/${p.providerName}.svg`;
+  return (
+    <span className="inline-block rounded bg-primary p-1">
+      <img src={src} alt={`${p.providerName} logo`} className="inline-block h-12 w-12" />
+    </span>
+  );
+};
 
 export const OAuth2ProviderForm = (p: {
   pb: PocketBase;
@@ -34,7 +43,9 @@ export const OAuth2ProviderForm = (p: {
           provider: { name: p.providerName, clientId, clientSecret },
           usersCollection: p.usersCollection,
         });
+
         if (resp.success) p.onUsersCollectionUpdate(resp.data);
+        toastMultiMessages(resp.messages);
       }}
     >
       <div className="flex flex-col gap-4">
