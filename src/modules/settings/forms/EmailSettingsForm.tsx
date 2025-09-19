@@ -1,11 +1,33 @@
 import { Button } from "@/components/ui/button";
 import { NumberInput, TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SimpleSelect } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TSettings, updateEmailSettings } from "../dbSettings";
+
+const SmtpServerTlsSelect = (p: { value: boolean; onValueChange: (x: boolean) => void }) => {
+  const [value, setValue] = useState(p.value);
+  const [textValue, setTextValue] = useState(p.value ? "true" : "false");
+
+  useEffect(() => p.onValueChange(value), [value]);
+  useEffect(() => setTextValue(p.value ? "true" : "false"), [p.value]);
+  useEffect(() => setValue(textValue === "true"), [textValue]);
+
+  return (
+    <SimpleSelect
+      value={textValue}
+      onValueChange={(x) => setTextValue(x)}
+      options={[
+        { name: "Auto (StartTLS)", value: "false" },
+        { name: "Always", value: "true" },
+      ]}
+      placeholder="Select an option"
+    />
+  );
+};
 
 export const EmailSettingsForm = (p: {
   pb: PocketBase;
@@ -129,22 +151,20 @@ export const EmailSettingsForm = (p: {
               onInput={(serverLocalName) => setSmtpServerLocalName(serverLocalName)}
             />
           </div>
-          <div className="flex items-center gap-2">
-            <Switch
-              id="emailSettings-serverTls-toggle"
-              disabled={isLoading}
-              checked={smtpServerTls}
-              onCheckedChange={async () => setSmtpServerTls((x) => !x)}
-            />
+          <div>
             <Label htmlFor="emailSettings-serverTls-input">Server Tls</Label>
+            <SmtpServerTlsSelect value={smtpServerTls} onValueChange={(x) => setSmtpServerTls(x)} />
           </div>
           <div>
-            <Label htmlFor="emailSettings-serverAuthMethod-input">Server AuthMethod</Label>
-            <TextInput
-              id="emailSettings-serverAuthMethod-input"
-              disabled={isLoading}
+            <Label htmlFor="emailSettings-serverAuthMethod-select">Server AuthMethod</Label>
+            <SimpleSelect
               value={smtpServerAuthMethod}
-              onInput={(serverAuthMethod) => setSmtpServerAuthMethod(serverAuthMethod)}
+              onValueChange={(x) => setSmtpServerAuthMethod(x)}
+              options={[
+                { name: "PLAIN", value: "PLAIN" },
+                { name: "LOGIN", value: "LOGIN" },
+              ]}
+              placeholder="Select an option"
             />
           </div>
         </div>

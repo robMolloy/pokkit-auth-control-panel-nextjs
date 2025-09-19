@@ -107,7 +107,30 @@ const SelectSeparator = React.forwardRef<
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
+const SimpleSelect = (p: {
+  value: string;
+  onValueChange: (x: string) => void;
+  options: { name: string; value: string }[];
+  placeholder: string;
+}) => {
+  return (
+    <Select value={p.value} onValueChange={(x) => p.onValueChange(x)}>
+      <SelectTrigger>
+        <SelectValue placeholder={p.placeholder} />
+      </SelectTrigger>
+      <SelectContent>
+        {p.options.map((x) => (
+          <SelectItem key={x.name} value={x.value}>
+            {x.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+};
+
 export {
+  SimpleSelect,
   Select,
   SelectGroup,
   SelectValue,
