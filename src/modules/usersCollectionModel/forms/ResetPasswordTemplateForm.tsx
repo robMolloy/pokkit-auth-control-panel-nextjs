@@ -5,10 +5,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { updateEmailVerificationTemplate } from "../pbUsersCollectionTemplateHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
+import { updateResetPasswordTemplate } from "../dbUsersCollectionModelTemplateHelpers";
 
-export const EmailVerificationTemplateForm = (p: {
+export const ResetPasswordTemplateForm = (p: {
   pb: PocketBase;
   body: string;
   subject: string;
@@ -30,7 +30,7 @@ export const EmailVerificationTemplateForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateEmailVerificationTemplate({ pb, template: { subject, body } });
+          const resp = await updateResetPasswordTemplate({ pb, template: { subject, body } });
 
           toastMultiMessages(resp.messages);
         })();
@@ -39,18 +39,18 @@ export const EmailVerificationTemplateForm = (p: {
       }}
     >
       <div>
-        <Label htmlFor="users-collection-emailVerificationTemplateSubject-input">Subject</Label>
+        <Label htmlFor="users-collection-resetPasswordTemplateSubject-input">Subject</Label>
         <TextInput
-          id="users-collection-emailVerificationTemplateSubject-input"
+          id="users-collection-resetPasswordTemplateSubject-input"
           disabled={isLoading}
           value={subject}
           onInput={async (subject) => setSubject(subject)}
         />
       </div>
       <div>
-        <Label htmlFor="users-collection-emailVerificationTemplateBody-input">Body</Label>
+        <Label htmlFor="users-collection-resetPasswordTemplateBody-input">Body</Label>
         <Textarea
-          id="users-collection-emailVerificationTemplateBody-input"
+          id="users-collection-resetPasswordTemplateBody-input"
           disabled={isLoading}
           value={body}
           onInput={(body) => setBody(body)}

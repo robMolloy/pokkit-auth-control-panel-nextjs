@@ -5,8 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { updateAuthAlertEmailTemplate } from "../pbUsersCollectionTemplateHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
+import { updateAuthAlertEmailTemplate } from "../dbUsersCollectionModelTemplateHelpers";
 
 export const AuthAlertEmailTemplateForm = (p: {
   pb: PocketBase;

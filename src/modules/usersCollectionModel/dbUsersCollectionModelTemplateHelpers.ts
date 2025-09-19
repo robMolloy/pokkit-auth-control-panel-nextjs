@@ -1,5 +1,5 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
-import { TTemplate, updateUsersCollection } from "./pbUsersCollectionHelpers";
+import { TTemplate, updateUsersCollection } from "./dbUsersCollectionModelHelpers";
 
 export const updateAuthAlertEmailTemplate = async (p: { pb: PocketBase; template: TTemplate }) => {
   return updateUsersCollection({

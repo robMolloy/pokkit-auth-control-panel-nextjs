@@ -1,12 +1,12 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
-import { EnableOAuth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOAuth2Toggle";
-import { OAuth2ProvidersFormCards } from "@/modules/usersCollection/forms/OAuth2ProviderFormCards";
+import { EnableOAuth2Toggle } from "@/modules/usersCollectionModel/forms/EnableUsersCollectionOAuth2Toggle";
+import { OAuth2ProvidersFormCards } from "@/modules/usersCollectionModel/forms/OAuth2ProviderFormCards";
 import {
   getUsersCollection,
   TUsersCollection,
-} from "@/modules/usersCollection/pbUsersCollectionHelpers";
+} from "@/modules/usersCollectionModel/dbUsersCollectionModelHelpers";
 import { useEffect, useState } from "react";
 
 export default function Home() {

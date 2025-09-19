@@ -5,10 +5,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { updateConfirmEmailChangeTemplate } from "../pbUsersCollectionTemplateHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
+import { updateEmailVerificationTemplate } from "../dbUsersCollectionModelTemplateHelpers";
 
-export const ConfirmEmailChangeTemplateForm = (p: {
+export const EmailVerificationTemplateForm = (p: {
   pb: PocketBase;
   body: string;
   subject: string;
@@ -30,7 +30,7 @@ export const ConfirmEmailChangeTemplateForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateConfirmEmailChangeTemplate({ pb, template: { subject, body } });
+          const resp = await updateEmailVerificationTemplate({ pb, template: { subject, body } });
 
           toastMultiMessages(resp.messages);
         })();
@@ -39,18 +39,18 @@ export const ConfirmEmailChangeTemplateForm = (p: {
       }}
     >
       <div>
-        <Label htmlFor="users-collection-confirmEmailChangeTemplateSubject-input">Subject</Label>
+        <Label htmlFor="users-collection-emailVerificationTemplateSubject-input">Subject</Label>
         <TextInput
-          id="users-collection-confirmEmailChangeTemplateSubject-input"
+          id="users-collection-emailVerificationTemplateSubject-input"
           disabled={isLoading}
           value={subject}
           onInput={async (subject) => setSubject(subject)}
         />
       </div>
       <div>
-        <Label htmlFor="users-collection-confirmEmailChangeTemplateBody-input">Body</Label>
+        <Label htmlFor="users-collection-emailVerificationTemplateBody-input">Body</Label>
         <Textarea
-          id="users-collection-confirmEmailChangeTemplateBody-input"
+          id="users-collection-emailVerificationTemplateBody-input"
           disabled={isLoading}
           value={body}
           onInput={(body) => setBody(body)}

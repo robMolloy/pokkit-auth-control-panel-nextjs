@@ -7,11 +7,11 @@ import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { updateEmailVerificationTokenDuration } from "../pbUsersCollectionModelTokenDurationHelpers";
-import { invalidateEmailVerificationTokens } from "../pbUsersCollectionInvalidateTokensHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
+import { updatePasswordResetTokenDuration } from "../dbUsersCollectionModelTokenDurationHelpers";
+import { invalidatePasswordResetTokens } from "../dbUsersCollectionModelInvalidateTokensHelpers";
 
-export const EmailVerificationTokenDurationInputForm = (p: {
+export const PasswordResetTokenDurationInputForm = (p: {
   pb: PocketBase;
   value: number;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
@@ -32,7 +32,7 @@ export const EmailVerificationTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateEmailVerificationTokenDuration({ pb, duration: value });
+          const resp = await updatePasswordResetTokenDuration({ pb, duration: value });
 
           toastMultiMessages(resp.messages);
         })();
@@ -40,12 +40,12 @@ export const EmailVerificationTokenDurationInputForm = (p: {
         setIsLoading(false);
       }}
     >
-      <Label htmlFor="users-collection-emailVerificationTokenDuration-input">
-        Email Verification Token Duration
+      <Label htmlFor="users-collection-passwordResetTokenDuration-input">
+        Password Reset Token Duration
       </Label>
       <span className="flex items-baseline gap-2">
         <NumberInput
-          id="users-collection-emailVerificationTokenDuration-input"
+          id="users-collection-passwordResetTokenDuration-input"
           disabled={isLoading}
           value={value}
           onInput={async (e) => setValue(e)}
@@ -59,7 +59,7 @@ export const EmailVerificationTokenDurationInputForm = (p: {
             <ConfirmationModalContent
               title="Confirm token invalidation"
               description="This will invalidate all previously issued tokens"
-              onConfirm={() => invalidateEmailVerificationTokens({ pb })}
+              onConfirm={() => invalidatePasswordResetTokens({ pb })}
             />,
           )
         }

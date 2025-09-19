@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
 import {
   TOAuth2ProviderName,
   TOAuth2Provider,
   addOAuth2Provider,
   removeOAuth2Provider,
   oAuth2ProviderNames,
-} from "../pbUsersCollectionOAuth2Helpers";
+} from "../dbUsersCollectionModelOAuth2Helpers";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 
 const OAuth2ProviderImage = (p: { providerName: TOAuth2ProviderName }) => {

@@ -3,8 +3,8 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { disableOtp, enableOtp } from "../pbUsersCollectionEnableFunctionalityHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
+import { disableOtp, enableOtp } from "../dbUsersCollectionModelEnableFunctionalityHelpers";
 
 export const EnableOtpToggle = (p: {
   pb: PocketBase;

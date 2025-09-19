@@ -3,11 +3,11 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
 import {
   disablePasswordAuth,
   enablePasswordAuth,
-} from "../pbUsersCollectionEnableFunctionalityHelpers";
+} from "../dbUsersCollectionModelEnableFunctionalityHelpers";
 
 export const EnablePasswordAuthToggle = (p: {
   pb: PocketBase;

@@ -7,11 +7,11 @@ import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { updatePasswordResetTokenDuration } from "../pbUsersCollectionModelTokenDurationHelpers";
-import { invalidatePasswordResetTokens } from "../pbUsersCollectionInvalidateTokensHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
+import { updateProtectedFileAccessTokenDuration } from "../dbUsersCollectionModelTokenDurationHelpers";
+import { invalidateFileAccessTokens } from "../dbUsersCollectionModelInvalidateTokensHelpers";
 
-export const PasswordResetTokenDurationInputForm = (p: {
+export const ProtectedFileAccessTokenDurationInputForm = (p: {
   pb: PocketBase;
   value: number;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
@@ -32,7 +32,7 @@ export const PasswordResetTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updatePasswordResetTokenDuration({ pb, duration: value });
+          const resp = await updateProtectedFileAccessTokenDuration({ pb, duration: value });
 
           toastMultiMessages(resp.messages);
         })();
@@ -40,12 +40,12 @@ export const PasswordResetTokenDurationInputForm = (p: {
         setIsLoading(false);
       }}
     >
-      <Label htmlFor="users-collection-passwordResetTokenDuration-input">
-        Password Reset Token Duration
+      <Label htmlFor="users-collection-protectedFileAccessTokenDuration-input">
+        Protected File Access Token Duration
       </Label>
       <span className="flex items-baseline gap-2">
         <NumberInput
-          id="users-collection-passwordResetTokenDuration-input"
+          id="users-collection-protectedFileAccessTokenDuration-input"
           disabled={isLoading}
           value={value}
           onInput={async (e) => setValue(e)}
@@ -59,7 +59,10 @@ export const PasswordResetTokenDurationInputForm = (p: {
             <ConfirmationModalContent
               title="Confirm token invalidation"
               description="This will invalidate all previously issued tokens"
-              onConfirm={() => invalidatePasswordResetTokens({ pb })}
+              onConfirm={async () => {
+                const resp = await invalidateFileAccessTokens({ pb });
+                toastMultiMessages(resp.messages);
+              }}
             />,
           )
         }

@@ -1,5 +1,5 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
-import { TUsersCollection, updateUsersCollection } from "./pbUsersCollectionHelpers";
+import { TUsersCollection, updateUsersCollection } from "./dbUsersCollectionModelHelpers";
 
 export type TOAuth2Provider = TUsersCollection["oauth2"]["providers"][number];
 type TOAuth2ProviderSeed = Pick<TOAuth2Provider, "name" | "clientId"> & { clientSecret: string };

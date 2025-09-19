@@ -1,15 +1,15 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
-import { AuthTokenDurationInputForm } from "@/modules/usersCollection/forms/AuthTokenDurationInputForm";
-import { EmailChangeTokenDurationInputForm } from "@/modules/usersCollection/forms/EmailChangeTokenDurationInputForm";
-import { EmailVerificationTokenDurationInputForm } from "@/modules/usersCollection/forms/EmailVerificationTokenInputForm";
-import { PasswordResetTokenDurationInputForm } from "@/modules/usersCollection/forms/PasswordResetTokenInputForm";
-import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/usersCollection/forms/ProtectedFileAccessTokenInputForm";
+import { AuthTokenDurationInputForm } from "@/modules/usersCollectionModel/forms/AuthTokenDurationInputForm";
+import { EmailChangeTokenDurationInputForm } from "@/modules/usersCollectionModel/forms/EmailChangeTokenDurationInputForm";
+import { EmailVerificationTokenDurationInputForm } from "@/modules/usersCollectionModel/forms/EmailVerificationTokenInputForm";
+import { PasswordResetTokenDurationInputForm } from "@/modules/usersCollectionModel/forms/PasswordResetTokenInputForm";
+import { ProtectedFileAccessTokenDurationInputForm } from "@/modules/usersCollectionModel/forms/ProtectedFileAccessTokenInputForm";
 import {
   getUsersCollection,
   TUsersCollection,
-} from "@/modules/usersCollection/pbUsersCollectionHelpers";
+} from "@/modules/usersCollectionModel/dbUsersCollectionModelHelpers";
 import { useEffect, useState } from "react";
 
 export default function Home() {

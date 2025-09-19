@@ -1,6 +1,6 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { generateToken } from "@/lib/utils";
-import { updateUsersCollection } from "./pbUsersCollectionHelpers";
+import { updateUsersCollection } from "./dbUsersCollectionModelHelpers";
 
 export const invalidateAuthTokens = async (p: { pb: PocketBase }) => {
   return updateUsersCollection({

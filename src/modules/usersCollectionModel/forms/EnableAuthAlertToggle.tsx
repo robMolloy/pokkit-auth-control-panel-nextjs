@@ -3,34 +3,38 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { disableOAuth2, enableOAuth2 } from "../pbUsersCollectionEnableFunctionalityHelpers";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
+import {
+  disableAuthAlert,
+  enableAuthAlert,
+} from "../dbUsersCollectionModelEnableFunctionalityHelpers";
 
-export const EnableOAuth2Toggle = (p: {
+export const EnableAuthAlertToggle = (p: {
   pb: PocketBase;
   usersCollection: TUsersCollection;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(p.usersCollection);
-  const isChecked = value.oauth2.enabled;
+  const isChecked = value.authAlert.enabled;
 
-  useEffect(() => setValue(p.usersCollection), [p.usersCollection.oauth2.enabled]);
+  useEffect(() => setValue(p.usersCollection), [p.usersCollection.authAlert.enabled]);
+  useEffect(() => p.onUsersCollectionUpdate(value), [value]);
 
   return (
     <span className="flex items-center gap-2">
       <Switch
-        id="enable-users-collection-oauth2-switch"
+        id="enable-users-collection-authAlert-switch"
         disabled={isLoading}
-        checked={value.oauth2.enabled}
+        checked={value.authAlert.enabled}
         onCheckedChange={async () => {
           if (isLoading) return;
           setIsLoading(true);
 
           await (async () => {
             const resp = await (isChecked
-              ? disableOAuth2({ pb: p.pb })
-              : enableOAuth2({ pb: p.pb }));
+              ? disableAuthAlert({ pb: p.pb })
+              : enableAuthAlert({ pb: p.pb }));
 
             if (resp.success) setValue(resp.data);
 
@@ -40,7 +44,7 @@ export const EnableOAuth2Toggle = (p: {
           setIsLoading(false);
         }}
       />
-      <Label htmlFor="enable-users-collection-oauth2-switch">Enable oAuth2</Label>
+      <Label htmlFor="enable-users-collection-authAlert-switch">Enable Auth Alert</Label>
     </span>
   );
 };

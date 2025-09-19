@@ -1,15 +1,15 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
-import { EnableAuthAlertToggle } from "@/modules/usersCollection/forms/EnableAuthAlertToggle";
-import { EnableMfaToggle } from "@/modules/usersCollection/forms/EnableMfaToggle";
-import { EnableOtpToggle } from "@/modules/usersCollection/forms/EnableOtpToggle";
-import { EnablePasswordAuthToggle } from "@/modules/usersCollection/forms/EnablePasswordAuthToggle";
-import { EnableOAuth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOAuth2Toggle";
+import { EnableAuthAlertToggle } from "@/modules/usersCollectionModel/forms/EnableAuthAlertToggle";
+import { EnableMfaToggle } from "@/modules/usersCollectionModel/forms/EnableMfaToggle";
+import { EnableOtpToggle } from "@/modules/usersCollectionModel/forms/EnableOtpToggle";
+import { EnablePasswordAuthToggle } from "@/modules/usersCollectionModel/forms/EnablePasswordAuthToggle";
+import { EnableOAuth2Toggle } from "@/modules/usersCollectionModel/forms/EnableUsersCollectionOAuth2Toggle";
 import {
   getUsersCollection,
   TUsersCollection,
-} from "@/modules/usersCollection/pbUsersCollectionHelpers";
+} from "@/modules/usersCollectionModel/dbUsersCollectionModelHelpers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

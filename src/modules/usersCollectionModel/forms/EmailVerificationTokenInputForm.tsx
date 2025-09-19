@@ -1,18 +1,17 @@
+import { ConfirmationModalContent } from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import { NumberInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
-import { useEffect, useState } from "react";
-
-import { ConfirmationModalContent } from "@/components/Modal";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
-import { TUsersCollection } from "../pbUsersCollectionHelpers";
-import { updateAuthTokenDuration } from "../pbUsersCollectionModelTokenDurationHelpers";
-import { invalidateAuthTokens } from "../pbUsersCollectionInvalidateTokensHelpers";
+import { useEffect, useState } from "react";
+import { TUsersCollection } from "../dbUsersCollectionModelHelpers";
+import { updateEmailVerificationTokenDuration } from "../dbUsersCollectionModelTokenDurationHelpers";
+import { invalidateEmailVerificationTokens } from "../dbUsersCollectionModelInvalidateTokensHelpers";
 
-export const AuthTokenDurationInputForm = (p: {
+export const EmailVerificationTokenDurationInputForm = (p: {
   pb: PocketBase;
   value: number;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
@@ -33,7 +32,7 @@ export const AuthTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateAuthTokenDuration({ pb, duration: value });
+          const resp = await updateEmailVerificationTokenDuration({ pb, duration: value });
 
           toastMultiMessages(resp.messages);
         })();
@@ -41,10 +40,12 @@ export const AuthTokenDurationInputForm = (p: {
         setIsLoading(false);
       }}
     >
-      <Label htmlFor="users-collection-authTokenDuration-input">Auth Token Duration</Label>
+      <Label htmlFor="users-collection-emailVerificationTokenDuration-input">
+        Email Verification Token Duration
+      </Label>
       <span className="flex items-baseline gap-2">
         <NumberInput
-          id="users-collection-authTokenDuration-input"
+          id="users-collection-emailVerificationTokenDuration-input"
           disabled={isLoading}
           value={value}
           onInput={async (e) => setValue(e)}
@@ -58,7 +59,7 @@ export const AuthTokenDurationInputForm = (p: {
             <ConfirmationModalContent
               title="Confirm token invalidation"
               description="This will invalidate all previously issued tokens"
-              onConfirm={() => invalidateAuthTokens({ pb })}
+              onConfirm={() => invalidateEmailVerificationTokens({ pb })}
             />,
           )
         }

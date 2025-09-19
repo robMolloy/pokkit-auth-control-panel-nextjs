@@ -1,5 +1,5 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
-import { updateUsersCollection } from "./pbUsersCollectionHelpers";
+import { updateUsersCollection } from "./dbUsersCollectionModelHelpers";
 
 export const updateAuthTokenDuration = async (p: { pb: PocketBase; duration: number }) => {
   return updateUsersCollection({

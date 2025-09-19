@@ -1,15 +1,15 @@
 import { AccordionCard } from "@/components/AccordionCard";
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
-import { AuthAlertEmailTemplateForm } from "@/modules/usersCollection/forms/AuthAlertEmailTemplateForm";
-import { ConfirmEmailChangeTemplateForm } from "@/modules/usersCollection/forms/ConfirmEmailChangeTemplateForm";
-import { EmailVerificationTemplateForm } from "@/modules/usersCollection/forms/EmailVerificationTemplateForm";
-import { OtpEmailTemplateForm } from "@/modules/usersCollection/forms/OtpEmailTemplateForm";
-import { ResetPasswordTemplateForm } from "@/modules/usersCollection/forms/ResetPasswordTemplateForm";
+import { AuthAlertEmailTemplateForm } from "@/modules/usersCollectionModel/forms/AuthAlertEmailTemplateForm";
+import { ConfirmEmailChangeTemplateForm } from "@/modules/usersCollectionModel/forms/ConfirmEmailChangeTemplateForm";
+import { EmailVerificationTemplateForm } from "@/modules/usersCollectionModel/forms/EmailVerificationTemplateForm";
+import { OtpEmailTemplateForm } from "@/modules/usersCollectionModel/forms/OtpEmailTemplateForm";
+import { ResetPasswordTemplateForm } from "@/modules/usersCollectionModel/forms/ResetPasswordTemplateForm";
 import {
   getUsersCollection,
   TUsersCollection,
-} from "@/modules/usersCollection/pbUsersCollectionHelpers";
+} from "@/modules/usersCollectionModel/dbUsersCollectionModelHelpers";
 import { useEffect, useState } from "react";
 
 const Page = () => {
