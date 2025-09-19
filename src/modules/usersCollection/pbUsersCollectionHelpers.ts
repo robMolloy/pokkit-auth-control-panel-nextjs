@@ -240,3 +240,14 @@ export const updateConfirmEmailChangeTemplate = async (p: {
     successMessage: "Successfully updated confirmEmailChangeTemplate",
   });
 };
+
+export const updateEmailVerificationTemplate = async (p: {
+  pb: PocketBase;
+  template: TUsersCollectionUpdateSeed["verificationTemplate"];
+}) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { verificationTemplate: p.template },
+    successMessage: "Successfully updated emailVerificationTemplate",
+  });
+};

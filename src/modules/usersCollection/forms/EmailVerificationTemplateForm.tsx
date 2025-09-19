@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { pb, PocketBase } from "@/config/pocketbaseConfig";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { extractMessageFromPbError, toastMultiMessages } from "../utils/pbUtils";
-import { updateEmailVerificationTemplate } from "./pbEmailVerificationTemplate";
 import { Textarea } from "@/components/ui/textarea";
+import { pb, PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
+import { useEffect, useState } from "react";
+import { TUsersCollection, updateEmailVerificationTemplate } from "../pbUsersCollectionHelpers";
 
 export const EmailVerificationTemplateForm = (p: {
   pb: PocketBase;
@@ -33,13 +31,10 @@ export const EmailVerificationTemplateForm = (p: {
         await (async () => {
           const resp = await updateEmailVerificationTemplate({
             pb,
-            value: { subject: innerSubjectValue, body: innerBodyValue },
+            template: { subject: innerSubjectValue, body: innerBodyValue },
           });
 
-          if (resp.success) return toast("template updated successfully");
-
-          const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) toastMultiMessages(errorMessages);
+          toastMultiMessages(resp.messages);
         })();
 
         setIsLoading(false);
