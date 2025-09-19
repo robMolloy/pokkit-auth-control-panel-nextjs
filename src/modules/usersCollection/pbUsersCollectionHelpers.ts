@@ -1,13 +1,13 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
+import { generateToken } from "@/lib/utils";
 import { z } from "zod";
 import { extractMessageFromPbError } from "../utils/pbUtils";
-import { generateToken } from "@/lib/utils";
 import { DeepPartial } from "../utils/typeUtils";
 
 const collectionName = "users";
 export const usersCollectionName = collectionName;
 const templateSchema = z.object({ subject: z.string(), body: z.string() });
-type TTemplateSchema = z.infer<typeof templateSchema>;
+type TTemplate = z.infer<typeof templateSchema>;
 
 export const usersCollectionSchema = z.object({
   created: z.string(),
@@ -256,7 +256,7 @@ export const disableOtp = async (p: { pb: PocketBase }) => {
   });
 };
 
-export const updateOtpEmailTemplate = async (p: { pb: PocketBase; template: TTemplateSchema }) => {
+export const updateOtpEmailTemplate = async (p: { pb: PocketBase; template: TTemplate }) => {
   return updateUsersCollection({
     pb: p.pb,
     usersCollection: { otp: { emailTemplate: p.template } },
@@ -293,5 +293,13 @@ export const disablePasswordAuth = async (p: { pb: PocketBase }) => {
     pb: p.pb,
     usersCollection: { passwordAuth: { enabled: false } },
     successMessage: "Successfully disabled passwordAuth",
+  });
+};
+
+export const updateResetPasswordTemplate = async (p: { pb: PocketBase; template: TTemplate }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { resetPasswordTemplate: p.template },
+    successMessage: "Successfully updated resetPasswordTemplate",
   });
 };

@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { pb, PocketBase } from "@/config/pocketbaseConfig";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { extractMessageFromPbError, toastMultiMessages } from "../utils/pbUtils";
-import { updateResetPasswordTemplate } from "./pbResetPasswordTemplate";
 import { Textarea } from "@/components/ui/textarea";
+import { pb, PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
+import { useEffect, useState } from "react";
+import { TUsersCollection, updateResetPasswordTemplate } from "../pbUsersCollectionHelpers";
 
 export const ResetPasswordTemplateForm = (p: {
   pb: PocketBase;
@@ -16,11 +14,11 @@ export const ResetPasswordTemplateForm = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerSubjectValue, setInnerSubjectValue] = useState(p.subject);
-  const [innerBodyValue, setInnerBodyValue] = useState(p.body);
+  const [subject, setSubject] = useState(p.subject);
+  const [body, setBody] = useState(p.body);
 
-  useEffect(() => setInnerSubjectValue(p.subject), [p.subject]);
-  useEffect(() => setInnerBodyValue(p.body), [p.body]);
+  useEffect(() => setSubject(p.subject), [p.subject]);
+  useEffect(() => setBody(p.body), [p.body]);
 
   return (
     <form
@@ -31,15 +29,9 @@ export const ResetPasswordTemplateForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateResetPasswordTemplate({
-            pb,
-            value: { subject: innerSubjectValue, body: innerBodyValue },
-          });
+          const resp = await updateResetPasswordTemplate({ pb, template: { subject, body } });
 
-          if (resp.success) return toast("template updated successfully");
-
-          const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) toastMultiMessages(errorMessages);
+          toastMultiMessages(resp.messages);
         })();
 
         setIsLoading(false);
@@ -50,8 +42,8 @@ export const ResetPasswordTemplateForm = (p: {
         <TextInput
           id="users-collection-resetPasswordTemplateSubject-input"
           disabled={isLoading}
-          value={innerSubjectValue}
-          onInput={async (subject) => setInnerSubjectValue(subject)}
+          value={subject}
+          onInput={async (subject) => setSubject(subject)}
         />
       </div>
       <div>
@@ -59,8 +51,8 @@ export const ResetPasswordTemplateForm = (p: {
         <Textarea
           id="users-collection-resetPasswordTemplateBody-input"
           disabled={isLoading}
-          value={innerBodyValue}
-          onInput={(body) => setInnerBodyValue(body)}
+          value={body}
+          onInput={(body) => setBody(body)}
           rows={10}
         />
       </div>
