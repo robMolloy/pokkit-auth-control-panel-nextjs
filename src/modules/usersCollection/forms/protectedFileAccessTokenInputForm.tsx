@@ -9,10 +9,7 @@ import {
   TUsersCollection,
   updateProtectedFileAccessTokenDuration,
 } from "../pbUsersCollectionHelpers";
-import {
-  extractMessageFromPbError,
-  showMultipleErrorMessagesAsToast,
-} from "@/modules/utils/pbUtils";
+import { extractMessageFromPbError, toastMultiMessages } from "@/modules/utils/pbUtils";
 import { ConfirmationModalContent } from "@/components/Modal";
 import Link from "next/link";
 import { useModalStore } from "@/stores/modalStore";
@@ -43,7 +40,7 @@ export const ProtectedFileAccessTokenDurationInputForm = (p: {
           if (resp.success) return toast("token updated successfully");
 
           const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) showMultipleErrorMessagesAsToast(errorMessages);
+          if (errorMessages) toastMultiMessages(errorMessages);
         })();
 
         setIsLoading(false);

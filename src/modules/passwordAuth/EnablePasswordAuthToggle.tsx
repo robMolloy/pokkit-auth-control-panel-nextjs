@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
+import { toastMultiMessages } from "../utils/pbUtils";
 import { disablePasswordAuth, enablePasswordAuth } from "./pbPasswordAuth";
 
 export const EnablePasswordAuthToggle = (p: {
@@ -32,10 +32,13 @@ export const EnablePasswordAuthToggle = (p: {
             const resp = await (isChecked
               ? disablePasswordAuth({ pb: p.pb })
               : enablePasswordAuth({ pb: p.pb }));
+            if (resp.success) setInnerValue(resp.data);
 
-            if (resp.success) return setInnerValue(resp.data);
-
-            showMultipleErrorMessagesAsToast(resp.error.messages);
+            toastMultiMessages(
+              resp.success
+                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} Password Auth`]
+                : resp.error.messages,
+            );
           })();
 
           setIsLoading(false);

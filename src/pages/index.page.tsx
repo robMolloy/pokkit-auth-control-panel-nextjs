@@ -5,7 +5,7 @@ import { EnableAuthAlertToggle } from "@/modules/authAlert/EnableAuthAlertToggle
 import { EnableMfaToggle } from "@/modules/mfa/EnableMfaToggle";
 import { EnableOtpToggle } from "@/modules/otp/EnableOtpToggle";
 import { EnablePasswordAuthToggle } from "@/modules/passwordAuth/EnablePasswordAuthToggle";
-import { EnableOAuth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOAuth2Toggle2";
+import { EnableOAuth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOAuth2Toggle";
 import {
   getUsersCollection,
   TUsersCollection,
@@ -59,7 +59,6 @@ export default function Home() {
             usersCollection={usersCollection}
             onUsersCollectionUpdate={(x) => setUsersCollection(x)}
           />
-          {/* <pre>{JSON.stringify({ usersCollection }, undefined, 2)}</pre> */}
         </div>
       )}
     </MainLayout>

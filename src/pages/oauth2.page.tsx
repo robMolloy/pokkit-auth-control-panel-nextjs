@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
-import { EnableOAuth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOAuth2Toggle2";
+import { EnableOAuth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOAuth2Toggle";
 import { OAuth2ProvidersFormCards } from "@/modules/usersCollection/forms/OAuth2ProviderFormCards";
 import {
   getUsersCollection,

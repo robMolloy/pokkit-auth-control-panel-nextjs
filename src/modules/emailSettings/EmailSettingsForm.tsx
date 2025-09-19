@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { extractMessageFromPbError, showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
+import { extractMessageFromPbError, toastMultiMessages } from "../utils/pbUtils";
 import { TEmailSettings, updateEmailSettings } from "./pbEmailSettings";
 import { Switch } from "@/components/ui/switch";
 
@@ -59,7 +59,7 @@ export const EmailSettingsForm = (p: {
           }
 
           const errorMessages = extractMessageFromPbError(resp);
-          showMultipleErrorMessagesAsToast(errorMessages ?? ["something went wrong"]);
+          toastMultiMessages(errorMessages ?? ["something went wrong"]);
         })();
 
         setIsLoading(false);

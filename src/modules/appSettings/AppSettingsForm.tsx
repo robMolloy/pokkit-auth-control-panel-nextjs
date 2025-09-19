@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { extractMessageFromPbError, showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
+import { toastMultiMessages } from "../utils/pbUtils";
 import { TAppSettings, updateAppSettings } from "./pbAppSettings";
 
 export const AppSettingsForm = (p: {
@@ -36,8 +36,7 @@ export const AppSettingsForm = (p: {
             return toast("App settings updated successfully");
           }
 
-          const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) showMultipleErrorMessagesAsToast(errorMessages);
+          toastMultiMessages(resp.error.messages);
         })();
 
         setIsLoading(false);

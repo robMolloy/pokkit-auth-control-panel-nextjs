@@ -5,7 +5,7 @@ import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { extractMessageFromPbError, showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
+import { extractMessageFromPbError, toastMultiMessages } from "../utils/pbUtils";
 import { updateResetPasswordTemplate } from "./pbResetPasswordTemplate";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -39,7 +39,7 @@ export const ResetPasswordTemplateForm = (p: {
           if (resp.success) return toast("template updated successfully");
 
           const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) showMultipleErrorMessagesAsToast(errorMessages);
+          if (errorMessages) toastMultiMessages(errorMessages);
         })();
 
         setIsLoading(false);

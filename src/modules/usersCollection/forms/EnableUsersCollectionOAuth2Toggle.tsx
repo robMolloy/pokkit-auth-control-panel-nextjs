@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
-import { showMultipleErrorMessagesAsToast } from "@/modules/utils/pbUtils";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
 import { TUsersCollection } from "../pbUsersCollectionHelpers";
 import { disableOAuth2, enableOAuth2 } from "../pbUsersCollectionOAuth2Helpers";
@@ -32,9 +32,13 @@ export const EnableOAuth2Toggle = (p: {
               ? disableOAuth2({ pb: p.pb })
               : enableOAuth2({ pb: p.pb }));
 
-            if (resp.success) return setInnerValue(resp.data);
+            if (resp.success) setInnerValue(resp.data);
 
-            showMultipleErrorMessagesAsToast(resp.error.messages);
+            toastMultiMessages(
+              resp.success
+                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} oAuth2`]
+                : resp.error.messages,
+            );
           })();
 
           setIsLoading(false);

@@ -5,10 +5,7 @@ import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 
 import { ConfirmationModalContent } from "@/components/Modal";
-import {
-  extractMessageFromPbError,
-  showMultipleErrorMessagesAsToast,
-} from "@/modules/utils/pbUtils";
+import { extractMessageFromPbError, toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -44,7 +41,7 @@ export const AuthTokenDurationInputForm = (p: {
           if (resp.success) return toast("token updated successfully");
 
           const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) showMultipleErrorMessagesAsToast(errorMessages);
+          if (errorMessages) toastMultiMessages(errorMessages);
         })();
 
         setIsLoading(false);

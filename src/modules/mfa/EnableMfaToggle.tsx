@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
+import { toastMultiMessages } from "../utils/pbUtils";
 import { disableMfa, enableMfa } from "./pbMfa";
 
 export const EnableMfaToggle = (p: {
@@ -30,10 +30,13 @@ export const EnableMfaToggle = (p: {
 
           await (async () => {
             const resp = await (isChecked ? disableMfa({ pb: p.pb }) : enableMfa({ pb: p.pb }));
+            if (resp.success) setInnerValue(resp.data);
 
-            if (resp.success) return setInnerValue(resp.data);
-
-            showMultipleErrorMessagesAsToast(resp.error.messages);
+            toastMultiMessages(
+              resp.success
+                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} MFA`]
+                : resp.error.messages,
+            );
           })();
 
           setIsLoading(false);

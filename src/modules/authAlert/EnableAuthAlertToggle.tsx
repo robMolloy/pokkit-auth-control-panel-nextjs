@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
+import { toastMultiMessages } from "../utils/pbUtils";
 import { disableAuthAlert, enableAuthAlert } from "./pbAuthAlert";
 
 export const EnableAuthAlertToggle = (p: {
@@ -33,9 +33,13 @@ export const EnableAuthAlertToggle = (p: {
               ? disableAuthAlert({ pb: p.pb })
               : enableAuthAlert({ pb: p.pb }));
 
-            if (resp.success) return setInnerValue(resp.data);
+            if (resp.success) setInnerValue(resp.data);
 
-            showMultipleErrorMessagesAsToast(resp.error.messages);
+            toastMultiMessages(
+              resp.success
+                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} auth alert`]
+                : resp.error.messages,
+            );
           })();
 
           setIsLoading(false);

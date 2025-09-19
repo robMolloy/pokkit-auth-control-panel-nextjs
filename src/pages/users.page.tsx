@@ -15,7 +15,7 @@ import { pb } from "@/config/pocketbaseConfig";
 import { deleteUsers } from "@/modules/users/dbUsersUtils";
 import { deleteUser } from "@/modules/users/dbUserUtils";
 import { useUsersStore } from "@/modules/users/usersStore";
-import { showMultipleErrorMessagesAsToast } from "@/modules/utils/pbUtils";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { LoadingScreen } from "@/screens/LoadingScreen";
 import { useModalStore } from "@/stores/modalStore";
 import { useEffect, useState } from "react";
@@ -93,7 +93,7 @@ export const UsersScreen = () => {
                               onConfirm={async () => {
                                 const resp = await deleteUser({ pb, id: x.id });
                                 if (resp.success) return toast("User deleted successfully");
-                                showMultipleErrorMessagesAsToast(resp.error.messages);
+                                toastMultiMessages(resp.error.messages);
                               }}
                             />,
                           )
@@ -127,7 +127,7 @@ export const UsersScreen = () => {
                         onConfirm={async () => {
                           const resp = await deleteUsers({ pb, ids: selectedUserIds });
                           if (resp.success) return toast("Users deleted successfully");
-                          showMultipleErrorMessagesAsToast(resp.error.messages);
+                          toastMultiMessages(resp.error.messages);
                         }}
                       />,
                     );

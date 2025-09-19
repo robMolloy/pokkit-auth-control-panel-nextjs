@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { showMultipleErrorMessagesAsToast } from "../utils/pbUtils";
+import { toastMultiMessages } from "../utils/pbUtils";
 import { disableOtp, enableOtp } from "./pbOtp";
 
 export const EnableOtpToggle = (p: {
@@ -31,9 +31,13 @@ export const EnableOtpToggle = (p: {
           await (async () => {
             const resp = await (isChecked ? disableOtp({ pb: p.pb }) : enableOtp({ pb: p.pb }));
 
-            if (resp.success) return setInnerValue(resp.data);
+            if (resp.success) setInnerValue(resp.data);
 
-            showMultipleErrorMessagesAsToast(resp.error.messages);
+            toastMultiMessages(
+              resp.success
+                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} OTP`]
+                : resp.error.messages,
+            );
           })();
 
           setIsLoading(false);

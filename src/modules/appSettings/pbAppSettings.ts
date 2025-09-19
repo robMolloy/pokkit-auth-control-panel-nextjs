@@ -1,5 +1,6 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { z } from "zod";
+import { extractMessageFromPbError } from "../utils/pbUtils";
 
 export const appSettingsSchema = z.object({
   meta: z.object({
@@ -24,8 +25,23 @@ export const updateAppSettings = async (p: { pb: PocketBase; appName: string; ap
     const appSettings = await p.pb.settings.update({
       meta: { appName: p.appName, appURL: p.appUrl },
     });
-    return appSettingsSchema.safeParse(appSettings);
+    const parsedAppSettings = appSettingsSchema.parse(appSettings);
+    return {
+      success: true,
+      data: parsedAppSettings,
+      messages: ["App settings updated successfully"],
+    } as const;
   } catch (error) {
-    return { success: false, error } as const;
+    const messagesResp = extractMessageFromPbError({ error });
+
+    return {
+      success: false,
+      error: (() => {
+        const fallback = "Update appSettings unsuccessful";
+        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+
+        return { messages };
+      })(),
+    } as const;
   }
 };
