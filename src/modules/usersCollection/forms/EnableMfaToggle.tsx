@@ -11,25 +11,25 @@ export const EnableMfaToggle = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerValue, setInnerValue] = useState(p.usersCollection);
-  const isChecked = innerValue.mfa.enabled;
+  const [value, setValue] = useState(p.usersCollection);
+  const isChecked = value.mfa.enabled;
 
-  useEffect(() => setInnerValue(p.usersCollection), [p.usersCollection.mfa.enabled]);
-  useEffect(() => p.onUsersCollectionUpdate(innerValue), [innerValue]);
+  useEffect(() => setValue(p.usersCollection), [p.usersCollection.mfa.enabled]);
+  useEffect(() => p.onUsersCollectionUpdate(value), [value]);
 
   return (
     <span className="flex items-center gap-2">
       <Switch
         id="enable-users-collection-mfa-switch"
         disabled={isLoading}
-        checked={innerValue.mfa.enabled}
+        checked={value.mfa.enabled}
         onCheckedChange={async () => {
           if (isLoading) return;
           setIsLoading(true);
 
           await (async () => {
             const resp = await (isChecked ? disableMfa({ pb: p.pb }) : enableMfa({ pb: p.pb }));
-            if (resp.success) setInnerValue(resp.data);
+            if (resp.success) setValue(resp.data);
 
             toastMultiMessages(resp.messages);
           })();

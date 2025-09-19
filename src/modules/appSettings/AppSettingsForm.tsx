@@ -13,11 +13,11 @@ export const AppSettingsForm = (p: {
   onAppSettingsUpdate: (x: TAppSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerAppName, setInnerAppName] = useState(p.appName);
-  const [innerAppUrl, setInnerAppUrl] = useState(p.appUrl);
+  const [appName, setAppName] = useState(p.appName);
+  const [appUrl, setAppUrl] = useState(p.appUrl);
 
-  useEffect(() => setInnerAppName(p.appName), [p.appName]);
-  useEffect(() => setInnerAppUrl(p.appUrl), [p.appUrl]);
+  useEffect(() => setAppName(p.appName), [p.appName]);
+  useEffect(() => setAppUrl(p.appUrl), [p.appUrl]);
 
   return (
     <form
@@ -28,7 +28,7 @@ export const AppSettingsForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const appSettings = { meta: { appName: innerAppName, appURL: innerAppUrl } };
+          const appSettings = { meta: { appName: appName, appURL: appUrl } };
           const resp = await updateAppSettings({ pb, appSettings });
 
           if (resp.success) p.onAppSettingsUpdate(resp.data);
@@ -43,8 +43,8 @@ export const AppSettingsForm = (p: {
         <TextInput
           id="appSettings-appName-input"
           disabled={isLoading}
-          value={innerAppName}
-          onInput={(appName) => setInnerAppName(appName)}
+          value={appName}
+          onInput={(appName) => setAppName(appName)}
         />
       </div>
       <div>
@@ -52,8 +52,8 @@ export const AppSettingsForm = (p: {
         <TextInput
           id="appSettings-appUrl-input"
           disabled={isLoading}
-          value={innerAppUrl}
-          onInput={(appUrl) => setInnerAppUrl(appUrl)}
+          value={appUrl}
+          onInput={(appUrl) => setAppUrl(appUrl)}
         />
       </div>
       <span className="flex justify-end gap-2">

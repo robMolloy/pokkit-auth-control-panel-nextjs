@@ -97,63 +97,63 @@ const Paginator = (
     setPageNumber?: (x: number) => void;
   } & ({ numberOfPages: number } | { numberOfItems: number; itemsPerPage: number }),
 ) => {
-  const [innerPageNumber, setInnerPageNumber] = useState(p.pageNumber ?? 0);
+  const [pageNumber, setPageNumber] = useState(p.pageNumber ?? 0);
 
   const numberOfPages =
     "numberOfPages" in p ? p.numberOfPages : Math.ceil(p.numberOfItems / p.itemsPerPage);
 
   const allPageNumbers = [...Array(numberOfPages)].map((_, i) => i);
-  const firstVisiblePageNumber = Math.max(0, innerPageNumber - 2);
-  const lastVisiblePageNumber = Math.min(numberOfPages, innerPageNumber + 3);
+  const firstVisiblePageNumber = Math.max(0, pageNumber - 2);
+  const lastVisiblePageNumber = Math.min(numberOfPages, pageNumber + 3);
   const visiblePageNumbers = allPageNumbers.slice(firstVisiblePageNumber, lastVisiblePageNumber);
   const lastPageNumber = Math.max(allPageNumbers.slice(-1)[0] ?? 0, 0);
 
   useEffect(() => {
-    if (p.pageNumber) setInnerPageNumber(p.pageNumber);
+    if (p.pageNumber) setPageNumber(p.pageNumber);
   }, [p.pageNumber]);
-  useEffect(() => p.setPageNumber?.(innerPageNumber), [innerPageNumber]);
+  useEffect(() => p.setPageNumber?.(pageNumber), [pageNumber]);
   useEffect(() => {
-    if (innerPageNumber >= numberOfPages) setInnerPageNumber(() => lastPageNumber);
+    if (pageNumber >= numberOfPages) setPageNumber(() => lastPageNumber);
   }, [numberOfPages]);
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={() => setInnerPageNumber((x) => (x === 0 ? x : x - 1))} />
+          <PaginationPrevious onClick={() => setPageNumber((x) => (x === 0 ? x : x - 1))} />
         </PaginationItem>
-        {!visiblePageNumbers.includes(0) && innerPageNumber > 0 && (
+        {!visiblePageNumbers.includes(0) && pageNumber > 0 && (
           <PaginationItem>
-            <PaginationLink onClick={() => setInnerPageNumber(0)}>{1}</PaginationLink>
+            <PaginationLink onClick={() => setPageNumber(0)}>{1}</PaginationLink>
           </PaginationItem>
         )}
-        {!visiblePageNumbers.includes(1) && innerPageNumber > 0 && (
+        {!visiblePageNumbers.includes(1) && pageNumber > 0 && (
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
         )}
         {visiblePageNumbers.map((x) => (
           <PaginationItem key={x}>
-            <PaginationLink onClick={() => setInnerPageNumber(x)} isActive={innerPageNumber === x}>
+            <PaginationLink onClick={() => setPageNumber(x)} isActive={pageNumber === x}>
               {x + 1}
             </PaginationLink>
           </PaginationItem>
         ))}
-        {!visiblePageNumbers.includes(lastPageNumber - 1) && innerPageNumber < lastPageNumber && (
+        {!visiblePageNumbers.includes(lastPageNumber - 1) && pageNumber < lastPageNumber && (
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
         )}
         {!visiblePageNumbers.includes(lastPageNumber) && (
           <PaginationItem>
-            <PaginationLink onClick={() => setInnerPageNumber(lastPageNumber)}>
+            <PaginationLink onClick={() => setPageNumber(lastPageNumber)}>
               {lastPageNumber + 1}
             </PaginationLink>
           </PaginationItem>
         )}
         <PaginationItem>
           <PaginationNext
-            onClick={() => setInnerPageNumber((x) => (x === lastPageNumber ? x : x + 1))}
+            onClick={() => setPageNumber((x) => (x === lastPageNumber ? x : x + 1))}
           />
         </PaginationItem>
       </PaginationContent>

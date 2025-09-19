@@ -19,11 +19,11 @@ export const EmailVerificationTokenDurationInputForm = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerValue, setInnerValue] = useState(p.value);
+  const [value, setValue] = useState(p.value);
 
   const modalStore = useModalStore();
 
-  useEffect(() => setInnerValue(p.value), [p.value]);
+  useEffect(() => setValue(p.value), [p.value]);
 
   return (
     <form
@@ -34,7 +34,7 @@ export const EmailVerificationTokenDurationInputForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateEmailVerificationTokenDuration({ pb, value: innerValue });
+          const resp = await updateEmailVerificationTokenDuration({ pb, value: value });
 
           toastMultiMessages(resp.messages);
         })();
@@ -49,8 +49,8 @@ export const EmailVerificationTokenDurationInputForm = (p: {
         <NumberInput
           id="users-collection-emailVerificationTokenDuration-input"
           disabled={isLoading}
-          value={innerValue}
-          onInput={async (e) => setInnerValue(e)}
+          value={value}
+          onInput={async (e) => setValue(e)}
         />
         <Button type="submit">Submit</Button>
       </span>

@@ -11,18 +11,18 @@ export const EnableAuthAlertToggle = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerValue, setInnerValue] = useState(p.usersCollection);
-  const isChecked = innerValue.authAlert.enabled;
+  const [value, setValue] = useState(p.usersCollection);
+  const isChecked = value.authAlert.enabled;
 
-  useEffect(() => setInnerValue(p.usersCollection), [p.usersCollection.authAlert.enabled]);
-  useEffect(() => p.onUsersCollectionUpdate(innerValue), [innerValue]);
+  useEffect(() => setValue(p.usersCollection), [p.usersCollection.authAlert.enabled]);
+  useEffect(() => p.onUsersCollectionUpdate(value), [value]);
 
   return (
     <span className="flex items-center gap-2">
       <Switch
         id="enable-users-collection-authAlert-switch"
         disabled={isLoading}
-        checked={innerValue.authAlert.enabled}
+        checked={value.authAlert.enabled}
         onCheckedChange={async () => {
           if (isLoading) return;
           setIsLoading(true);
@@ -32,7 +32,7 @@ export const EnableAuthAlertToggle = (p: {
               ? disableAuthAlert({ pb: p.pb })
               : enableAuthAlert({ pb: p.pb }));
 
-            if (resp.success) setInnerValue(resp.data);
+            if (resp.success) setValue(resp.data);
 
             toastMultiMessages(resp.messages);
           })();

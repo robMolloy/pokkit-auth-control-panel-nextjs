@@ -15,18 +15,18 @@ export const EnablePasswordAuthToggle = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerValue, setInnerValue] = useState(p.usersCollection);
-  const isChecked = innerValue.passwordAuth.enabled;
+  const [value, setValue] = useState(p.usersCollection);
+  const isChecked = value.passwordAuth.enabled;
 
-  useEffect(() => setInnerValue(p.usersCollection), [p.usersCollection.passwordAuth.enabled]);
-  useEffect(() => p.onUsersCollectionUpdate(innerValue), [innerValue]);
+  useEffect(() => setValue(p.usersCollection), [p.usersCollection.passwordAuth.enabled]);
+  useEffect(() => p.onUsersCollectionUpdate(value), [value]);
 
   return (
     <span className="flex items-center gap-2">
       <Switch
         id="enable-users-collection-passwordAuth-switch"
         disabled={isLoading}
-        checked={innerValue.passwordAuth.enabled}
+        checked={value.passwordAuth.enabled}
         onCheckedChange={async () => {
           if (isLoading) return;
           setIsLoading(true);
@@ -35,7 +35,7 @@ export const EnablePasswordAuthToggle = (p: {
             const resp = await (isChecked
               ? disablePasswordAuth({ pb: p.pb })
               : enablePasswordAuth({ pb: p.pb }));
-            if (resp.success) setInnerValue(resp.data);
+            if (resp.success) setValue(resp.data);
 
             toastMultiMessages(resp.messages);
           })();

@@ -12,17 +12,17 @@ export const EnableOAuth2Toggle = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerValue, setInnerValue] = useState(p.usersCollection);
-  const isChecked = innerValue.oauth2.enabled;
+  const [value, setValue] = useState(p.usersCollection);
+  const isChecked = value.oauth2.enabled;
 
-  useEffect(() => setInnerValue(p.usersCollection), [p.usersCollection.oauth2.enabled]);
+  useEffect(() => setValue(p.usersCollection), [p.usersCollection.oauth2.enabled]);
 
   return (
     <span className="flex items-center gap-2">
       <Switch
         id="enable-users-collection-oauth2-switch"
         disabled={isLoading}
-        checked={innerValue.oauth2.enabled}
+        checked={value.oauth2.enabled}
         onCheckedChange={async () => {
           if (isLoading) return;
           setIsLoading(true);
@@ -32,7 +32,7 @@ export const EnableOAuth2Toggle = (p: {
               ? disableOAuth2({ pb: p.pb })
               : enableOAuth2({ pb: p.pb }));
 
-            if (resp.success) setInnerValue(resp.data);
+            if (resp.success) setValue(resp.data);
 
             toastMultiMessages(resp.messages);
           })();

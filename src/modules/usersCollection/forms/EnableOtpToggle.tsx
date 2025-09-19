@@ -11,18 +11,18 @@ export const EnableOtpToggle = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerValue, setInnerValue] = useState(p.usersCollection);
-  const isChecked = innerValue.otp.enabled;
+  const [value, setValue] = useState(p.usersCollection);
+  const isChecked = value.otp.enabled;
 
-  useEffect(() => setInnerValue(p.usersCollection), [p.usersCollection.otp.enabled]);
-  useEffect(() => p.onUsersCollectionUpdate(innerValue), [innerValue]);
+  useEffect(() => setValue(p.usersCollection), [p.usersCollection.otp.enabled]);
+  useEffect(() => p.onUsersCollectionUpdate(value), [value]);
 
   return (
     <span className="flex items-center gap-2">
       <Switch
         id="enable-users-collection-otp-switch"
         disabled={isLoading}
-        checked={innerValue.otp.enabled}
+        checked={value.otp.enabled}
         onCheckedChange={async () => {
           if (isLoading) return;
           setIsLoading(true);
@@ -30,7 +30,7 @@ export const EnableOtpToggle = (p: {
           await (async () => {
             const resp = await (isChecked ? disableOtp({ pb: p.pb }) : enableOtp({ pb: p.pb }));
 
-            if (resp.success) setInnerValue(resp.data);
+            if (resp.success) setValue(resp.data);
             toastMultiMessages(resp.messages);
           })();
 

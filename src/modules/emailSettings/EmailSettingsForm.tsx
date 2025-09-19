@@ -14,27 +14,21 @@ export const EmailSettingsForm = (p: {
   onEmailSettingsUpdate: (x: TEmailSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerSenderName, setInnerSenderName] = useState(p.emailSettings.meta.senderName);
-  const [innerSenderAddress, setInnerSenderAddress] = useState(p.emailSettings.meta.senderAddress);
-  const [innerSmtpEnabled, setInnerSmtpEnabled] = useState(p.emailSettings.smtp.enabled);
-  const [innerSmtpServerHost, setInnerSmtpServerHost] = useState(p.emailSettings.smtp.host);
-  const [innerSmtpServerPort, setInnerSmtpServerPort] = useState(p.emailSettings.smtp.port);
-  const [innerSmtpServerUsername, setInnerSmtpServerUsername] = useState(
-    p.emailSettings.smtp.username,
-  );
-  const [innerSmtpServerPassword, setInnerSmtpServerPassword] = useState("");
-  const [innerSmtpServerLocalName, setInnerSmtpServerLocalName] = useState(
-    p.emailSettings.smtp.localName,
-  );
-  const [innerSmtpServerTls, setInnerSmtpServerTls] = useState(p.emailSettings.smtp.tls);
-  const [innerSmtpServerAuthMethod, setInnerSmtpServerAuthMethod] = useState(
-    p.emailSettings.smtp.authMethod,
-  );
+  const [senderName, setSenderName] = useState(p.emailSettings.meta.senderName);
+  const [senderAddress, setSenderAddress] = useState(p.emailSettings.meta.senderAddress);
+  const [smtpEnabled, setSmtpEnabled] = useState(p.emailSettings.smtp.enabled);
+  const [smtpServerHost, setSmtpServerHost] = useState(p.emailSettings.smtp.host);
+  const [smtpServerPort, setSmtpServerPort] = useState(p.emailSettings.smtp.port);
+  const [smtpServerUsername, setSmtpServerUsername] = useState(p.emailSettings.smtp.username);
+  const [smtpServerPassword, setSmtpServerPassword] = useState("");
+  const [smtpServerLocalName, setSmtpServerLocalName] = useState(p.emailSettings.smtp.localName);
+  const [smtpServerTls, setSmtpServerTls] = useState(p.emailSettings.smtp.tls);
+  const [smtpServerAuthMethod, setSmtpServerAuthMethod] = useState(p.emailSettings.smtp.authMethod);
 
   useEffect(() => {
-    setInnerSenderName(p.emailSettings.meta.senderName);
-    setInnerSenderAddress(p.emailSettings.meta.senderAddress);
-    setInnerSmtpEnabled(p.emailSettings.smtp.enabled);
+    setSenderName(p.emailSettings.meta.senderName);
+    setSenderAddress(p.emailSettings.meta.senderAddress);
+    setSmtpEnabled(p.emailSettings.smtp.enabled);
   }, [p.emailSettings]);
 
   return (
@@ -48,9 +42,9 @@ export const EmailSettingsForm = (p: {
         await (async () => {
           const resp = await updateEmailSettings({
             pb,
-            senderName: innerSenderName,
-            senderAddress: innerSenderAddress,
-            smtpEnabled: innerSmtpEnabled,
+            senderName: senderName,
+            senderAddress: senderAddress,
+            smtpEnabled: smtpEnabled,
           });
 
           if (resp.success) {
@@ -70,8 +64,8 @@ export const EmailSettingsForm = (p: {
         <TextInput
           id="emailSettings-senderName-input"
           disabled={isLoading}
-          value={innerSenderName}
-          onInput={(senderName) => setInnerSenderName(senderName)}
+          value={senderName}
+          onInput={(senderName) => setSenderName(senderName)}
         />
       </div>
       <div>
@@ -79,28 +73,28 @@ export const EmailSettingsForm = (p: {
         <TextInput
           id="emailSettings-senderAddress-input"
           disabled={isLoading}
-          value={innerSenderAddress}
-          onInput={(senderAddress) => setInnerSenderAddress(senderAddress)}
+          value={senderAddress}
+          onInput={(senderAddress) => setSenderAddress(senderAddress)}
         />
       </div>
       <div className="flex items-center gap-2">
         <Switch
           id="emailSettings-smtpEnabled-switch"
           disabled={isLoading}
-          checked={innerSmtpEnabled}
-          onCheckedChange={async () => setInnerSmtpEnabled((x) => !x)}
+          checked={smtpEnabled}
+          onCheckedChange={async () => setSmtpEnabled((x) => !x)}
         />
         <Label htmlFor="emailSettings-smtpEnabled-switch">Enable SMTP</Label>
       </div>
-      {innerSmtpEnabled && (
+      {smtpEnabled && (
         <div className="flex flex-col gap-4">
           <div>
             <Label htmlFor="emailSettings-serverHost-input">Server Host</Label>
             <TextInput
               id="emailSettings-serverHost-input"
               disabled={isLoading}
-              value={innerSmtpServerHost}
-              onInput={(serverHost) => setInnerSmtpServerHost(serverHost)}
+              value={smtpServerHost}
+              onInput={(serverHost) => setSmtpServerHost(serverHost)}
             />
           </div>
           <div>
@@ -108,8 +102,8 @@ export const EmailSettingsForm = (p: {
             <NumberInput
               id="emailSettings-serverPort-input"
               disabled={isLoading}
-              value={innerSmtpServerPort}
-              onInput={(serverPort) => setInnerSmtpServerPort(serverPort)}
+              value={smtpServerPort}
+              onInput={(serverPort) => setSmtpServerPort(serverPort)}
             />
           </div>
           <div>
@@ -117,8 +111,8 @@ export const EmailSettingsForm = (p: {
             <TextInput
               id="emailSettings-serverUsername-input"
               disabled={isLoading}
-              value={innerSmtpServerUsername}
-              onInput={(serverUsername) => setInnerSmtpServerUsername(serverUsername)}
+              value={smtpServerUsername}
+              onInput={(serverUsername) => setSmtpServerUsername(serverUsername)}
             />
           </div>
           <div>
@@ -127,8 +121,8 @@ export const EmailSettingsForm = (p: {
               type="password"
               id="emailSettings-serverPassword-input"
               disabled={isLoading}
-              value={innerSmtpServerPassword}
-              onInput={(serverPassword) => setInnerSmtpServerPassword(serverPassword)}
+              value={smtpServerPassword}
+              onInput={(serverPassword) => setSmtpServerPassword(serverPassword)}
             />
           </div>
           <div>
@@ -136,16 +130,16 @@ export const EmailSettingsForm = (p: {
             <TextInput
               id="emailSettings-serverLocalName-input"
               disabled={isLoading}
-              value={innerSmtpServerLocalName}
-              onInput={(serverLocalName) => setInnerSmtpServerLocalName(serverLocalName)}
+              value={smtpServerLocalName}
+              onInput={(serverLocalName) => setSmtpServerLocalName(serverLocalName)}
             />
           </div>
           <div className="flex items-center gap-2">
             <Switch
               id="emailSettings-serverTls-toggle"
               disabled={isLoading}
-              checked={innerSmtpServerTls}
-              onCheckedChange={async () => setInnerSmtpServerTls((x) => !x)}
+              checked={smtpServerTls}
+              onCheckedChange={async () => setSmtpServerTls((x) => !x)}
             />
             <Label htmlFor="emailSettings-serverTls-input">Server Tls</Label>
           </div>
@@ -154,8 +148,8 @@ export const EmailSettingsForm = (p: {
             <TextInput
               id="emailSettings-serverAuthMethod-input"
               disabled={isLoading}
-              value={innerSmtpServerAuthMethod}
-              onInput={(serverAuthMethod) => setInnerSmtpServerAuthMethod(serverAuthMethod)}
+              value={smtpServerAuthMethod}
+              onInput={(serverAuthMethod) => setSmtpServerAuthMethod(serverAuthMethod)}
             />
           </div>
         </div>
