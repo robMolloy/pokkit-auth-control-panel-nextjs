@@ -1,11 +1,11 @@
 import { AccordionCard } from "@/components/AccordionCard";
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
-import { AuthAlertEmailTemplateForm } from "@/modules/authAlertEmailTemplate/authAlertEmailTemplateForm";
 import { ConfirmEmailChangeTemplateForm } from "@/modules/confirmEmailChangeTemplate/confirmEmailChangeTemplateForm";
 import { EmailVerificationTemplateForm } from "@/modules/emailVerificationTemplate/emailVerificationTemplateForm";
 import { OtpEmailTemplateForm } from "@/modules/otpEmailTemplate/otpEmailTemplateForm";
 import { ResetPasswordTemplateForm } from "@/modules/resetPasswordTemplate/ResetPasswordTemplateForm";
+import { AuthAlertEmailTemplateForm } from "@/modules/usersCollection/forms/authAlertEmailTemplateForm";
 import {
   getUsersCollection,
   TUsersCollection,

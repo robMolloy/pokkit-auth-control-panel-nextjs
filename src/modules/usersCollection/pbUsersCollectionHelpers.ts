@@ -97,18 +97,18 @@ export const updateUsersCollection = async (p: {
     const collection = await p.pb.collections.update(collectionName, p.usersCollection);
 
     const data = usersCollectionSchema.parse(collection);
-    return { success: true, data } as const;
+    const messages = ["Successfully updated usersCollection"];
+    return { success: true, data, messages } as const;
   } catch (error) {
     const messagesResp = extractMessageFromPbError({ error });
 
+    const fallback = "Failed to update usersCollection";
+    const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+
     return {
       success: false,
-      error: (() => {
-        const fallback = "Update usersCollection unsuccessful";
-        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
-
-        return { messages } as const;
-      })(),
+      error,
+      messages,
     } as const;
   }
 };
@@ -195,4 +195,14 @@ export const enableAuthAlert = async (p: { pb: PocketBase }) => {
 
 export const disableAuthAlert = async (p: { pb: PocketBase }) => {
   return updateUsersCollection({ pb: p.pb, usersCollection: { authAlert: { enabled: false } } });
+};
+
+export const updateAuthAlertEmailTemplate = async (p: {
+  pb: PocketBase;
+  authAlertEmailTemplate: TInitUsersCollectionUpdateSeed["authAlert"]["emailTemplate"];
+}) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { authAlert: { emailTemplate: p.authAlertEmailTemplate } },
+  });
 };

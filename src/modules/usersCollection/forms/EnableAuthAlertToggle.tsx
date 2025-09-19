@@ -37,7 +37,7 @@ export const EnableAuthAlertToggle = (p: {
             toastMultiMessages(
               resp.success
                 ? [`Successfully ${!isChecked ? "enabled" : "disabled"} auth alert`]
-                : resp.error.messages,
+                : resp.messages,
             );
           })();
 
