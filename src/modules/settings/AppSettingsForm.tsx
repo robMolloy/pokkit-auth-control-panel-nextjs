@@ -4,13 +4,13 @@ import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { toastMultiMessages } from "../utils/pbUtils";
-import { TAppSettings, updateAppSettings } from "./pbAppSettings";
+import { TSettings, updateSettings as updateSettings } from "./pbSettings";
 
 export const AppSettingsForm = (p: {
   pb: PocketBase;
   appName: string;
   appUrl: string;
-  onAppSettingsUpdate: (x: TAppSettings) => void;
+  onAppSettingsUpdate: (x: TSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [appName, setAppName] = useState(p.appName);
@@ -28,8 +28,12 @@ export const AppSettingsForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const appSettings = { meta: { appName: appName, appURL: appUrl } };
-          const resp = await updateAppSettings({ pb, appSettings });
+          const resp = await updateSettings({
+            pb,
+            appSettings: { meta: { appName: appName, appURL: appUrl } },
+            successMessage: "Successfully updated app settings",
+            failMessage: "Failed to update app settings",
+          });
 
           if (resp.success) p.onAppSettingsUpdate(resp.data);
           toastMultiMessages(resp.messages);

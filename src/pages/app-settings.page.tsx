@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
-import { AppSettingsForm } from "@/modules/appSettings/AppSettingsForm";
-import { getAppSettings, TAppSettings } from "@/modules/appSettings/pbAppSettings";
+import { AppSettingsForm } from "@/modules/settings/AppSettingsForm";
+import { getSettings, TSettings } from "@/modules/settings/pbSettings";
 import {
   getUsersCollection,
   TUsersCollection,
@@ -10,12 +10,12 @@ import { EnableAuthAlertToggle } from "@/modules/usersCollectionModel/forms/Enab
 import { useEffect, useState } from "react";
 
 const Page = () => {
-  const [appSettings, setAppSettings] = useState<TAppSettings>();
+  const [appSettings, setAppSettings] = useState<TSettings>();
   const [usersCollection, setUsersCollection] = useState<TUsersCollection>();
 
   useEffect(() => {
     (async () => {
-      const resp = await getAppSettings({ pb });
+      const resp = await getSettings({ pb });
       if (resp.success) setAppSettings(resp.data);
     })();
   }, []);

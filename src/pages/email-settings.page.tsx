@@ -1,25 +1,25 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
-import { EmailSettingsForm } from "@/modules/emailSettings/EmailSettingsForm";
-import { getEmailSettings, TEmailSettings } from "@/modules/emailSettings/pbEmailSettings";
+import { EmailSettingsForm } from "@/modules/settings/forms/EmailSettingsForm";
+import { TSettings, getSettings } from "@/modules/settings/pbSettings";
 import { useEffect, useState } from "react";
 
 const Page = () => {
-  const [emailSettings, setEmailSettings] = useState<TEmailSettings>();
+  const [appSettings, setEmailSettings] = useState<TSettings>();
 
   useEffect(() => {
     (async () => {
-      const resp = await getEmailSettings({ pb });
+      const resp = await getSettings({ pb });
       if (resp.success) setEmailSettings(resp.data);
     })();
   }, []);
   return (
     <MainLayout>
-      {emailSettings && (
+      {appSettings && (
         <div className="flex flex-col gap-4">
           <EmailSettingsForm
             pb={pb}
-            emailSettings={emailSettings}
+            appSettings={appSettings}
             onEmailSettingsUpdate={(x) => setEmailSettings(x)}
           />
         </div>

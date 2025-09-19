@@ -1,35 +1,34 @@
 import { Button } from "@/components/ui/button";
 import { NumberInput, TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { pb, PocketBase } from "@/config/pocketbaseConfig";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { extractMessageFromPbError, toastMultiMessages } from "../utils/pbUtils";
-import { TEmailSettings, updateEmailSettings } from "./pbEmailSettings";
 import { Switch } from "@/components/ui/switch";
+import { pb, PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
+import { useEffect, useState } from "react";
+import { TSettings, updateEmailSettings } from "../pbSettings";
 
 export const EmailSettingsForm = (p: {
   pb: PocketBase;
-  emailSettings: TEmailSettings;
-  onEmailSettingsUpdate: (x: TEmailSettings) => void;
+  appSettings: TSettings;
+  onEmailSettingsUpdate: (x: TSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [senderName, setSenderName] = useState(p.emailSettings.meta.senderName);
-  const [senderAddress, setSenderAddress] = useState(p.emailSettings.meta.senderAddress);
-  const [smtpEnabled, setSmtpEnabled] = useState(p.emailSettings.smtp.enabled);
-  const [smtpServerHost, setSmtpServerHost] = useState(p.emailSettings.smtp.host);
-  const [smtpServerPort, setSmtpServerPort] = useState(p.emailSettings.smtp.port);
-  const [smtpServerUsername, setSmtpServerUsername] = useState(p.emailSettings.smtp.username);
+  const [senderName, setSenderName] = useState(p.appSettings.meta.senderName);
+  const [senderAddress, setSenderAddress] = useState(p.appSettings.meta.senderAddress);
+  const [smtpEnabled, setSmtpEnabled] = useState(p.appSettings.smtp.enabled);
+  const [smtpServerHost, setSmtpServerHost] = useState(p.appSettings.smtp.host);
+  const [smtpServerPort, setSmtpServerPort] = useState(p.appSettings.smtp.port);
+  const [smtpServerUsername, setSmtpServerUsername] = useState(p.appSettings.smtp.username);
   const [smtpServerPassword, setSmtpServerPassword] = useState("");
-  const [smtpServerLocalName, setSmtpServerLocalName] = useState(p.emailSettings.smtp.localName);
-  const [smtpServerTls, setSmtpServerTls] = useState(p.emailSettings.smtp.tls);
-  const [smtpServerAuthMethod, setSmtpServerAuthMethod] = useState(p.emailSettings.smtp.authMethod);
+  const [smtpServerLocalName, setSmtpServerLocalName] = useState(p.appSettings.smtp.localName);
+  const [smtpServerTls, setSmtpServerTls] = useState(p.appSettings.smtp.tls);
+  const [smtpServerAuthMethod, setSmtpServerAuthMethod] = useState(p.appSettings.smtp.authMethod);
 
   useEffect(() => {
-    setSenderName(p.emailSettings.meta.senderName);
-    setSenderAddress(p.emailSettings.meta.senderAddress);
-    setSmtpEnabled(p.emailSettings.smtp.enabled);
-  }, [p.emailSettings]);
+    setSenderName(p.appSettings.meta.senderName);
+    setSenderAddress(p.appSettings.meta.senderAddress);
+    setSmtpEnabled(p.appSettings.smtp.enabled);
+  }, [p.appSettings]);
 
   return (
     <form
@@ -47,13 +46,8 @@ export const EmailSettingsForm = (p: {
             smtpEnabled: smtpEnabled,
           });
 
-          if (resp.success) {
-            p.onEmailSettingsUpdate(resp.data);
-            return toast("Email settings updated successfully");
-          }
-
-          const errorMessages = extractMessageFromPbError(resp);
-          toastMultiMessages(errorMessages ?? ["something went wrong"]);
+          if (resp.success) p.onEmailSettingsUpdate(resp.data);
+          toastMultiMessages(resp.messages);
         })();
 
         setIsLoading(false);
