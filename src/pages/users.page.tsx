@@ -19,7 +19,6 @@ import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { LoadingScreen } from "@/screens/LoadingScreen";
 import { useModalStore } from "@/stores/modalStore";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 export const UsersScreen = () => {
   const usersStore = useUsersStore();
@@ -126,8 +125,7 @@ export const UsersScreen = () => {
                         content={<pre>{JSON.stringify(selectedUserIds, undefined, 2)}</pre>}
                         onConfirm={async () => {
                           const resp = await deleteUsers({ pb, ids: selectedUserIds });
-                          if (resp.success) return toast("Users deleted successfully");
-                          toastMultiMessages(resp.error.messages);
+                          toastMultiMessages(resp.messages);
                         }}
                       />,
                     );

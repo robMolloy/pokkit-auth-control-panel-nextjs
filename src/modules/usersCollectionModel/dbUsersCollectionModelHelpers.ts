@@ -76,10 +76,11 @@ export const getUsersCollection = async (p: { pb: PocketBase }) => {
   }
 };
 
-export const updateUsersCollection = async (p: {
+export const updateUsersCollectionModel = async (p: {
   pb: PocketBase;
   usersCollection: TUsersCollectionUpdateSeed;
   successMessage: string;
+  failMessage: string;
 }) => {
   try {
     const collection = await p.pb.collections.update(collectionName, p.usersCollection);
@@ -90,13 +91,8 @@ export const updateUsersCollection = async (p: {
   } catch (error) {
     const messagesResp = extractMessageFromPbError({ error });
 
-    const fallback = "Failed to update usersCollection";
-    const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+    const messages = [p.failMessage, ...(messagesResp ? messagesResp : [])];
 
-    return {
-      success: false,
-      error,
-      messages,
-    } as const;
+    return { success: false, error, messages } as const;
   }
 };

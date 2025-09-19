@@ -1,5 +1,5 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
-import { TUsersCollection, updateUsersCollection } from "./dbUsersCollectionModelHelpers";
+import { TUsersCollection, updateUsersCollectionModel } from "./dbUsersCollectionModelHelpers";
 
 export type TOAuth2Provider = TUsersCollection["oauth2"]["providers"][number];
 type TOAuth2ProviderSeed = Pick<TOAuth2Provider, "name" | "clientId"> & { clientSecret: string };
@@ -47,10 +47,11 @@ export const addOAuth2Provider = async (p: {
   const filteredProviders = providers.filter((x) => x.name !== p.provider.name);
   const newProviders = [...filteredProviders, p.provider];
 
-  return updateUsersCollection({
+  return updateUsersCollectionModel({
     pb: p.pb,
     usersCollection: { oauth2: { providers: newProviders } },
     successMessage: "Successfully added oAuth2 provider",
+    failMessage: "Failed to add oAuth2 provider",
   });
 };
 
@@ -62,9 +63,10 @@ export const removeOAuth2Provider = async (p: {
   const providers = p.usersCollection.oauth2.providers;
   const newProviders = providers.filter((x) => x.name !== p.providerName);
 
-  return updateUsersCollection({
+  return updateUsersCollectionModel({
     pb: p.pb,
     usersCollection: { oauth2: { providers: newProviders } },
     successMessage: "Successfully removed oAuth2 provider",
+    failMessage: "Failed to remove oAuth2 provider",
   });
 };

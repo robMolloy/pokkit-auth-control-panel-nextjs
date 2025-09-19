@@ -1,6 +1,7 @@
 import PocketBase from "pocketbase";
 import { TUser, userSchema } from "./dbUserUtils";
 import { extractMessageFromPbError } from "../utils/pbUtils";
+import { z } from "zod";
 
 export const listUsers = async (p: { pb: PocketBase }) => {
   try {
@@ -63,20 +64,16 @@ export const deleteUsers = async (p: { pb: PocketBase; ids: string[] }) => {
   try {
     const batch = p.pb.createBatch();
     p.ids.forEach((x) => batch.collection("users").delete(x));
-    await batch.send();
+    const resp = await batch.send();
 
-    return { success: true } as const;
+    z.array(z.object({ status: z.literal(204) })).parse(resp);
+    const messages = ["Successfully deleted users"];
+    return { success: true, messages } as const;
   } catch (error) {
     const messagesResp = extractMessageFromPbError({ error });
+    const title = "Failed to delete users";
+    const messages = [title, ...(messagesResp ? messagesResp : [])];
 
-    return {
-      success: false,
-      error: (() => {
-        const fallback = "Delete user unsuccessful";
-        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
-
-        return { messages };
-      })(),
-    } as const;
+    return { success: false, error, messages } as const;
   }
 };
