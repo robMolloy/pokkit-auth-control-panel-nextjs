@@ -1,10 +1,9 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { toastMultiMessages } from "../utils/pbUtils";
-import { disableOtp, enableOtp } from "./pbOtp";
+import { TUsersCollection, disableOtp, enableOtp } from "../pbUsersCollectionHelpers";
 
 export const EnableOtpToggle = (p: {
   pb: PocketBase;
@@ -32,12 +31,7 @@ export const EnableOtpToggle = (p: {
             const resp = await (isChecked ? disableOtp({ pb: p.pb }) : enableOtp({ pb: p.pb }));
 
             if (resp.success) setInnerValue(resp.data);
-
-            toastMultiMessages(
-              resp.success
-                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} OTP`]
-                : resp.error.messages,
-            );
+            toastMultiMessages(resp.messages);
           })();
 
           setIsLoading(false);

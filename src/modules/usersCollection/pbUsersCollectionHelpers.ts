@@ -251,3 +251,19 @@ export const updateEmailVerificationTemplate = async (p: {
     successMessage: "Successfully updated emailVerificationTemplate",
   });
 };
+
+export const enableOtp = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { otp: { enabled: true } },
+    successMessage: "Successfully enabled OTP",
+  });
+};
+
+export const disableOtp = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { otp: { enabled: false } },
+    successMessage: "Successfully disabled OTP",
+  });
+};

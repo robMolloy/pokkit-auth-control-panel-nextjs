@@ -2,9 +2,9 @@ import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
 import { EnableMfaToggle } from "@/modules/mfa/EnableMfaToggle";
-import { EnableOtpToggle } from "@/modules/otp/EnableOtpToggle";
 import { EnablePasswordAuthToggle } from "@/modules/passwordAuth/EnablePasswordAuthToggle";
 import { EnableAuthAlertToggle } from "@/modules/usersCollection/forms/EnableAuthAlertToggle";
+import { EnableOtpToggle } from "@/modules/usersCollection/forms/EnableOtpToggle";
 import { EnableOAuth2Toggle } from "@/modules/usersCollection/forms/EnableUsersCollectionOAuth2Toggle";
 import {
   getUsersCollection,
