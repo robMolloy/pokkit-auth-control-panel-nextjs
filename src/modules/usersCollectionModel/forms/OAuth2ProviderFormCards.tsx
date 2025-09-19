@@ -30,7 +30,7 @@ export const OAuth2ProviderForm = (p: {
   usersCollection: TUsersCollection;
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
-  const [clientId, setClientId] = useState("");
+  const [clientId, setClientId] = useState(p.provider?.clientId ?? "");
   const [clientSecret, setClientSecret] = useState("");
 
   return (

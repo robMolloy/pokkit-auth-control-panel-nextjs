@@ -1,5 +1,10 @@
 import { cn } from "@/lib/utils";
 import {
+  Key,
+  Mail,
+  FileTextIcon,
+  Link,
+  Shield,
   Ban,
   Clock,
   ChevronDown,
@@ -42,7 +47,11 @@ import {
 } from "lucide-react";
 
 const iconMap = {
-  CheckCircleIcon,
+  Key,
+  Mail,
+  FileTextIcon,
+  Link,
+  Shield,
   Ban,
   Clock,
   ChevronDown,
@@ -73,6 +82,7 @@ const iconMap = {
   Monitor,
   X,
   Check,
+  CheckCircleIcon,
   Circle,
   MoreVertical,
   Upload,

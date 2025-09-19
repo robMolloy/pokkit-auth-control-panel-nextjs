@@ -22,6 +22,13 @@ export function LeftSidebar() {
                 Home
               </SidebarButton>
               <SidebarButton
+                href="/app-settings"
+                iconName="Settings"
+                isHighlighted={router.pathname === "/app-settings"}
+              >
+                App Settings
+              </SidebarButton>
+              <SidebarButton
                 href="/users"
                 iconName="Users"
                 isHighlighted={router.pathname === "/users"}
@@ -29,36 +36,36 @@ export function LeftSidebar() {
                 Users
               </SidebarButton>
               <SidebarButton
-                href="/app-settings"
-                iconName="Home"
-                isHighlighted={router.pathname === "/app-settings"}
+                href="/auth-methods"
+                iconName="Shield"
+                isHighlighted={router.pathname === "/auth-methods"}
               >
-                App Settings
+                Auth Methods
               </SidebarButton>
               <SidebarButton
                 href="/oauth2"
-                iconName="Home"
+                iconName="Link"
                 isHighlighted={router.pathname === "/oauth2"}
               >
                 oAuth2
               </SidebarButton>
               <SidebarButton
                 href="/email-settings"
-                iconName="Home"
+                iconName="Mail"
                 isHighlighted={router.pathname === "/email-settings"}
               >
                 Email Settings
               </SidebarButton>
               <SidebarButton
                 href="/email-templates"
-                iconName="Home"
+                iconName="FileText"
                 isHighlighted={router.pathname === "/email-templates"}
               >
                 Email Templates
               </SidebarButton>
               <SidebarButton
                 href="/tokens"
-                iconName="Home"
+                iconName="Key"
                 isHighlighted={router.pathname === "/tokens"}
               >
                 Tokens
