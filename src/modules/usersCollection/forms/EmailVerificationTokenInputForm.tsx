@@ -7,8 +7,9 @@ import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { invalidateEmailVerificationTokens, TUsersCollection } from "../pbUsersCollectionHelpers";
+import { TUsersCollection } from "../pbUsersCollectionHelpers";
 import { updateEmailVerificationTokenDuration } from "../pbUsersCollectionModelTokenDurationHelpers";
+import { invalidateEmailVerificationTokens } from "../pbUsersCollectionInvalidateTokensHelpers";
 
 export const EmailVerificationTokenDurationInputForm = (p: {
   pb: PocketBase;
