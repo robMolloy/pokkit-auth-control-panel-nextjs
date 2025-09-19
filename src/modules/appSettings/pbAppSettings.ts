@@ -1,6 +1,7 @@
 import { PocketBase } from "@/config/pocketbaseConfig";
 import { z } from "zod";
 import { extractMessageFromPbError } from "../utils/pbUtils";
+import { DeepPartial } from "../utils/typeUtils";
 
 export const appSettingsSchema = z.object({
   meta: z.object({
@@ -10,6 +11,7 @@ export const appSettingsSchema = z.object({
 });
 
 export type TAppSettings = z.infer<typeof appSettingsSchema>;
+export type TAppSettingsUpdateSeed = DeepPartial<TAppSettings>;
 
 export const getAppSettings = async (p: { pb: PocketBase }) => {
   try {
@@ -20,28 +22,22 @@ export const getAppSettings = async (p: { pb: PocketBase }) => {
   }
 };
 
-export const updateAppSettings = async (p: { pb: PocketBase; appName: string; appUrl: string }) => {
+export const updateAppSettings = async (p: {
+  pb: PocketBase;
+  appSettings: TAppSettingsUpdateSeed;
+}) => {
   try {
-    const appSettings = await p.pb.settings.update({
-      meta: { appName: p.appName, appURL: p.appUrl },
-    });
+    const appSettings = await p.pb.settings.update(p.appSettings);
     const parsedAppSettings = appSettingsSchema.parse(appSettings);
-    return {
-      success: true,
-      data: parsedAppSettings,
-      messages: ["App settings updated successfully"],
-    } as const;
+    const messages = ["Successfully updated app settings"];
+
+    return { success: true, data: parsedAppSettings, messages } as const;
   } catch (error) {
     const messagesResp = extractMessageFromPbError({ error });
 
-    return {
-      success: false,
-      error: (() => {
-        const fallback = "Update appSettings unsuccessful";
-        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
+    const fallback = "Unsuccessful update to app settings";
+    const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
 
-        return { messages };
-      })(),
-    } as const;
+    return { success: false, error, messages } as const;
   }
 };

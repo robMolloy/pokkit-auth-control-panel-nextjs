@@ -3,7 +3,6 @@ import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { toastMultiMessages } from "../utils/pbUtils";
 import { TAppSettings, updateAppSettings } from "./pbAppSettings";
 
@@ -29,14 +28,11 @@ export const AppSettingsForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateAppSettings({ pb, appName: innerAppName, appUrl: innerAppUrl });
+          const appSettings = { meta: { appName: innerAppName, appURL: innerAppUrl } };
+          const resp = await updateAppSettings({ pb, appSettings });
 
-          if (resp.success) {
-            p.onAppSettingsUpdate(resp.data);
-            return toast("App settings updated successfully");
-          }
-
-          toastMultiMessages(resp.error.messages);
+          if (resp.success) p.onAppSettingsUpdate(resp.data);
+          toastMultiMessages(resp.messages);
         })();
 
         setIsLoading(false);
