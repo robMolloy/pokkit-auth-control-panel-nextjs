@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { pb, PocketBase } from "@/config/pocketbaseConfig";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { extractMessageFromPbError, toastMultiMessages } from "../utils/pbUtils";
-import { updateConfirmEmailChangeTemplate } from "./pbConfirmEmailChangeTemplate";
 import { Textarea } from "@/components/ui/textarea";
+import { pb, PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
+import { useEffect, useState } from "react";
+import { TUsersCollection, updateConfirmEmailChangeTemplate } from "../pbUsersCollectionHelpers";
 
 export const ConfirmEmailChangeTemplateForm = (p: {
   pb: PocketBase;
@@ -33,13 +31,10 @@ export const ConfirmEmailChangeTemplateForm = (p: {
         await (async () => {
           const resp = await updateConfirmEmailChangeTemplate({
             pb,
-            value: { subject: innerSubjectValue, body: innerBodyValue },
+            confirmEmailChangeTemplate: { subject: innerSubjectValue, body: innerBodyValue },
           });
 
-          if (resp.success) return toast("template updated successfully");
-
-          const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) toastMultiMessages(errorMessages);
+          toastMultiMessages(resp.messages);
         })();
 
         setIsLoading(false);

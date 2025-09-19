@@ -226,3 +226,17 @@ export const updateAuthAlertEmailTemplate = async (p: {
     successMessage: "Successfully updated authAlert email template",
   });
 };
+
+export const updateConfirmEmailChangeTemplate = async (p: {
+  pb: PocketBase;
+  confirmEmailChangeTemplate: {
+    subject: string;
+    body: string;
+  };
+}) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { confirmEmailChangeTemplate: p.confirmEmailChangeTemplate },
+    successMessage: "Successfully updated confirmEmailChangeTemplate",
+  });
+};
