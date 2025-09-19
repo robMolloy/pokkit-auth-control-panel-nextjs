@@ -73,6 +73,13 @@ export const UsersScreen = () => {
                 </TableHeader>
 
                 <TableBody>
+                  {usersStore.data.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center">
+                        No users found
+                      </TableCell>
+                    </TableRow>
+                  )}
                   {displayedUsers.map((x, j) => (
                     <TableRow key={x.id}>
                       <TableCell className="font-medium">

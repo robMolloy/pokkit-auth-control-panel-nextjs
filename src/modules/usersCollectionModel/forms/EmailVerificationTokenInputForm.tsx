@@ -25,7 +25,7 @@ export const EmailVerificationTokenDurationInputForm = (p: {
 
   return (
     <form
-      className="flex flex-col gap-2"
+      className="flex flex-col gap-1"
       onSubmit={async (e) => {
         e.preventDefault();
         if (isLoading) return;

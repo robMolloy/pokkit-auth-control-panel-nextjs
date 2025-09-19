@@ -27,7 +27,7 @@ export default function Home() {
       <H1>Welcome to pokkit auth control panel</H1>
       <br />
       {usersCollection && (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           <AuthTokenDurationInputForm
             pb={pb}
             value={usersCollection.authToken.duration}
