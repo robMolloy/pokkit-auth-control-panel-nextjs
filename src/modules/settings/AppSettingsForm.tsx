@@ -10,7 +10,7 @@ export const AppSettingsForm = (p: {
   pb: PocketBase;
   appName: string;
   appUrl: string;
-  onAppSettingsUpdate: (x: TSettings) => void;
+  onSettingsUpdate: (x: TSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [appName, setAppName] = useState(p.appName);
@@ -30,12 +30,12 @@ export const AppSettingsForm = (p: {
         await (async () => {
           const resp = await updateSettings({
             pb,
-            appSettings: { meta: { appName: appName, appURL: appUrl } },
+            settings: { meta: { appName: appName, appURL: appUrl } },
             successMessage: "Successfully updated app settings",
             failMessage: "Failed to update app settings",
           });
 
-          if (resp.success) p.onAppSettingsUpdate(resp.data);
+          if (resp.success) p.onSettingsUpdate(resp.data);
           toastMultiMessages(resp.messages);
         })();
 

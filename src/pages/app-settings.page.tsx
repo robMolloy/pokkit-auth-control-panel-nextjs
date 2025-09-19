@@ -10,13 +10,13 @@ import { EnableAuthAlertToggle } from "@/modules/usersCollectionModel/forms/Enab
 import { useEffect, useState } from "react";
 
 const Page = () => {
-  const [appSettings, setAppSettings] = useState<TSettings>();
+  const [settings, setSettings] = useState<TSettings>();
   const [usersCollection, setUsersCollection] = useState<TUsersCollection>();
 
   useEffect(() => {
     (async () => {
       const resp = await getSettings({ pb });
-      if (resp.success) setAppSettings(resp.data);
+      if (resp.success) setSettings(resp.data);
     })();
   }, []);
 
@@ -28,12 +28,12 @@ const Page = () => {
   }, []);
   return (
     <MainLayout>
-      {appSettings && (
+      {settings && (
         <AppSettingsForm
           pb={pb}
-          appName={appSettings.meta.appName}
-          appUrl={appSettings.meta.appURL}
-          onAppSettingsUpdate={(x) => setAppSettings(x)}
+          appName={settings.meta.appName}
+          appUrl={settings.meta.appURL}
+          onSettingsUpdate={(x) => setSettings(x)}
         />
       )}
       {usersCollection && (

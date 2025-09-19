@@ -5,22 +5,22 @@ import { TSettings, getSettings } from "@/modules/settings/pbSettings";
 import { useEffect, useState } from "react";
 
 const Page = () => {
-  const [appSettings, setEmailSettings] = useState<TSettings>();
+  const [settings, setSettings] = useState<TSettings>();
 
   useEffect(() => {
     (async () => {
       const resp = await getSettings({ pb });
-      if (resp.success) setEmailSettings(resp.data);
+      if (resp.success) setSettings(resp.data);
     })();
   }, []);
   return (
     <MainLayout>
-      {appSettings && (
+      {settings && (
         <div className="flex flex-col gap-4">
           <EmailSettingsForm
             pb={pb}
-            appSettings={appSettings}
-            onEmailSettingsUpdate={(x) => setEmailSettings(x)}
+            settings={settings}
+            onEmailSettingsUpdate={(x) => setSettings(x)}
           />
         </div>
       )}

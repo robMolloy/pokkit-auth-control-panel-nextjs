@@ -9,26 +9,26 @@ import { TSettings, updateEmailSettings } from "../pbSettings";
 
 export const EmailSettingsForm = (p: {
   pb: PocketBase;
-  appSettings: TSettings;
+  settings: TSettings;
   onEmailSettingsUpdate: (x: TSettings) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [senderName, setSenderName] = useState(p.appSettings.meta.senderName);
-  const [senderAddress, setSenderAddress] = useState(p.appSettings.meta.senderAddress);
-  const [smtpEnabled, setSmtpEnabled] = useState(p.appSettings.smtp.enabled);
-  const [smtpServerHost, setSmtpServerHost] = useState(p.appSettings.smtp.host);
-  const [smtpServerPort, setSmtpServerPort] = useState(p.appSettings.smtp.port);
-  const [smtpServerUsername, setSmtpServerUsername] = useState(p.appSettings.smtp.username);
+  const [senderName, setSenderName] = useState(p.settings.meta.senderName);
+  const [senderAddress, setSenderAddress] = useState(p.settings.meta.senderAddress);
+  const [smtpEnabled, setSmtpEnabled] = useState(p.settings.smtp.enabled);
+  const [smtpServerHost, setSmtpServerHost] = useState(p.settings.smtp.host);
+  const [smtpServerPort, setSmtpServerPort] = useState(p.settings.smtp.port);
+  const [smtpServerUsername, setSmtpServerUsername] = useState(p.settings.smtp.username);
   const [smtpServerPassword, setSmtpServerPassword] = useState("");
-  const [smtpServerLocalName, setSmtpServerLocalName] = useState(p.appSettings.smtp.localName);
-  const [smtpServerTls, setSmtpServerTls] = useState(p.appSettings.smtp.tls);
-  const [smtpServerAuthMethod, setSmtpServerAuthMethod] = useState(p.appSettings.smtp.authMethod);
+  const [smtpServerLocalName, setSmtpServerLocalName] = useState(p.settings.smtp.localName);
+  const [smtpServerTls, setSmtpServerTls] = useState(p.settings.smtp.tls);
+  const [smtpServerAuthMethod, setSmtpServerAuthMethod] = useState(p.settings.smtp.authMethod);
 
   useEffect(() => {
-    setSenderName(p.appSettings.meta.senderName);
-    setSenderAddress(p.appSettings.meta.senderAddress);
-    setSmtpEnabled(p.appSettings.smtp.enabled);
-  }, [p.appSettings]);
+    setSenderName(p.settings.meta.senderName);
+    setSenderAddress(p.settings.meta.senderAddress);
+    setSmtpEnabled(p.settings.smtp.enabled);
+  }, [p.settings]);
 
   return (
     <form

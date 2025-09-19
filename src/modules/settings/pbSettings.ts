@@ -26,8 +26,8 @@ export type TSettingsUpdateSeed = DeepPartial<TSettings>;
 
 export const getSettings = async (p: { pb: PocketBase }) => {
   try {
-    const appSettings = await p.pb.settings.getAll();
-    return settingsSchema.safeParse(appSettings);
+    const settings = await p.pb.settings.getAll();
+    return settingsSchema.safeParse(settings);
   } catch (error) {
     return { success: false, error } as const;
   }
@@ -35,13 +35,13 @@ export const getSettings = async (p: { pb: PocketBase }) => {
 
 export const updateSettings = async (p: {
   pb: PocketBase;
-  appSettings: TSettingsUpdateSeed;
+  settings: TSettingsUpdateSeed;
   successMessage: string;
   failMessage: string;
 }) => {
   try {
-    const appSettings = await p.pb.settings.update(p.appSettings);
-    const data = settingsSchema.parse(appSettings);
+    const settings = await p.pb.settings.update(p.settings);
+    const data = settingsSchema.parse(settings);
     const messages = [p.successMessage];
 
     return { success: true, data, messages } as const;
@@ -57,7 +57,7 @@ export const updateSettings = async (p: {
 export const updateAppSettings = async (p: { pb: PocketBase; appName: string; appUrl: string }) => {
   return updateSettings({
     pb: p.pb,
-    appSettings: { meta: { appName: p.appName, appURL: p.appUrl } },
+    settings: { meta: { appName: p.appName, appURL: p.appUrl } },
     successMessage: "Successfully updated app settings",
     failMessage: "Failed to update app settings",
   });
@@ -71,7 +71,7 @@ export const updateEmailSettings = async (p: {
 }) => {
   return updateSettings({
     pb: p.pb,
-    appSettings: {
+    settings: {
       meta: { senderName: p.senderName, senderAddress: p.senderAddress },
       smtp: { enabled: p.smtpEnabled },
     },
