@@ -22,6 +22,7 @@ export default function Home() {
   return (
     <MainLayout>
       <H1>oAuth2</H1>
+      <br />
       {usersCollection && (
         <>
           <EnableOAuth2Toggle

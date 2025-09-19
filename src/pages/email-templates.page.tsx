@@ -11,6 +11,7 @@ import {
   TUsersCollection,
 } from "@/modules/usersCollectionModel/dbUsersCollectionModelHelpers";
 import { useEffect, useState } from "react";
+import { H1 } from "@/components/ui/defaultComponents";
 
 const Page = () => {
   const [usersCollection, setUsersCollection] = useState<TUsersCollection>();
@@ -24,6 +25,8 @@ const Page = () => {
 
   return (
     <MainLayout>
+      <H1>Email Templates</H1>
+      <br />
       {usersCollection && (
         <div className="flex flex-col gap-4">
           <AccordionCard title="Email Verification Template" value="email-verification-template">

@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <H1>Welcome to pokkit auth control panel</H1>
+      <H1>Tokens</H1>
       <br />
       {usersCollection && (
         <div className="flex flex-col gap-4">

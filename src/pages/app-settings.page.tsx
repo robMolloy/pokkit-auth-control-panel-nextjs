@@ -1,4 +1,5 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
+import { H1 } from "@/components/ui/defaultComponents";
 import { pb } from "@/config/pocketbaseConfig";
 import { AppSettingsForm } from "@/modules/settings/AppSettingsForm";
 import { getSettings, TSettings } from "@/modules/settings/dbSettings";
@@ -28,6 +29,8 @@ const Page = () => {
   }, []);
   return (
     <MainLayout>
+      <H1>App Settings</H1>
+      <br />
       {settings && (
         <AppSettingsForm
           pb={pb}

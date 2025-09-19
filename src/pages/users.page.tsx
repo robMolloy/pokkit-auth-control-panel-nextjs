@@ -2,6 +2,7 @@ import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { ConfirmationModalContent } from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { H1 } from "@/components/ui/defaultComponents";
 import { Paginator } from "@/components/ui/pagination";
 import {
   Table,
@@ -36,6 +37,8 @@ export const UsersScreen = () => {
 
   return (
     <MainLayout>
+      <H1>Users</H1>
+      <br />
       {usersStore.data === undefined && <LoadingScreen />}
       {usersStore.data === null && <div>No users found</div>}
       {usersStore.data &&
