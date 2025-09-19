@@ -263,3 +263,19 @@ export const updateOtpEmailTemplate = async (p: { pb: PocketBase; template: TTem
     successMessage: "Successfully updated OTP email template",
   });
 };
+
+export const enableMfa = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { mfa: { enabled: true } },
+    successMessage: "Successfully enabled MFA",
+  });
+};
+
+export const disableMfa = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { mfa: { enabled: false } },
+    successMessage: "Successfully disabled MFA",
+  });
+};

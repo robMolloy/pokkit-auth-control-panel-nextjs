@@ -1,10 +1,9 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { toastMultiMessages } from "../utils/pbUtils";
-import { disableMfa, enableMfa } from "./pbMfa";
+import { TUsersCollection, disableMfa, enableMfa } from "../pbUsersCollectionHelpers";
 
 export const EnableMfaToggle = (p: {
   pb: PocketBase;
@@ -32,11 +31,7 @@ export const EnableMfaToggle = (p: {
             const resp = await (isChecked ? disableMfa({ pb: p.pb }) : enableMfa({ pb: p.pb }));
             if (resp.success) setInnerValue(resp.data);
 
-            toastMultiMessages(
-              resp.success
-                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} MFA`]
-                : resp.error.messages,
-            );
+            toastMultiMessages(resp.messages);
           })();
 
           setIsLoading(false);

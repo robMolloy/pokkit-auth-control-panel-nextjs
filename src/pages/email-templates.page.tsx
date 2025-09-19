@@ -5,7 +5,7 @@ import { ResetPasswordTemplateForm } from "@/modules/resetPasswordTemplate/Reset
 import { AuthAlertEmailTemplateForm } from "@/modules/usersCollection/forms/AuthAlertEmailTemplateForm";
 import { ConfirmEmailChangeTemplateForm } from "@/modules/usersCollection/forms/ConfirmEmailChangeTemplateForm";
 import { EmailVerificationTemplateForm } from "@/modules/usersCollection/forms/EmailVerificationTemplateForm";
-import { OtpEmailTemplateForm } from "@/modules/usersCollection/forms/otpEmailTemplateForm";
+import { OtpEmailTemplateForm } from "@/modules/usersCollection/forms/OtpEmailTemplateForm";
 import {
   getUsersCollection,
   TUsersCollection,
