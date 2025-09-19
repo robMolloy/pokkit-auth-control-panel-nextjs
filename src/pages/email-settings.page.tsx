@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
 import { EmailSettingsForm } from "@/modules/settings/forms/EmailSettingsForm";
-import { TSettings, getSettings } from "@/modules/settings/pbSettings";
+import { TSettings, getSettings } from "@/modules/settings/dbSettings";
 import { useEffect, useState } from "react";
 
 const Page = () => {

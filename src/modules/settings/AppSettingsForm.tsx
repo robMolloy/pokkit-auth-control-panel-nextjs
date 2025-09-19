@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { useEffect, useState } from "react";
 import { toastMultiMessages } from "../utils/pbUtils";
-import { TSettings, updateSettings as updateSettings } from "./pbSettings";
+import { TSettings, updateSettings as updateSettings } from "./dbSettings";
 
 export const AppSettingsForm = (p: {
   pb: PocketBase;

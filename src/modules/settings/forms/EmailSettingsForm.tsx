@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useState } from "react";
-import { TSettings, updateEmailSettings } from "../pbSettings";
+import { TSettings, updateEmailSettings } from "../dbSettings";
 
 export const EmailSettingsForm = (p: {
   pb: PocketBase;
@@ -30,8 +30,8 @@ export const EmailSettingsForm = (p: {
       onSubmit={async (e) => {
         e.preventDefault();
         if (isLoading) return;
-
         setIsLoading(true);
+
         await (async () => {
           const resp = await updateEmailSettings({
             pb,

@@ -22,7 +22,10 @@ export const settingsSchema = z.object({
 });
 
 export type TSettings = z.infer<typeof settingsSchema>;
-export type TSettingsUpdateSeed = DeepPartial<TSettings>;
+type TInitSettingsUpdateSeed = Omit<TSettings, "smtp"> & {
+  smtp: TSettings["smtp"] & { password: string };
+};
+export type TSettingsUpdateSeed = DeepPartial<TInitSettingsUpdateSeed>;
 
 export const getSettings = async (p: { pb: PocketBase }) => {
   try {
@@ -47,7 +50,6 @@ export const updateSettings = async (p: {
     return { success: true, data, messages } as const;
   } catch (error) {
     const messagesResp = extractMessageFromPbError({ error });
-
     const messages = [p.failMessage, ...(messagesResp ? messagesResp : [])];
 
     return { success: false, error, messages } as const;
@@ -83,7 +85,7 @@ export const updateEmailSettings = async (p: {
     smtpServerHost,
     smtpServerPort,
     smtpServerUsername,
-    // smtpServerPassword,
+    smtpServerPassword,
     smtpServerTls,
     smtpServerLocalName,
     smtpServerAuthMethod,
@@ -97,6 +99,7 @@ export const updateEmailSettings = async (p: {
         host: smtpServerHost,
         port: smtpServerPort,
         username: smtpServerUsername,
+        password: smtpServerPassword,
         authMethod: smtpServerAuthMethod,
         localName: smtpServerLocalName,
         tls: smtpServerTls,

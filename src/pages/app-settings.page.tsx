@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/layout/LayoutTemplate";
 import { pb } from "@/config/pocketbaseConfig";
 import { AppSettingsForm } from "@/modules/settings/AppSettingsForm";
-import { getSettings, TSettings } from "@/modules/settings/pbSettings";
+import { getSettings, TSettings } from "@/modules/settings/dbSettings";
 import {
   getUsersCollection,
   TUsersCollection,
