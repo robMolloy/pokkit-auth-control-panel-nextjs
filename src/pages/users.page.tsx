@@ -92,8 +92,8 @@ export const UsersScreen = () => {
                               content={<pre>{JSON.stringify(x, undefined, 2)}</pre>}
                               onConfirm={async () => {
                                 const resp = await deleteUser({ pb, id: x.id });
-                                if (resp.success) return toast("User deleted successfully");
-                                toastMultiMessages(resp.error.messages);
+
+                                toastMultiMessages(resp.messages);
                               }}
                             />,
                           )

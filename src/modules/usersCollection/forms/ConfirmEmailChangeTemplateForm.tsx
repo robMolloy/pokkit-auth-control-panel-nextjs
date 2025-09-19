@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection, updateConfirmEmailChangeTemplate } from "../pbUsersCollectionHelpers";
+import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import { updateConfirmEmailChangeTemplate } from "../pbUsersCollectionTemplateHelpers";
 
 export const ConfirmEmailChangeTemplateForm = (p: {
   pb: PocketBase;
@@ -29,10 +30,7 @@ export const ConfirmEmailChangeTemplateForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateConfirmEmailChangeTemplate({
-            pb,
-            confirmEmailChangeTemplate: { subject, body },
-          });
+          const resp = await updateConfirmEmailChangeTemplate({ pb, template: { subject, body } });
 
           toastMultiMessages(resp.messages);
         })();

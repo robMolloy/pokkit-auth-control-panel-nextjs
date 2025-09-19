@@ -6,7 +6,7 @@ import { DeepPartial } from "../utils/typeUtils";
 const collectionName = "users";
 export const usersCollectionName = collectionName;
 const templateSchema = z.object({ subject: z.string(), body: z.string() });
-type TTemplate = z.infer<typeof templateSchema>;
+export type TTemplate = z.infer<typeof templateSchema>;
 
 export const usersCollectionSchema = z.object({
   created: z.string(),
@@ -99,53 +99,4 @@ export const updateUsersCollection = async (p: {
       messages,
     } as const;
   }
-};
-
-export const updateAuthAlertEmailTemplate = async (p: {
-  pb: PocketBase;
-  authAlertEmailTemplate: TTemplate;
-}) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { authAlert: { emailTemplate: p.authAlertEmailTemplate } },
-    successMessage: "Successfully updated authAlert email template",
-  });
-};
-
-export const updateConfirmEmailChangeTemplate = async (p: {
-  pb: PocketBase;
-  confirmEmailChangeTemplate: TTemplate;
-}) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { confirmEmailChangeTemplate: p.confirmEmailChangeTemplate },
-    successMessage: "Successfully updated confirmEmailChangeTemplate",
-  });
-};
-
-export const updateEmailVerificationTemplate = async (p: {
-  pb: PocketBase;
-  template: TTemplate;
-}) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { verificationTemplate: p.template },
-    successMessage: "Successfully updated emailVerificationTemplate",
-  });
-};
-
-export const updateOtpEmailTemplate = async (p: { pb: PocketBase; template: TTemplate }) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { otp: { emailTemplate: p.template } },
-    successMessage: "Successfully updated OTP email template",
-  });
-};
-
-export const updateResetPasswordTemplate = async (p: { pb: PocketBase; template: TTemplate }) => {
-  return updateUsersCollection({
-    pb: p.pb,
-    usersCollection: { resetPasswordTemplate: p.template },
-    successMessage: "Successfully updated resetPasswordTemplate",
-  });
 };

@@ -6,7 +6,8 @@ import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { TUsersCollection, updateOtpEmailTemplate } from "../pbUsersCollectionHelpers";
+import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import { updateOtpEmailTemplate } from "../pbUsersCollectionTemplateHelpers";
 
 export const OtpEmailTemplateForm = (p: {
   pb: PocketBase;

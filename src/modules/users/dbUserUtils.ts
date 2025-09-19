@@ -45,19 +45,17 @@ export const subscribeToUser = async (p: {
 
 export const deleteUser = async (p: { pb: PocketBase; id: string }) => {
   try {
-    await p.pb.collection("users").delete(p.id);
-    return { success: true } as const;
+    const resp = await p.pb.collection("users").delete(p.id);
+
+    z.literal(true).parse(resp);
+
+    const messages = ["User deleted successfully"];
+    return { success: true, messages } as const;
   } catch (error) {
     const messagesResp = extractMessageFromPbError({ error });
+    const fallback = "Delete user unsuccessful";
+    const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
 
-    return {
-      success: false,
-      error: (() => {
-        const fallback = "Delete user unsuccessful";
-        const messages = !messagesResp || messagesResp?.length === 0 ? [fallback] : messagesResp;
-
-        return { messages };
-      })(),
-    } as const;
+    return { success: false, error, messages } as const;
   }
 };

@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection, updateAuthAlertEmailTemplate } from "../pbUsersCollectionHelpers";
+import { TUsersCollection } from "../pbUsersCollectionHelpers";
+import { updateAuthAlertEmailTemplate } from "../pbUsersCollectionTemplateHelpers";
 
 export const AuthAlertEmailTemplateForm = (p: {
   pb: PocketBase;
@@ -29,10 +30,7 @@ export const AuthAlertEmailTemplateForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateAuthAlertEmailTemplate({
-            pb,
-            authAlertEmailTemplate: { subject, body },
-          });
+          const resp = await updateAuthAlertEmailTemplate({ pb, template: { subject, body } });
 
           toastMultiMessages(resp.messages);
         })();
