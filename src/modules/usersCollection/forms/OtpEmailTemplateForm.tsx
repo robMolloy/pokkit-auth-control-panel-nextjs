@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { extractMessageFromPbError, toastMultiMessages } from "../utils/pbUtils";
-import { updateOtpEmailTemplate } from "./pbOtpEmailTemplate";
-import { Textarea } from "@/components/ui/textarea";
+import { TUsersCollection, updateOtpEmailTemplate } from "../pbUsersCollectionHelpers";
 
 export const OtpEmailTemplateForm = (p: {
   pb: PocketBase;
@@ -16,11 +15,11 @@ export const OtpEmailTemplateForm = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerSubjectValue, setInnerSubjectValue] = useState(p.subject);
-  const [innerBodyValue, setInnerBodyValue] = useState(p.body);
+  const [subject, setSubject] = useState(p.subject);
+  const [body, setBody] = useState(p.body);
 
-  useEffect(() => setInnerSubjectValue(p.subject), [p.subject]);
-  useEffect(() => setInnerBodyValue(p.body), [p.body]);
+  useEffect(() => setSubject(p.subject), [p.subject]);
+  useEffect(() => setBody(p.body), [p.body]);
 
   return (
     <form
@@ -31,15 +30,11 @@ export const OtpEmailTemplateForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateOtpEmailTemplate({
-            pb,
-            value: { subject: innerSubjectValue, body: innerBodyValue },
-          });
+          const resp = await updateOtpEmailTemplate({ pb, template: { subject, body } });
 
           if (resp.success) return toast("template updated successfully");
 
-          const errorMessages = extractMessageFromPbError(resp);
-          if (errorMessages) toastMultiMessages(errorMessages);
+          toastMultiMessages(resp.messages);
         })();
 
         setIsLoading(false);
@@ -50,8 +45,8 @@ export const OtpEmailTemplateForm = (p: {
         <TextInput
           id="users-collection-otpEmailTemplateSubject-input"
           disabled={isLoading}
-          value={innerSubjectValue}
-          onInput={async (subject) => setInnerSubjectValue(subject)}
+          value={subject}
+          onInput={async (subject) => setSubject(subject)}
         />
       </div>
       <div>
@@ -59,8 +54,8 @@ export const OtpEmailTemplateForm = (p: {
         <Textarea
           id="users-collection-otpEmailTemplateBody-input"
           disabled={isLoading}
-          value={innerBodyValue}
-          onInput={(body) => setInnerBodyValue(body)}
+          value={body}
+          onInput={(body) => setBody(body)}
           rows={10}
         />
       </div>

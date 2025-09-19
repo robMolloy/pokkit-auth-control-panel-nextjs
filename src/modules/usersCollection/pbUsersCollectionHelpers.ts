@@ -6,22 +6,19 @@ import { DeepPartial } from "../utils/typeUtils";
 
 const collectionName = "users";
 export const usersCollectionName = collectionName;
+const templateSchema = z.object({ subject: z.string(), body: z.string() });
+type TTemplateSchema = z.infer<typeof templateSchema>;
+
 export const usersCollectionSchema = z.object({
   created: z.string(),
   authAlert: z.object({
     enabled: z.boolean(),
-    emailTemplate: z.object({
-      subject: z.string(),
-      body: z.string(),
-    }),
+    emailTemplate: templateSchema,
   }),
   authToken: z.object({
     duration: z.number(),
   }),
-  confirmEmailChangeTemplate: z.object({
-    subject: z.string(),
-    body: z.string(),
-  }),
+  confirmEmailChangeTemplate: templateSchema,
   emailChangeToken: z.object({
     duration: z.number(),
   }),
@@ -42,10 +39,7 @@ export const usersCollectionSchema = z.object({
   }),
   otp: z.object({
     enabled: z.boolean(),
-    emailTemplate: z.object({
-      subject: z.string(),
-      body: z.string(),
-    }),
+    emailTemplate: templateSchema,
   }),
   passwordAuth: z.object({
     enabled: z.boolean(),
@@ -53,14 +47,8 @@ export const usersCollectionSchema = z.object({
   passwordResetToken: z.object({
     duration: z.number(),
   }),
-  resetPasswordTemplate: z.object({
-    subject: z.string(),
-    body: z.string(),
-  }),
-  verificationTemplate: z.object({
-    subject: z.string(),
-    body: z.string(),
-  }),
+  resetPasswordTemplate: templateSchema,
+  verificationTemplate: templateSchema,
   verificationToken: z.object({
     duration: z.number(),
   }),
@@ -265,5 +253,13 @@ export const disableOtp = async (p: { pb: PocketBase }) => {
     pb: p.pb,
     usersCollection: { otp: { enabled: false } },
     successMessage: "Successfully disabled OTP",
+  });
+};
+
+export const updateOtpEmailTemplate = async (p: { pb: PocketBase; template: TTemplateSchema }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { otp: { emailTemplate: p.template } },
+    successMessage: "Successfully updated OTP email template",
   });
 };
