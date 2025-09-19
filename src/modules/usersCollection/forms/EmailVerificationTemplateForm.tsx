@@ -14,11 +14,11 @@ export const EmailVerificationTemplateForm = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerSubjectValue, setInnerSubjectValue] = useState(p.subject);
-  const [innerBodyValue, setInnerBodyValue] = useState(p.body);
+  const [subject, setSubject] = useState(p.subject);
+  const [body, setBody] = useState(p.body);
 
-  useEffect(() => setInnerSubjectValue(p.subject), [p.subject]);
-  useEffect(() => setInnerBodyValue(p.body), [p.body]);
+  useEffect(() => setSubject(p.subject), [p.subject]);
+  useEffect(() => setBody(p.body), [p.body]);
 
   return (
     <form
@@ -29,10 +29,7 @@ export const EmailVerificationTemplateForm = (p: {
 
         setIsLoading(true);
         await (async () => {
-          const resp = await updateEmailVerificationTemplate({
-            pb,
-            template: { subject: innerSubjectValue, body: innerBodyValue },
-          });
+          const resp = await updateEmailVerificationTemplate({ pb, template: { subject, body } });
 
           toastMultiMessages(resp.messages);
         })();
@@ -45,8 +42,8 @@ export const EmailVerificationTemplateForm = (p: {
         <TextInput
           id="users-collection-emailVerificationTemplateSubject-input"
           disabled={isLoading}
-          value={innerSubjectValue}
-          onInput={async (subject) => setInnerSubjectValue(subject)}
+          value={subject}
+          onInput={async (subject) => setSubject(subject)}
         />
       </div>
       <div>
@@ -54,8 +51,8 @@ export const EmailVerificationTemplateForm = (p: {
         <Textarea
           id="users-collection-emailVerificationTemplateBody-input"
           disabled={isLoading}
-          value={innerBodyValue}
-          onInput={(body) => setInnerBodyValue(body)}
+          value={body}
+          onInput={(body) => setBody(body)}
           rows={10}
         />
       </div>

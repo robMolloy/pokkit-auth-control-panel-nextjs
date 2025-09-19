@@ -14,11 +14,11 @@ export const AuthAlertEmailTemplateForm = (p: {
   onUsersCollectionUpdate: (x: TUsersCollection) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [innerSubjectValue, setInnerSubjectValue] = useState(p.subject);
-  const [innerBodyValue, setInnerBodyValue] = useState(p.body);
+  const [subject, setSubject] = useState(p.subject);
+  const [body, setBody] = useState(p.body);
 
-  useEffect(() => setInnerSubjectValue(p.subject), [p.subject]);
-  useEffect(() => setInnerBodyValue(p.body), [p.body]);
+  useEffect(() => setSubject(p.subject), [p.subject]);
+  useEffect(() => setBody(p.body), [p.body]);
 
   return (
     <form
@@ -31,7 +31,7 @@ export const AuthAlertEmailTemplateForm = (p: {
         await (async () => {
           const resp = await updateAuthAlertEmailTemplate({
             pb,
-            authAlertEmailTemplate: { subject: innerSubjectValue, body: innerBodyValue },
+            authAlertEmailTemplate: { subject, body },
           });
 
           toastMultiMessages(resp.messages);
@@ -45,8 +45,8 @@ export const AuthAlertEmailTemplateForm = (p: {
         <TextInput
           id="users-collection-authAlertEmailTemplateSubject-input"
           disabled={isLoading}
-          value={innerSubjectValue}
-          onInput={async (subject) => setInnerSubjectValue(subject)}
+          value={subject}
+          onInput={async (subject) => setSubject(subject)}
         />
       </div>
       <div>
@@ -54,8 +54,8 @@ export const AuthAlertEmailTemplateForm = (p: {
         <Textarea
           id="users-collection-authAlertEmailTemplateBody-input"
           disabled={isLoading}
-          value={innerBodyValue}
-          onInput={(body) => setInnerBodyValue(body)}
+          value={body}
+          onInput={(body) => setBody(body)}
           rows={10}
         />
       </div>
