@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { pb, PocketBase } from "@/config/pocketbaseConfig";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TSettings, updateEmailSettings } from "../pbSettings";
 
 export const EmailSettingsForm = (p: {
@@ -24,12 +24,6 @@ export const EmailSettingsForm = (p: {
   const [smtpServerTls, setSmtpServerTls] = useState(p.settings.smtp.tls);
   const [smtpServerAuthMethod, setSmtpServerAuthMethod] = useState(p.settings.smtp.authMethod);
 
-  useEffect(() => {
-    setSenderName(p.settings.meta.senderName);
-    setSenderAddress(p.settings.meta.senderAddress);
-    setSmtpEnabled(p.settings.smtp.enabled);
-  }, [p.settings]);
-
   return (
     <form
       className="flex flex-col gap-4"
@@ -41,9 +35,16 @@ export const EmailSettingsForm = (p: {
         await (async () => {
           const resp = await updateEmailSettings({
             pb,
-            senderName: senderName,
-            senderAddress: senderAddress,
-            smtpEnabled: smtpEnabled,
+            senderName,
+            senderAddress,
+            smtpEnabled,
+            smtpServerHost,
+            smtpServerPort,
+            smtpServerUsername,
+            smtpServerPassword,
+            smtpServerLocalName,
+            smtpServerTls,
+            smtpServerAuthMethod,
           });
 
           if (resp.success) p.onEmailSettingsUpdate(resp.data);

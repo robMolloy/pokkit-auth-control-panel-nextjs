@@ -68,12 +68,39 @@ export const updateEmailSettings = async (p: {
   senderName: string;
   senderAddress: string;
   smtpEnabled: boolean;
+  smtpServerHost: string;
+  smtpServerPort: number;
+  smtpServerUsername: string;
+  smtpServerPassword: string;
+  smtpServerLocalName: string;
+  smtpServerTls: boolean;
+  smtpServerAuthMethod: string;
 }) => {
+  const {
+    senderName,
+    senderAddress,
+    smtpEnabled,
+    smtpServerHost,
+    smtpServerPort,
+    smtpServerUsername,
+    // smtpServerPassword,
+    smtpServerTls,
+    smtpServerLocalName,
+    smtpServerAuthMethod,
+  } = p;
   return updateSettings({
     pb: p.pb,
     settings: {
-      meta: { senderName: p.senderName, senderAddress: p.senderAddress },
-      smtp: { enabled: p.smtpEnabled },
+      meta: { senderName, senderAddress },
+      smtp: {
+        enabled: smtpEnabled,
+        host: smtpServerHost,
+        port: smtpServerPort,
+        username: smtpServerUsername,
+        authMethod: smtpServerAuthMethod,
+        localName: smtpServerLocalName,
+        tls: smtpServerTls,
+      },
     },
     successMessage: "Successfully updated email settings",
     failMessage: "Failed to update email settings",
