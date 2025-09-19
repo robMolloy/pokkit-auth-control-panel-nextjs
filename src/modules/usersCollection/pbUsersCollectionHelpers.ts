@@ -188,3 +188,11 @@ export const invalidatePasswordResetTokens = async (p: { pb: PocketBase }) => {
     usersCollection: { passwordResetToken: { secret: generateToken() } },
   });
 };
+
+export const enableAuthAlert = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({ pb: p.pb, usersCollection: { authAlert: { enabled: true } } });
+};
+
+export const disableAuthAlert = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({ pb: p.pb, usersCollection: { authAlert: { enabled: false } } });
+};
