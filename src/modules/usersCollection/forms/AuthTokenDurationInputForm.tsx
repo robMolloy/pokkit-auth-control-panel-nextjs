@@ -8,11 +8,8 @@ import { ConfirmationModalContent } from "@/components/Modal";
 import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
-import {
-  invalidateAuthTokens,
-  TUsersCollection,
-  updateAuthTokenDuration,
-} from "../pbUsersCollectionHelpers";
+import { invalidateAuthTokens, TUsersCollection } from "../pbUsersCollectionHelpers";
+import { updateAuthTokenDuration } from "../pbUsersCollectionModelTokenDurationHelpers";
 
 export const AuthTokenDurationInputForm = (p: {
   pb: PocketBase;

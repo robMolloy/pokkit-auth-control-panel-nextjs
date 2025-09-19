@@ -7,11 +7,8 @@ import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  invalidatePasswordResetTokens,
-  TUsersCollection,
-  updatePasswordResetTokenDuration,
-} from "../pbUsersCollectionHelpers";
+import { invalidatePasswordResetTokens, TUsersCollection } from "../pbUsersCollectionHelpers";
+import { updatePasswordResetTokenDuration } from "../pbUsersCollectionModelTokenDurationHelpers";
 
 export const PasswordResetTokenDurationInputForm = (p: {
   pb: PocketBase;
