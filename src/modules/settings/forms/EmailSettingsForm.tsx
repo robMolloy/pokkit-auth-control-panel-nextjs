@@ -105,67 +105,75 @@ export const EmailSettingsForm = (p: {
       </div>
       {smtpEnabled && (
         <div className="flex flex-col gap-4">
-          <div>
-            <Label htmlFor="emailSettings-serverHost-input">Server Host</Label>
-            <TextInput
-              id="emailSettings-serverHost-input"
-              disabled={isLoading}
-              value={smtpServerHost}
-              onInput={(serverHost) => setSmtpServerHost(serverHost)}
-            />
+          <div className="flex flex-col gap-4 md:flex-row">
+            <div className="flex-1">
+              <Label htmlFor="emailSettings-serverHost-input">Server Host</Label>
+              <TextInput
+                id="emailSettings-serverHost-input"
+                disabled={isLoading}
+                value={smtpServerHost}
+                onInput={(serverHost) => setSmtpServerHost(serverHost)}
+              />
+            </div>
+            <div className="flex-1">
+              <Label htmlFor="emailSettings-serverPort-input">Server Port</Label>
+              <NumberInput
+                id="emailSettings-serverPort-input"
+                disabled={isLoading}
+                value={smtpServerPort}
+                onInput={(serverPort) => setSmtpServerPort(serverPort)}
+              />
+            </div>
+            <div className="flex-1">
+              <Label htmlFor="emailSettings-serverUsername-input">Server Username</Label>
+              <TextInput
+                id="emailSettings-serverUsername-input"
+                disabled={isLoading}
+                value={smtpServerUsername}
+                onInput={(serverUsername) => setSmtpServerUsername(serverUsername)}
+              />
+            </div>
+            <div className="flex-1">
+              <Label htmlFor="emailSettings-serverPassword-input">Server Password</Label>
+              <TextInput
+                type="password"
+                id="emailSettings-serverPassword-input"
+                disabled={isLoading}
+                value={smtpServerPassword}
+                onInput={(serverPassword) => setSmtpServerPassword(serverPassword)}
+              />
+            </div>
           </div>
-          <div>
-            <Label htmlFor="emailSettings-serverPort-input">Server Port</Label>
-            <NumberInput
-              id="emailSettings-serverPort-input"
-              disabled={isLoading}
-              value={smtpServerPort}
-              onInput={(serverPort) => setSmtpServerPort(serverPort)}
-            />
-          </div>
-          <div>
-            <Label htmlFor="emailSettings-serverUsername-input">Server Username</Label>
-            <TextInput
-              id="emailSettings-serverUsername-input"
-              disabled={isLoading}
-              value={smtpServerUsername}
-              onInput={(serverUsername) => setSmtpServerUsername(serverUsername)}
-            />
-          </div>
-          <div>
-            <Label htmlFor="emailSettings-serverPassword-input">Server Password</Label>
-            <TextInput
-              type="password"
-              id="emailSettings-serverPassword-input"
-              disabled={isLoading}
-              value={smtpServerPassword}
-              onInput={(serverPassword) => setSmtpServerPassword(serverPassword)}
-            />
-          </div>
-          <div>
-            <Label htmlFor="emailSettings-serverLocalName-input">Server LocalName</Label>
-            <TextInput
-              id="emailSettings-serverLocalName-input"
-              disabled={isLoading}
-              value={smtpServerLocalName}
-              onInput={(serverLocalName) => setSmtpServerLocalName(serverLocalName)}
-            />
-          </div>
-          <div>
-            <Label htmlFor="emailSettings-serverTls-input">Server Tls</Label>
-            <SmtpServerTlsSelect value={smtpServerTls} onValueChange={(x) => setSmtpServerTls(x)} />
-          </div>
-          <div>
-            <Label htmlFor="emailSettings-serverAuthMethod-select">Server AuthMethod</Label>
-            <SimpleSelect
-              value={smtpServerAuthMethod}
-              onValueChange={(x) => setSmtpServerAuthMethod(x)}
-              options={[
-                { name: "PLAIN", value: "PLAIN" },
-                { name: "LOGIN", value: "LOGIN" },
-              ]}
-              placeholder="Select an option"
-            />
+
+          <div className="flex flex-col gap-4 md:flex-row">
+            <div className="flex-1">
+              <Label htmlFor="emailSettings-serverLocalName-input">Server LocalName</Label>
+              <TextInput
+                id="emailSettings-serverLocalName-input"
+                disabled={isLoading}
+                value={smtpServerLocalName}
+                onInput={(serverLocalName) => setSmtpServerLocalName(serverLocalName)}
+              />
+            </div>
+            <div className="flex-1">
+              <Label htmlFor="emailSettings-serverTls-input">Server Tls</Label>
+              <SmtpServerTlsSelect
+                value={smtpServerTls}
+                onValueChange={(x) => setSmtpServerTls(x)}
+              />
+            </div>
+            <div className="flex-1">
+              <Label htmlFor="emailSettings-serverAuthMethod-select">Server AuthMethod</Label>
+              <SimpleSelect
+                value={smtpServerAuthMethod}
+                onValueChange={(x) => setSmtpServerAuthMethod(x)}
+                options={[
+                  { name: "PLAIN", value: "PLAIN" },
+                  { name: "LOGIN", value: "LOGIN" },
+                ]}
+                placeholder="Select an option"
+              />
+            </div>
           </div>
         </div>
       )}
