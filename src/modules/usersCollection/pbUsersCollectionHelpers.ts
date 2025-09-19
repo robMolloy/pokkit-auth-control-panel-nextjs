@@ -279,3 +279,19 @@ export const disableMfa = async (p: { pb: PocketBase }) => {
     successMessage: "Successfully disabled MFA",
   });
 };
+
+export const enablePasswordAuth = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { passwordAuth: { enabled: true } },
+    successMessage: "Successfully enabled passwordAuth",
+  });
+};
+
+export const disablePasswordAuth = async (p: { pb: PocketBase }) => {
+  return updateUsersCollection({
+    pb: p.pb,
+    usersCollection: { passwordAuth: { enabled: false } },
+    successMessage: "Successfully disabled passwordAuth",
+  });
+};

@@ -1,10 +1,13 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PocketBase } from "@/config/pocketbaseConfig";
+import { toastMultiMessages } from "@/modules/utils/pbUtils";
 import { useEffect, useState } from "react";
-import { TUsersCollection } from "../usersCollection/pbUsersCollectionHelpers";
-import { toastMultiMessages } from "../utils/pbUtils";
-import { disablePasswordAuth, enablePasswordAuth } from "./pbPasswordAuth";
+import {
+  TUsersCollection,
+  disablePasswordAuth,
+  enablePasswordAuth,
+} from "../pbUsersCollectionHelpers";
 
 export const EnablePasswordAuthToggle = (p: {
   pb: PocketBase;
@@ -34,11 +37,7 @@ export const EnablePasswordAuthToggle = (p: {
               : enablePasswordAuth({ pb: p.pb }));
             if (resp.success) setInnerValue(resp.data);
 
-            toastMultiMessages(
-              resp.success
-                ? [`Successfully ${!isChecked ? "enabled" : "disabled"} Password Auth`]
-                : resp.error.messages,
-            );
+            toastMultiMessages(resp.messages);
           })();
 
           setIsLoading(false);
