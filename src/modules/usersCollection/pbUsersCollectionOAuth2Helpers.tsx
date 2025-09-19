@@ -42,6 +42,7 @@ export const enableOAuth2 = async (p: { pb: PocketBase }) => {
   return updateUsersCollection({
     pb: p.pb,
     usersCollection: { oauth2: { enabled: true } },
+    successMessage: "Successfully enabled oAuth2",
   });
 };
 
@@ -49,6 +50,7 @@ export const disableOAuth2 = async (p: { pb: PocketBase }) => {
   return updateUsersCollection({
     pb: p.pb,
     usersCollection: { oauth2: { enabled: false } },
+    successMessage: "Successfully disabled oAuth2",
   });
 };
 
@@ -64,6 +66,7 @@ export const addOAuth2Provider = async (p: {
   return updateUsersCollection({
     pb: p.pb,
     usersCollection: { oauth2: { providers: newProviders } },
+    successMessage: "Successfully added oAuth2 provider",
   });
 };
 
@@ -78,5 +81,6 @@ export const removeOAuth2Provider = async (p: {
   return updateUsersCollection({
     pb: p.pb,
     usersCollection: { oauth2: { providers: newProviders } },
+    successMessage: "Successfully removed oAuth2 provider",
   });
 };
