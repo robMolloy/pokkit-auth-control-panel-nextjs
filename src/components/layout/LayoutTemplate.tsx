@@ -14,7 +14,9 @@ export const MainLayout = (p: {
   children: React.ReactNode;
   className?: HTMLDivElement["className"];
 }) => {
-  return <div className={`p-6 ${p.className ?? ""}`}>{p.children}</div>;
+  return (
+    <div className={`mx-auto w-full max-w-[1080px] p-6 ${p.className ?? ""}`}>{p.children}</div>
+  );
 };
 export const MainFixedLayout = (p: { children: React.ReactNode }) => {
   return <PreserveScrollAbility>{p.children}</PreserveScrollAbility>;
